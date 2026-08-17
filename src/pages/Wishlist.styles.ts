@@ -1,0 +1,52 @@
+import styled from 'styled-components';
+
+export const WishlistMain = styled.main`
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: var(--tabbar-h);
+  background: #fafaf9;
+  padding-bottom: calc(var(--tabbar-h) + 100px);
+`;
+
+export const WishlistHeader = styled.div`
+  text-align: center;
+  padding: 40px 16px 24px;
+`;
+
+export const Title = styled.h2`
+  font-family: 'EB Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  margin: 0 0 8px;
+`;
+
+export const Count = styled.p`
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+`;
+
+export const ActionBottom = styled.div`
+  position: absolute;
+  bottom: var(--tabbar-h);
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: #fafaf9;
+  z-index: 10;
+`;
+
+export const AddAllBtn = styled.button`
+  width: 100%;
+  height: 52px;
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+`;

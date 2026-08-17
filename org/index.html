@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BYREDO | 구조 스켈레톤</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+KR:wght@300;400;500;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  $
+  <!-- ============================================================
+     1. 데스크탑 전체 페이지 헤더 (480px 초과에서만 노출)
+     ============================================================ -->
+  <header class="site-header">
+    <div class="site-header__inner">
+      <div class="site-header__logo">
+        <a href="javascript:void(0)" onclick="window.location.reload(); return false;">
+          <img src="img/logo.png" alt="BYREDO logo">
+        </a>
+      </div>
+      <nav class="site-header__nav">
+        <ul>
+          <li><a href="#hand-care" class="trigger-product-list">HAND CARE</a></li>
+          <li><a href="#about-byredo" class="trigger-about">ABOUT BYREDO</a></li>
+          <li><a href="#sign-up" class="trigger-login">SIGN UP</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============================================================
+     2. 페이지 본문 : 좌(앱 프레임) / 우(브랜드 소개) 2단 구조
+     ============================================================ -->
+  <div class="page-wrap">
+    <!-- 데스크탑 배경 데코 이미지 -->
+    <img src="img/gift.png" alt="" class="page-deco page-deco--gift" data-scope="desktop-only">
+    <img src="img/three.png" alt="" class="page-deco page-deco--three" data-scope="desktop-only">
+    <img src="img/center.png" alt="" class="page-deco page-deco--center" data-scope="desktop-only">
+
+    <!-- ---------- 좌측 60% : 실제 동작하는 모바일 앱 영역 ---------- -->
+    <div class="app-column">
+      <!-- app-frame : 데스크탑·모바일 공통 컴포넌트. 내부 콘텐츠/기능은 완전히 동일하며,
+         데스크탑에서는 좌측 프레임 안에서, 모바일에서는 전체 화면으로 확장되어 실행됨 -->
+      <div class="app-frame" id="app-frame" data-scope="app-shared">
+
+        <!-- 2-1. 모바일 앱 내부 헤더 (데스크탑/모바일 공통 컴포넌트) -->
+        <header class="app-header" id="home-header">
+          <button class="app-header__icon-btn" id="btn-menu" aria-label="메뉴 열기">
+            <img src="img/icon-menu.png" alt="menu icon">
+          </button>
+          <div class="app-header__logo">
+            <img src="img/logo.png" alt="BYREDO logo">
+          </div>
+          <div class="app-header__actions">
+            <button class="app-header__icon-btn trigger-search" id="btn-search-open" aria-label="검색">
+              <img src="img/icon-search.png" alt="search icon">
+            </button>
+            <button class="app-header__icon-btn app-header__icon-btn--cart trigger-cart" id="btn-cart-open"
+              aria-label="장바구니">
+              <img src="img/icon-cart.png" alt="cart icon">
+            </button>
+            <button class="app-header__icon-btn trigger-mypage" aria-label="마이페이지">
+              <img src="img/icon-user.png" alt="user icon">
+            </button>
+          </div>
+        </header>
+
+        <!-- 앱 본문 : 스크롤 되는 영역 -->
+        <main class="app-main" id="home-main">
+
+          <!-- 2-2. 메인 비주얼 배너 (캐러셀)
+             공통(데스크탑·모바일) 요소. 배경 #E0E0D8 계열, "BYREDO HAND CARE" 문구,
+             SHOP NOW 버튼, 좌우 화살표, "1/3" 텍스트형 인디케이터로 구성 -->
+          <section class="hero-banner" id="hero-banner" aria-label="메인 비주얼 배너">
+            <div class="hero-banner__track" id="hero-track">
+
+              <div class="hero-banner__slide">
+                <img src="img/banner-hero-1.jpg" alt="hero banner 1">
+                <div class="hero-banner__copy">
+                  <h2 class="hero-banner__title">BYREDO<br>HAND CARE</h2>
+                  <p class="hero-banner__desc">섬세한 향으로 완성하는<br>나만의 순간</p>
+                  <a href="#" class="hero-banner__cta trigger-product-list">SHOP NOW →</a>
+                </div>
+              </div>
+
+              <div class="hero-banner__slide">
+                <img src="img/banner-hero-2.jpg" alt="hero banner 2">
+                <div class="hero-banner__copy">
+                  <h2 class="hero-banner__title">BYREDO<br>HAND CARE</h2>
+                  <p class="hero-banner__desc">나만의 특별한 향기를 찾아보세요</p>
+                  <a href="#" class="hero-banner__cta trigger-product-list">SHOP NOW →</a>
+                </div>
+              </div>
+
+              <div class="hero-banner__slide">
+                <img src="img/banner-hero-3.jpg" alt="hero banner 3">
+                <div class="hero-banner__copy">
+                  <h2 class="hero-banner__title">BYREDO<br>HAND CARE</h2>
+                  <p class="hero-banner__desc">은은하게 퍼지는 매력적인 머스크</p>
+                  <a href="#" class="hero-banner__cta trigger-product-list">SHOP NOW →</a>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- 점(dot) 형태 인디케이터 : ● ○ ○ -->
+            <div class="hero-banner__indicator" id="hero-indicator" aria-live="polite">
+              <button class="hero-banner__dot is-active" data-index="0" aria-label="1번째 배너 보기"></button>
+              <button class="hero-banner__dot" data-index="1" aria-label="2번째 배너 보기"></button>
+              <button class="hero-banner__dot" data-index="2" aria-label="3번째 배너 보기"></button>
+            </div>
+          </section>
+
+          <!-- 2-3. 바이레도 핸드크림 브랜드 소개 배너 -->
+          <section class="brand-intro-banner" id="brand-intro-banner" aria-label="브랜드 소개 배너">
+            <div class="brand-intro-banner__text">
+              <h2>BYREDO<br>HAND CREAM</h2>
+              <p>기억에 남는 향, 감각적인 경험 바이레도 핸드크림을 만나보세요.</p>
+              <a href="#" class="brand-intro-banner__link trigger-about">브랜드 소개 보기 →</a>
+            </div>
+            <div class="brand-intro-banner__image">
+              <img src="img/banner-brand-intro.jpg" alt="brand intro banner">
+            </div>
+          </section>
+
+          <!-- 2-4. 카테고리 메뉴 : 아이콘형 카테고리 4개 (원형 아이콘 + 라벨)
+             공통(데스크탑·모바일) 요소, 4등분 그리드 -->
+          <section class="category-grid" id="category-grid" aria-label="카테고리 메뉴">
+            <a href="#" class="category-grid__item trigger-product-list">
+              <span class="category-grid__icon">
+                <img src="img/icon-cat-all.png" alt="전체 상품">
+              </span>
+              <span class="category-grid__label">전체 상품</span>
+            </a>
+            <a href="#" class="category-grid__item trigger-quiz">
+              <span class="category-grid__icon">
+                <img src="img/icon-cat-scent.png" alt="향 취향찾기">
+              </span>
+              <span class="category-grid__label">향 취향찾기</span>
+            </a>
+            <a href="#" class="category-grid__item trigger-wishlist">
+              <span class="category-grid__icon">
+                <img src="img/icon-cat-wish.png" alt="위시리스트">
+              </span>
+              <span class="category-grid__label">위시리스트</span>
+            </a>
+            <a href="#" class="category-grid__item trigger-about">
+              <span class="category-grid__icon">
+                <img src="img/icon-cat-story.png" alt="브랜드 스토리">
+              </span>
+              <span class="category-grid__label">브랜드 스토리</span>
+            </a>
+          </section>
+
+          <!-- 2-5. 실시간 검색 순위 (모바일 전용 섹션) -->
+          <section class="live-search-rank" id="live-search-rank" aria-label="실시간 검색 순위">
+            <h3 class="live-search-rank__title">실시간 검색 순위</h3>
+            <div class="live-search-rank__scroller">
+              <a href="#" class="live-search-rank__pill">
+                <span class="live-search-rank__num">1</span>
+                <span class="live-search-rank__keyword">블랑쉬</span>
+                <span class="live-search-rank__trend">↑</span>
+              </a>
+              <a href="#" class="live-search-rank__pill">
+                <span class="live-search-rank__num">2</span>
+                <span class="live-search-rank__keyword">발 다프리크</span>
+                <span class="live-search-rank__trend">↑</span>
+              </a>
+              <a href="#" class="live-search-rank__pill">
+                <span class="live-search-rank__num">3</span>
+                <span class="live-search-rank__keyword">로즈 오브 노…</span>
+                <span class="live-search-rank__trend">↑</span>
+              </a>
+            </div>
+          </section>
+
+          <!-- 2-6. 실시간 베스트 상품 -->
+          <section class="best-products" id="best-products" aria-label="실시간 베스트 상품">
+            <div class="best-products__head">
+              <h3>실시간 베스트 상품</h3>
+              <a href="#" class="best-products__more trigger-product-list">전체 상품 보기 ›</a>
+            </div>
+            <div class="best-products__list">
+              <div class="best-products__card trigger-product-detail">
+                <div class="best-products__img-wrap">
+                  <span class="best-products__rank">01</span>
+                  <img src="img/product-blanche.jpg" alt="BLANCHE 핸드크림">
+                </div>
+                <p class="best-products__name">BLANCHE</p>
+                <p class="best-products__desc">블랑쉬<br>핸드크림 30ml</p>
+                <p class="best-products__price">₩70,000</p>
+              </div>
+              <div class="best-products__card trigger-product-detail">
+                <div class="best-products__img-wrap">
+                  <span class="best-products__rank">02</span>
+                  <img src="img/product-baldafrique.jpg" alt="BAL D'AFRIQUE 핸드크림">
+                </div>
+                <p class="best-products__name">BAL D'AFRIQUE</p>
+                <p class="best-products__desc">발 다프리크<br>핸드크림 30ml</p>
+                <p class="best-products__price">₩70,000</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- 2-7. 향 취향 퀴즈 진입 영역 (모바일에서만 앱 본문 내부 노출) -->
+          <section class="quiz-entry" id="quiz-entry" aria-label="향 취향 퀴즈 진입">
+            <p class="quiz-entry__title">
+              <span class="quiz-entry__badge">
+                <img src="img/icon-quiz.png" alt="quiz icon">
+              </span>
+              나에게 딱 맞는 향을 찾아보세요
+            </p>
+            <p class="quiz-entry__sub">간단한 질문으로 당신에게 어울리는<br>핸드크림을 추천해드려요.</p>
+            <a href="#" class="quiz-entry__btn trigger-quiz">향 취향 퀴즈 시작 →</a>
+          </section>
+
+        </main>
+
+        <!-- ============================================================
+             검색 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="search-main" id="search-main" style="display: none;">
+          <div class="search-input-area">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="1.5">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="M21 21l-4.35-4.35"></path>
+            </svg>
+            <input type="text" class="search-input" placeholder="검색어를 입력하세요">
+            <button class="search-clear" aria-label="지우기">✕</button>
+          </div>
+          <div class="search-recent">
+            <h3 class="search-recent__title">최근 검색어</h3>
+            <ul class="search-recent__list">
+              <li>
+                <span>블랑쉬</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5">
+                  <path d="M9 18l6-6-6-6"></path>
+                </svg>
+              </li>
+              <li>
+                <span>핸드크림</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5">
+                  <path d="M9 18l6-6-6-6"></path>
+                </svg>
+              </li>
+            </ul>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             상품 목록 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="product-list-main" id="product-list-main" style="display: none;">
+          <div class="product-list-header">
+            <h2 class="product-list-header__title">Hand Creams</h2>
+            <div class="product-list-header__sort">
+              <select>
+                <option>인기순</option>
+                <option>최신순</option>
+                <option>낮은가격순</option>
+                <option>높은가격순</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="product-grid">
+            <div class="product-card trigger-product-detail">
+              <div class="product-card__badge">BEST</div>
+              <div class="product-card__img"><img src="img/product-blanche.jpg" alt="LA TULIPE"></div>
+              <div class="product-card__info">
+                <span class="product-card__brand">BYREDO</span>
+                <h3 class="product-card__name">LA TULIPE</h3>
+                <p class="product-card__desc">핸드 크림 30ml</p>
+                <p class="product-card__price">₩70,000</p>
+              </div>
+            </div>
+            <div class="product-card trigger-product-detail">
+              <div class="product-card__img"><img src="img/product-baldafrique.jpg" alt="MOJAVE GHOST"></div>
+              <div class="product-card__info">
+                <span class="product-card__brand">BYREDO</span>
+                <h3 class="product-card__name">MOJAVE GHOST</h3>
+                <p class="product-card__desc">핸드 크림 30ml</p>
+                <p class="product-card__price">₩70,000</p>
+              </div>
+            </div>
+            <div class="product-card trigger-product-detail">
+              <div class="product-card__badge">NEW</div>
+              <div class="product-card__img"><img src="img/product-blanche.jpg" alt="BLANCHE"></div>
+              <div class="product-card__info">
+                <span class="product-card__brand">BYREDO</span>
+                <h3 class="product-card__name">BLANCHE</h3>
+                <p class="product-card__desc">핸드 크림 30ml</p>
+                <p class="product-card__price">₩70,000</p>
+              </div>
+            </div>
+            <div class="product-card trigger-product-detail">
+              <div class="product-card__img"><img src="img/product-baldafrique.jpg" alt="BAL D'AFRIQUE"></div>
+              <div class="product-card__info">
+                <span class="product-card__brand">BYREDO</span>
+                <h3 class="product-card__name">BAL D'AFRIQUE</h3>
+                <p class="product-card__desc">핸드 크림 30ml</p>
+                <p class="product-card__price">₩70,000</p>
+              </div>
+            </div>
+            <div class="product-card trigger-product-detail">
+              <div class="product-card__img"><img src="img/product-blanche.jpg" alt="ROSE OF NO MAN'S..."></div>
+              <div class="product-card__info">
+                <span class="product-card__brand">BYREDO</span>
+                <h3 class="product-card__name">ROSE OF NO MAN'S...</h3>
+                <p class="product-card__desc">핸드 크림 30ml</p>
+                <p class="product-card__price">₩70,000</p>
+              </div>
+            </div>
+            <div class="product-card trigger-product-detail">
+              <div class="product-card__img"><img src="img/product-baldafrique.jpg" alt="GYPSY WATER"></div>
+              <div class="product-card__info">
+                <span class="product-card__brand">BYREDO</span>
+                <h3 class="product-card__name">GYPSY WATER</h3>
+                <p class="product-card__desc">핸드 크림 30ml</p>
+                <p class="product-card__price">₩70,000</p>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             상품 상세 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="product-detail-main" id="product-detail-main" style="display: none;">
+          <div class="product-detail-hero">
+            <img src="img/product-baldafrique.jpg" alt="BAL D'AFRIQUE">
+            <div class="hero-indicator">
+              <span class="active"></span>
+            </div>
+          </div>
+
+          <div class="product-detail-info">
+            <span class="product-detail-info__cate">HAND CREAM</span>
+            <h2 class="product-detail-info__title">BLANCHE</h2>
+            <p class="product-detail-info__desc">깨끗한 세탁물과 화이트 로즈의 향기를 담은 향수입니다.</p>
+            <p class="product-detail-info__price">₩70,000</p>
+          </div>
+
+          <div class="product-detail-options">
+            <h3 class="product-detail-options__label">SIZE</h3>
+            <div class="product-detail-options__sizes">
+              <button class="is-active">30ML</button>
+              <button>100ML</button>
+            </div>
+            <div class="product-detail-options__qty">
+              <button class="qty-btn-minus">−</button>
+              <span class="qty-val">1</span>
+              <button class="qty-btn-plus">+</button>
+            </div>
+          </div>
+
+          <div class="product-detail-accordion">
+            <div class="accordion-item is-expanded">
+              <button class="accordion-header">
+                <span>SCENT NOTES</span>
+                <span class="accordion-icon">∨</span>
+              </button>
+              <div class="accordion-content">
+                <ul>
+                  <li><strong>Top:</strong> White Rose, Pink Pepper</li>
+                  <li><strong>Heart:</strong> Violet, Neroli</li>
+                  <li><strong>Base:</strong> Blonde Woods, Sandalwood</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="accordion-item is-expanded">
+              <button class="accordion-header">
+                <span>전성분</span>
+                <span class="accordion-icon">∨</span>
+              </button>
+              <div class="accordion-content">
+                <p>정제수, 시어버터, 향료, 글리세릴스테아레이트, PEG-100스테아레이트, 알코올, 스테아레스-2, 글리세린, 세틸알코올, 스테아릭애씨드, 팔미틱애씨드</p>
+                <p class="mt-2">피부에 깊은 보습과 영양을 공급하여 오랫동안 촉촉함을 유지해 주는 고보습 포뮬러입니다.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-detail-gift">
+            <div class="gift-box">
+              <div class="gift-box__header">
+                <div class="gift-box__title">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="8" width="18" height="14" rx="2" />
+                    <path d="M12 8v14M8 8V6a2 2 0 114 0v2M12 8V6a2 2 0 114 0v2" />
+                  </svg>
+                  <span>선물하기 (GIFTING SERVICE)</span>
+                </div>
+                <div class="toggle-switch">
+                  <input type="checkbox" id="gift-toggle">
+                  <label for="gift-toggle"></label>
+                </div>
+              </div>
+              <div class="gift-box__content">
+                <span class="gift-box__label">커스텀 메시지 카드 작성</span>
+                <textarea placeholder="메시지를 입력해주세요..." disabled></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-detail-reviews">
+            <div class="reviews-header">
+              <h3>리뷰 (124)</h3>
+              <a href="#">리뷰 작성하기</a>
+            </div>
+            <div class="review-item">
+              <div class="review-meta">
+                <div class="stars">★★★★★</div>
+                <div class="date">2024.05.12</div>
+              </div>
+              <p class="review-text">향이 정말 깔끔하고 은은하게 오래가요. 만족합니다.</p>
+              <span class="review-author">Sarah K.</span>
+            </div>
+            <div class="review-item">
+              <div class="review-meta">
+                <div class="stars">★★★★★</div>
+                <div class="date">2024.05.08</div>
+              </div>
+              <p class="review-text">선물로 구매했는데 받는 분이 너무 좋아하네요. 패키지가 정말 고급스러워요.</p>
+              <span class="review-author">Michael R.</span>
+            </div>
+            <button class="btn-more-reviews trigger-review">전체 리뷰 보기</button>
+          </div>
+
+          <div class="product-detail-action">
+            <button class="btn-action btn-action--cart trigger-cart">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span>장바구니 담기</span>
+            </button>
+            <button class="btn-action btn-action--buy trigger-checkout">바로 구매하기</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             장바구니 화면 (기본 숨김)
+             ============================================================ -->
+        <header class="cart-header" id="cart-header" style="display: none;">
+          <button id="btn-cart-back" class="cart-header__back" aria-label="뒤로가기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <h2 class="cart-header__title">장바구니</h2>
+          <div style="width: 40px;"></div>
+        </header>
+        <main class="cart-main" id="cart-main" style="display: none;">
+          <ul class="cart-list">
+            <li class="cart-item">
+              <div class="cart-item__img trigger-product-detail" style="cursor: pointer;"><img
+                  src="img/product-blanche.jpg" alt="BLANCHE"></div>
+              <div class="cart-item__info">
+                <div class="cart-item__head">
+                  <h3 class="cart-item__name trigger-product-detail" style="cursor: pointer;">BLANCHE</h3>
+                  <button class="cart-item__remove">✕</button>
+                </div>
+                <select class="cart-item__option-select">
+                  <option>30ML</option>
+                  <option>50ML</option>
+                  <option>100ML</option>
+                </select>
+                <div class="cart-item__bottom">
+                  <div class="cart-qty">
+                    <button class="cart-qty__btn">−</button>
+                    <span class="cart-qty__val">1</span>
+                    <button class="cart-qty__btn">+</button>
+                  </div>
+                  <span class="cart-item__price">₩70,000</span>
+                </div>
+                <div class="cart-gift added">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="8" width="18" height="14" rx="2" />
+                    <path d="M12 8v14M8 8V6a2 2 0 114 0v2M12 8V6a2 2 0 114 0v2" />
+                  </svg>
+                  <div>
+                    <span class="cart-gift__label">GIFT MESSAGE ADDED</span>
+                    <p class="cart-gift__text">"생일 축하해! 항상 고마워."</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="cart-item">
+              <div class="cart-item__img trigger-product-detail" style="cursor: pointer;"><img
+                  src="img/product-baldafrique.jpg" alt="BAL D'AFRIQUE"></div>
+              <div class="cart-item__info">
+                <div class="cart-item__head">
+                  <h3 class="cart-item__name trigger-product-detail" style="cursor: pointer;">BAL D'AFRIQUE</h3>
+                  <button class="cart-item__remove">✕</button>
+                </div>
+                <select class="cart-item__option-select">
+                  <option>50ML</option>
+                  <option>30ML</option>
+                  <option>100ML</option>
+                </select>
+                <div class="cart-item__bottom">
+                  <div class="cart-qty">
+                    <button class="cart-qty__btn">−</button>
+                    <span class="cart-qty__val">1</span>
+                    <button class="cart-qty__btn">+</button>
+                  </div>
+                  <span class="cart-item__price">₩70,000</span>
+                </div>
+                <div class="cart-gift">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="8" width="18" height="14" rx="2" />
+                    <path d="M12 8v14M8 8V6a2 2 0 114 0v2M12 8V6a2 2 0 114 0v2" />
+                  </svg>
+                  <span class="cart-gift__add">ADD GIFT MESSAGE</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <div class="cart-summary">
+            <h3 class="cart-summary__title">주문 요약</h3>
+            <ul class="cart-summary__list">
+              <li><span>BLANCHE (1개)</span><span>₩70,000</span></li>
+              <li><span>BAL D'AFRIQUE (1개)</span><span>₩70,000</span></li>
+            </ul>
+            <ul class="cart-summary__totals">
+              <li><span>상품 금액</span><span>₩140,000</span></li>
+              <li><span>배송비</span><span class="free-shipping">무료</span></li>
+            </ul>
+            <div class="cart-summary__final">
+              <span>총 결제 금액</span>
+              <strong>₩140,000</strong>
+            </div>
+          </div>
+
+          <div class="cart-action">
+            <button class="btn-checkout" id="btn-checkout">주문하기</button>
+          </div>
+          <p class="cart-footer-text">장바구니 내역은 로컬 저장소에 안전하게 보관됩니다.</p>
+        </main>
+
+        <!-- ============================================================
+             주문/결제 화면 (기본 숨김)
+             ============================================================ -->
+        <header class="checkout-header" id="checkout-header" style="display: none;">
+          <button id="btn-checkout-back" class="checkout-header__back" aria-label="뒤로가기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <h2 class="checkout-header__title">주문/결제</h2>
+          <div style="width: 40px;"></div>
+        </header>
+        <main class="checkout-main" id="checkout-main" style="display: none;">
+          <div class="checkout-section">
+            <h3 class="checkout-section__title">배송 정보</h3>
+            <div class="checkout-form">
+              <div class="checkout-form__row">
+                <label>이름</label>
+                <input type="text" value="홍길동" readonly>
+              </div>
+              <div class="checkout-form__row">
+                <label>연락처</label>
+                <input type="text" value="010-1234-5678" readonly>
+              </div>
+              <div class="checkout-form__row">
+                <label>주소</label>
+                <div class="checkout-form__zip">
+                  <input type="text" value="06035" readonly>
+                  <button type="button">우편번호 찾기</button>
+                </div>
+                <input type="text" value="서울특별시 강남구 도산대로 45길 10-5" readonly class="mt-2">
+                <input type="text" placeholder="상세 주소를 입력해주세요" class="mt-2">
+              </div>
+              <div class="checkout-form__row">
+                <label>배송 요청사항</label>
+                <div class="checkout-form__select">
+                  <select>
+                    <option>배송 전 연락바랍니다.</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkout-section">
+            <h3 class="checkout-section__title">주문 상품 정보</h3>
+            <div class="checkout-product">
+              <div class="checkout-product__img"><img src="img/product-blanche.jpg" alt="BLANCHE"></div>
+              <div class="checkout-product__info">
+                <span class="checkout-product__cate">HAND CREAM</span>
+                <h4 class="checkout-product__name">BLANCHE</h4>
+                <p class="checkout-product__option">30ml / 2개</p>
+                <span class="checkout-product__price">₩140,000</span>
+              </div>
+            </div>
+            <div class="checkout-summary">
+              <ul>
+                <li><span>상품 금액</span><span>₩140,000</span></li>
+                <li><span>배송비</span><span>₩0</span></li>
+              </ul>
+              <div class="checkout-summary__total">
+                <span>총 결제 금액</span>
+                <strong>₩140,000</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkout-section">
+            <h3 class="checkout-section__title">결제 수단</h3>
+            <div class="checkout-pay-tabs">
+              <button class="is-active">신용카드</button>
+              <button>페이코</button>
+              <button>무통장 입금</button>
+            </div>
+            <div class="checkout-pay-box">
+              <div class="checkout-form__row">
+                <label>카드 선택</label>
+                <div class="checkout-form__select">
+                  <select>
+                    <option>신한카드</option>
+                  </select>
+                </div>
+              </div>
+              <div class="checkout-form__row">
+                <label>할부 기간</label>
+                <div class="checkout-form__select">
+                  <select>
+                    <option>일시불</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkout-agree">
+            <label class="checkbox-label">
+              <input type="checkbox">
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">주문 상품 정보 및 결제 대행 서비스 이용 약관에 모두 동의합니다.<br>(필수)</span>
+            </label>
+          </div>
+
+          <div class="checkout-action">
+            <button class="btn-pay">₩140,000 결제하기</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             주문 완료 화면 (기본 숨김)
+             ============================================================ -->
+        <header class="order-complete-header" id="order-complete-header" style="display: none;">
+          <button id="btn-order-complete-back" class="order-complete-header__back" aria-label="뒤로가기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <h2 class="order-complete-header__title">주문/결제</h2>
+          <div style="width: 40px;"></div>
+        </header>
+        <main class="order-complete-main" id="order-complete-main" style="display: none;">
+          <div class="order-complete__message">
+            <h2 class="order-complete__title">주문이 완료되었습니다.</h2>
+            <p class="order-complete__subtitle">바이레도의 향기를 곧 만나보실 수 있습니다.</p>
+          </div>
+
+          <div class="order-complete__card">
+            <div class="order-complete__row">
+              <span class="order-complete__label">ORDER NUMBER</span>
+              <span class="order-complete__value" id="oc-order-number">BRD-20231024-001</span>
+            </div>
+            <div class="order-complete__divider"></div>
+            <div class="order-complete__row">
+              <span class="order-complete__label">TOTAL AMOUNT</span>
+              <span class="order-complete__value order-complete__value--amount" id="oc-total-amount">₩ 140,000</span>
+            </div>
+            <div class="order-complete__divider"></div>
+            <div class="order-complete__address-block">
+              <span class="order-complete__label">DELIVERY ADDRESS</span>
+              <p class="order-complete__address" id="oc-address">서울 강남구 도산대로45길 10-5<br>바이레도 플래그십 스토어 앞<br>02-1234-5678
+              </p>
+            </div>
+          </div>
+
+          <div class="order-complete__actions">
+            <button class="order-complete__btn order-complete__btn--outline" id="btn-order-detail">주문 상세 보기</button>
+            <button class="order-complete__btn order-complete__btn--filled trigger-home" id="btn-continue-shopping">쇼핑
+              계속하기</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             주문 취소 화면 (기본 숨김)
+             ============================================================ -->
+        <header class="order-cancel-header" id="order-cancel-header" style="display: none;">
+          <button id="btn-order-cancel-back" class="order-cancel-header__back" aria-label="뒤로가기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <h2 class="order-cancel-header__title">주문취소</h2>
+          <div style="width: 40px;"></div>
+        </header>
+
+        <main class="order-cancel-main" id="order-cancel-main" style="display: none;">
+          <!-- ORDER SUMMARY -->
+          <div class="order-cancel__section">
+            <h3 class="order-cancel__section-title">ORDER SUMMARY</h3>
+            <div class="order-cancel__product">
+              <div class="order-cancel__product-img"><img src="img/product-blanche.jpg" alt="Blanche"></div>
+              <div class="order-cancel__product-info">
+                <h4 class="order-cancel__product-name">Blanche</h4>
+                <p class="order-cancel__product-option">Hand Cream 30ml</p>
+                <p class="order-cancel__product-price">₩ 65,000</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- REASON FOR CANCELLATION -->
+          <div class="order-cancel__section">
+            <h3 class="order-cancel__section-title">REASON FOR CANCELLATION</h3>
+            <div class="order-cancel__reasons">
+              <label class="order-cancel__radio">
+                <input type="radio" name="cancel_reason" checked>
+                <span class="radio-custom"></span>
+                <span>단순 변심</span>
+              </label>
+              <label class="order-cancel__radio">
+                <input type="radio" name="cancel_reason">
+                <span class="radio-custom"></span>
+                <span>상품 정보 오기재</span>
+              </label>
+              <label class="order-cancel__radio">
+                <input type="radio" name="cancel_reason">
+                <span class="radio-custom"></span>
+                <span>배송 지연</span>
+              </label>
+              <label class="order-cancel__radio">
+                <input type="radio" name="cancel_reason">
+                <span class="radio-custom"></span>
+                <span>기타</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- REFUND INFO -->
+          <div class="order-cancel__section">
+            <h3 class="order-cancel__section-title">REFUND INFO</h3>
+            <div class="order-cancel__refund-box">
+              <div class="refund-row">
+                <span class="refund-label">환불 수단</span>
+                <span class="refund-value">신용카드 (**** 1234)</span>
+              </div>
+              <div class="refund-divider"></div>
+              <div class="refund-row refund-total">
+                <span class="refund-label">환불 예상 금액</span>
+                <span class="refund-value">₩ 65,000</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-cancel__actions">
+            <button class="btn-cancel-submit" id="btn-cancel-submit">취소 신청하기</button>
+            <button class="btn-cancel-go-back" id="btn-cancel-go-back">돌아가기</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             주문 취소 완료 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="order-cancel-complete-main" id="order-cancel-complete-main" style="display: none;">
+          <div class="order-cancel-complete__message">
+            <h2 class="order-cancel-complete__title">취소 신청이 완료되었습니다</h2>
+            <p class="order-cancel-complete__subtitle">요청하신 주문 취소가 정상적으로 접수되었습니다.<br>환불 처리는 카드사에 따라 평일 기준 3~5일 정도<br>소요될
+              수 있습니다.</p>
+          </div>
+
+          <div class="order-cancel-complete__info-box">
+            <div class="complete-info-row">
+              <span class="complete-info-label">주문 번호</span>
+              <span class="complete-info-value">BRD-20231024-0912</span>
+            </div>
+            <div class="complete-info-divider"></div>
+            <div class="complete-info-row">
+              <span class="complete-info-label">환불 예정 금액</span>
+              <span class="complete-info-value complete-info-value--strong">₩ 240,000</span>
+            </div>
+          </div>
+
+          <div class="order-cancel-complete__actions">
+            <button class="btn-go-home trigger-home">홈으로 이동</button>
+            <button class="btn-go-order-list trigger-order-list">주문 내역 확인</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             주문 내역 더보기 화면 (기본 숨김)
+             ============================================================ -->
+        <header class="order-list-header" id="order-list-header" style="display: none;">
+          <button id="btn-order-list-back" class="order-list-header__back" aria-label="뒤로가기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <h2 class="order-list-header__title">주문취소</h2>
+          <div style="width: 40px;"></div>
+        </header>
+
+        <main class="order-list-main" id="order-list-main" style="display: none;">
+          <div class="order-list__items">
+            <!-- Order 1 -->
+            <div class="ol-card">
+              <div class="ol-card__top">
+                <span class="ol-card__date">2023.10.25 <span class="ol-card__divider">|</span> 주문번호 123456789</span>
+                <span class="ol-card__status">배송 완료</span>
+              </div>
+              <div class="ol-card__product">
+                <div class="ol-card__product-img"><img src="img/product-blanche.jpg" alt="블랑쉬"></div>
+                <div class="ol-card__product-info">
+                  <span class="ol-brand">BYREDO</span>
+                  <h4 class="ol-name">블랑쉬 핸드크림 30ml</h4>
+                  <p class="ol-price">₩ 70,000</p>
+                </div>
+              </div>
+              <div class="ol-card__actions">
+                <button class="trigger-order-detail">주문 상세 보기</button>
+                <button>교환 / 반품</button>
+              </div>
+            </div>
+
+            <div class="ol-divider"></div>
+
+            <!-- Order 2 -->
+            <div class="ol-card">
+              <div class="ol-card__top">
+                <span class="ol-card__date">2023.09.12 <span class="ol-card__divider">|</span> 주문번호 987654321</span>
+                <span class="ol-card__status">배송 준비 중</span>
+              </div>
+              <div class="ol-card__product">
+                <div class="ol-card__product-img"><img src="img/product-baldafrique.jpg" alt="발 다프리크"></div>
+                <div class="ol-card__product-info">
+                  <span class="ol-brand">BYREDO</span>
+                  <h4 class="ol-name">발 다프리크 핸드크림 30ml</h4>
+                  <p class="ol-price">₩ 70,000</p>
+                </div>
+              </div>
+              <div class="ol-card__actions">
+                <button class="trigger-order-detail">주문 상세 보기</button>
+                <button class="btn-order-cancel">주문 취소</button>
+              </div>
+            </div>
+
+            <div class="ol-divider"></div>
+
+            <p class="ol-empty-msg">더 이상 주문 내역이 없습니다.</p>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             마이페이지 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="mypage-main" id="mypage-main" style="display: none;">
+          <div class="mypage-profile">
+            <div class="mypage-profile__avatar">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <h2 class="mypage-profile__name">인영님, 안녕하세요</h2>
+            <p class="mypage-profile__membership">Membership: SILVER</p>
+          </div>
+
+          <div class="mypage-actions">
+            <button class="mypage-action-btn trigger-wishlist">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path
+                  d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                </path>
+              </svg>
+              <span>Wishlist</span>
+            </button>
+            <button class="mypage-action-btn trigger-review">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                <path d="M12 9v2m0 4h.01"></path>
+              </svg>
+              <span>Review</span>
+            </button>
+          </div>
+
+          <div class="mypage-orders">
+            <div class="mypage-orders__header">
+              <h3>Recent Orders</h3>
+              <a href="#" class="trigger-order-list">더보기 ›</a>
+            </div>
+
+            <div class="mypage-order-card">
+              <div class="mypage-order-card__top">
+                <span class="mypage-order-card__date">2023.10.25 (주문번호: 123456789)</span>
+                <span class="mypage-order-card__status">배송 준비 중</span>
+              </div>
+              <div class="mypage-order-card__product">
+                <div class="mypage-order-card__img"><img src="img/product-blanche.jpg" alt="BLANCHE"></div>
+                <div class="mypage-order-card__info">
+                  <h4 class="mypage-order-card__name">BLANCHE</h4>
+                  <p class="mypage-order-card__option">핸드 크림 30ml</p>
+                  <p class="mypage-order-card__price">₩70,000</p>
+                </div>
+              </div>
+              <div class="mypage-order-card__actions">
+                <button class="trigger-order-detail">주문 상세 보기</button>
+                <button class="btn-order-cancel">주문 취소</button>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             주문 상세 화면 (기본 숨김)
+             ============================================================ -->
+        <header class="order-detail-header" id="order-detail-header" style="display: none;">
+          <button id="btn-order-detail-back" class="order-detail-header__back" aria-label="뒤로가기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <h2 class="order-detail-header__title">주문상세</h2>
+          <div style="width: 40px;"></div>
+        </header>
+
+        <main class="order-detail-main" id="order-detail-main" style="display: none;">
+          <!-- 주문 상세 타이틀 -->
+          <div class="order-detail__title-box">
+            <h2 class="order-detail__title">주문 상세</h2>
+          </div>
+
+          <!-- 주문 요약 정보 -->
+          <div class="order-detail__info-group">
+            <div class="order-detail__row">
+              <span class="order-detail__label">주문 번호</span>
+              <span class="order-detail__value">BRD-20231024-001</span>
+            </div>
+            <div class="order-detail__row">
+              <span class="order-detail__label">주문 일자</span>
+              <span class="order-detail__value">2023.10.24</span>
+            </div>
+            <div class="order-detail__row">
+              <span class="order-detail__label">주문 상태</span>
+              <span class="order-detail__value"><strong>배송 중</strong></span>
+            </div>
+          </div>
+
+          <div class="order-detail__divider"></div>
+
+          <!-- 주문 상품 -->
+          <div class="order-detail__section">
+            <h3 class="order-detail__section-title">주문 상품</h3>
+            <div class="order-detail__product">
+              <div class="order-detail__product-img">
+                <img src="img/product-blanche.jpg" alt="블랑쉬 핸드크림">
+              </div>
+              <div class="order-detail__product-info">
+                <h4 class="order-detail__product-name">블랑쉬 핸드크림</h4>
+                <p class="order-detail__product-option">30ml</p>
+                <div class="order-detail__product-bottom">
+                  <span class="order-detail__product-qty">수량: 1개</span>
+                  <span class="order-detail__product-price">₩ 58,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="order-detail__divider"></div>
+
+          <!-- 배송 정보 -->
+          <div class="order-detail__section">
+            <h3 class="order-detail__section-title">배송 정보</h3>
+            <div class="order-detail__row">
+              <span class="order-detail__label">수령인</span>
+              <span class="order-detail__value">John Doe</span>
+            </div>
+            <div class="order-detail__row">
+              <span class="order-detail__label">연락처</span>
+              <span class="order-detail__value">010-1234-5678</span>
+            </div>
+            <div class="order-detail__row">
+              <span class="order-detail__label">주소</span>
+              <span class="order-detail__value" style="text-align: right;">123 Teheran-ro, Gangnam-gu, Seoul,<br>South
+                Korea</span>
+            </div>
+            <div class="order-detail__row">
+              <span class="order-detail__label">배송 메세지</span>
+              <span class="order-detail__value">문 앞에 놓아주세요.</span>
+            </div>
+          </div>
+
+          <div class="order-detail__divider"></div>
+
+          <!-- 결제 요약 -->
+          <div class="order-detail__section">
+            <h3 class="order-detail__section-title">결제 요약</h3>
+            <div class="order-detail__row">
+              <span class="order-detail__label">상품 금액</span>
+              <span class="order-detail__value">₩ 58,000</span>
+            </div>
+            <div class="order-detail__row">
+              <span class="order-detail__label">배송비</span>
+              <span class="order-detail__value free-shipping">무료</span>
+            </div>
+            <div class="order-detail__summary-divider"></div>
+            <div class="order-detail__row order-detail__total">
+              <span class="order-detail__label">총 결제 금액</span>
+              <span class="order-detail__value">₩ 58,000</span>
+            </div>
+          </div>
+
+          <!-- 하단 버튼 (목록으로 돌아가기만) -->
+          <div class="order-detail__actions">
+            <button class="order-detail__btn order-detail__btn--outline" id="btn-order-detail-list">목록으로 돌아가기</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             브랜드 스토리 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="about-main" id="about-main" style="display: none;">
+          <div class="about-hero">
+            <img src="img/pf (1).png" alt="Byredo perfumes">
+          </div>
+          <div class="about-section">
+            <h3 class="about-section__title">벤 고햄</h3>
+            <p class="about-section__desc">
+              <strong>바이레도(Byredo)는 2006년 스톡홀름에서 벤 고햄(Ben Gorham)이 설립한 브랜드입니다.</strong><br><br>
+              기억과 감정을 물건과 경험으로 해석하고자 하는 발상에서 시작된 이 브랜드는, 감정을 중심으로 한 장인적인 접근 방식을 통해 독창적인 경험을 선사합니다.
+            </p>
+          </div>
+          <div class="about-big-text">2026</div>
+          <div class="about-section">
+            <p class="about-section__desc">
+              향수, 메이크업, 홈 컬렉션, 바디 케어, 액세서리에 이르기까지 다양한 라인을 바탕으로, 바이레도는 장인적 가치와 문화적 레퍼런스로 구성된 깊이 있는 내러티브를 구축하며, 개인적이며서도
+              보편적인 징후를 아우릅니다. 각 제품은 최상의 형태, 소재 개발을 바탕으로 하여 높은 디테일과 완성도를 달성하며, 스칸디나비아의 미니멀리즘과 다층적 예술적 융합 사이의 긴장을 고스란히 담고
+              있습니다.
+            </p>
+          </div>
+          <div class="about-image">
+            <img src="img/pf (3).png" alt="Ben Gorham">
+          </div>
+          <div class="about-section">
+            <p class="about-section__desc">
+              바이레도는 일상의 감각을 깨우는 향기를 통해, 단순한 케어를 넘어서 하나의 예술적 경험을 제안합니다. 정교하게 설계된 향의 노트들이 당신의 공간과 시간에 깊은 영감을 불어넣습니다.
+            </p>
+          </div>
+          <div class="about-image">
+            <img src="img/pf (2).png" alt="Byredo hand creams">
+          </div>
+          <div class="about-section">
+            <p class="about-section__desc">
+              바이레도의 핸드 크림은 브랜드의 상징적인 향기들을 가장 부드럽고 가깝게 경험할 수 있는 오브제입니다. 블랑쉬, 라 튤립, 집시 워터 등 대표적인 향기들이 풍부한 시어버터 성분과 만나 피부에
+              깊은 보습과 섬세한 잔향을 남깁니다. 감각적인 패키지 디자인은 일상의 소중한 순간을 더욱 특별하게 만들어줍니다.<br><br>
+              현재 바이레도는 전 세계 40개 이상의 국가에서 플래그십 스토어와 프리미엄 리테일러 네트워크를 통해 글로벌 고객들과 소통하고 있습니다. 브랜드의 중심에는 과정의 가치를 탐구하는 집요함과
+              창조적 자유가 시대를 뛰어넘어 깊은 울림을 주는 새로운 럭셔리 퍼스펙티브를 만들어내고 있습니다.
+            </p>
+          </div>
+        </main>
+        <!-- ============================================================
+             위시리스트 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="wishlist-main" id="wishlist-main" style="display: none;">
+          <div class="wishlist-header">
+            <h2 class="wishlist-title">Wish list</h2>
+            <p class="wishlist-subtitle">2개 상품</p>
+          </div>
+          <div class="product-grid">
+            <!-- Product Item 1 -->
+            <a href="#" class="product-card trigger-product-detail">
+              <div class="product-card__img-box">
+                <button class="wishlist-item-remove">✕</button>
+                <span class="product-card__badge">BEST</span>
+                <img src="img/product-blanche.jpg" alt="LA TULIPE">
+              </div>
+              <div class="product-card__info">
+                <span class="product-card__brand">BYREDO</span>
+                <h4 class="product-card__name">LA TULIPE</h4>
+                <p class="product-card__option">핸드 크림 30ml</p>
+                <span class="product-card__price">₩70,000</span>
+              </div>
+            </a>
+            <!-- Product Item 2 -->
+            <a href="#" class="product-card trigger-product-detail">
+              <div class="product-card__img-box">
+                <button class="wishlist-item-remove">✕</button>
+                <img src="img/product-baldafrique.jpg" alt="MOJAVE GHOST">
+              </div>
+              <div class="product-card__info">
+                <span class="product-card__brand">BYREDO</span>
+                <h4 class="product-card__name">MOJAVE GHOST</h4>
+                <p class="product-card__option">핸드 크림 30ml</p>
+                <span class="product-card__price">₩70,000</span>
+              </div>
+            </a>
+          </div>
+          <div class="wishlist-action">
+            <button class="btn-add-all-cart trigger-cart">전체 상품 장바구니 담기</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             리뷰 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="review-main" id="review-main" style="display: none;">
+          <div class="review-header">
+            <h2 class="review-title">My Reviews</h2>
+            <p class="review-subtitle">함께 나눈 향의 경험과 기억들을 관리해보세요.</p>
+            <button class="btn-write-review" id="btn-write-review">리뷰 작성하기</button>
+          </div>
+          <div class="review-list">
+            <!-- Review Item 1 -->
+            <div class="review-list-item">
+              <div class="review-list-item__img">
+                <img src="img/product-baldafrique.jpg" alt="GYPSY WATER">
+              </div>
+              <div class="review-list-item__content">
+                <div class="review-list-item__top">
+                  <h4 class="review-list-item__name">GYPSY WATER</h4>
+                  <span class="review-list-item__date">2025년 10월 12일</span>
+                </div>
+                <div class="review-list-item__stars">★★★★★</div>
+                <p class="review-list-item__text">소나무 바늘, 샌달우드, 레몬이 어우러진 공기 같은 향입니다. 따뜻하고 친근한 향으로 내려앉아 마치 제2의 피부처럼
+                  느껴집니다. 정말 매혹적이에요.</p>
+                <div class="review-list-item__actions">
+                  <button>수정</button>
+                  <button>삭제</button>
+                </div>
+              </div>
+            </div>
+            <!-- Review Item 2 -->
+            <div class="review-list-item">
+              <div class="review-list-item__img">
+                <img src="img/product-baldafrique.jpg" alt="MOJAVE GHOST">
+              </div>
+              <div class="review-list-item__content">
+                <div class="review-list-item__top">
+                  <h4 class="review-list-item__name">MOJAVE GHOST</h4>
+                  <span class="review-list-item__date">2025년 9월 5일</span>
+                </div>
+                <div class="review-list-item__stars">★★★★☆</div>
+                <p class="review-list-item__text">잊을 수 없을 만큼 아름답지만 덧없습니다. 암브레트와 매그놀리아 노트가 완벽하게 조화를 이룹니다. 지속력이 그 화려함 만큼
+                  길었으면 좋았을 것 같아요.</p>
+                <div class="review-list-item__actions">
+                  <button>수정</button>
+                  <button>삭제</button>
+                </div>
+              </div>
+            </div>
+            <!-- Review Item 3 -->
+            <div class="review-list-item">
+              <div class="review-list-item__img">
+                <img src="img/product-blanche.jpg" alt="BLANCHE">
+              </div>
+              <div class="review-list-item__content">
+                <div class="review-list-item__top">
+                  <h4 class="review-list-item__name">BLANCHE</h4>
+                  <span class="review-list-item__date">2025년 7월 22일</span>
+                </div>
+                <div class="review-list-item__stars">★★★★★</div>
+                <p class="review-list-item__text">오래된 종이, 가죽 제본, 그리고 약간의 다크 플럼 향으로 공간을 가득 채웁니다. 나의 공간을 조용한 안식처로 변화시켜 줘요
+                </p>
+                <div class="review-list-item__actions">
+                  <button>수정</button>
+                  <button>삭제</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             리뷰 작성 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="write-review-main" id="write-review-main" style="display: none;">
+          <!-- Write a Review 제목 -->
+          <div class="write-review__header">
+            <h2 class="write-review__title">Write a Review</h2>
+          </div>
+
+          <!-- 상품 카드 -->
+          <div class="write-review__product-card">
+            <div class="write-review__product-img">
+              <img src="img/product-blanche.jpg" alt="로즈 오브 노 맨즈 랜드" id="wr-product-img">
+            </div>
+            <div class="write-review__product-info">
+              <span class="write-review__product-cate" id="wr-product-cate">핸드크림</span>
+              <h3 class="write-review__product-name" id="wr-product-name">로즈 오브 노 맨즈 랜드</h3>
+            </div>
+          </div>
+
+          <!-- 별점 섹션 -->
+          <div class="write-review__rating-section">
+            <p class="write-review__rating-label">전체 평점</p>
+            <div class="write-review__stars" id="wr-stars" role="group" aria-label="별점 선택">
+              <button class="wr-star" data-value="1" aria-label="별점 1점">★</button>
+              <button class="wr-star" data-value="2" aria-label="별점 2점">★</button>
+              <button class="wr-star" data-value="3" aria-label="별점 3점">★</button>
+              <button class="wr-star" data-value="4" aria-label="별점 4점">★</button>
+              <button class="wr-star" data-value="5" aria-label="별점 5점">★</button>
+            </div>
+          </div>
+
+          <!-- 리뷰 텍스트 영역 -->
+          <div class="write-review__text-section">
+            <textarea class="write-review__textarea" id="wr-textarea" placeholder="당신의 경험을 공유해 주세요..."
+              rows="8"></textarea>
+          </div>
+
+          <!-- 등록 버튼 -->
+          <div class="write-review__action">
+            <button class="write-review__submit-btn" id="btn-submit-review">리뷰 등록하기</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             향 취향 퀴즈 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="quiz-main" id="quiz-main" style="display: none;">
+          <header class="quiz-header">
+            <button class="quiz-header__close" id="btn-quiz-close">✕</button>
+            <h2 class="quiz-header__title">SCENT QUIZ</h2>
+            <div class="quiz-header__empty"></div>
+          </header>
+
+          <div class="quiz-content">
+            <!-- Step 1 -->
+            <div class="quiz-step active" id="quiz-step-1">
+              <div class="quiz-intro">
+                <h3 class="quiz-intro__title">나에게 어울리는<br>향을 찾아보세요</h3>
+                <p class="quiz-intro__desc">간단한 질문을 통해 당신의 향 취향에 가장 잘 어울리는 핸드크림을 찾아드립니다.</p>
+                <div class="quiz-intro__meta">
+                  <span>5 QUESTIONS · ABOUT 1 MIN</span>
+                </div>
+              </div>
+              <button class="quiz-btn-primary quiz-btn-start" id="btn-quiz-start">
+                <span class="text">START QUIZ</span>
+                <span class="arrow">→</span>
+              </button>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="quiz-step" id="quiz-step-2" style="display: none;">
+              <h3 class="quiz-step__title">당신의 향 취향을 알려주세요</h3>
+              <div class="quiz-question">
+                <div class="quiz-question__top">
+                  <span class="quiz-question__num">01</span>
+                  <p class="quiz-question__text">어떤 분위기의 향을 좋아하시나요?</p>
+                </div>
+                <div class="quiz-options quiz-options--radio">
+                  <label class="quiz-option"><input type="radio" name="q1"> <span class="quiz-radio-custom"></span>
+                    <span>깨끗하고 산뜻한</span></label>
+                  <label class="quiz-option"><input type="radio" name="q1" checked> <span
+                      class="quiz-radio-custom"></span> <span>따뜻하고 포근한</span></label>
+                  <label class="quiz-option"><input type="radio" name="q1"> <span class="quiz-radio-custom"></span>
+                    <span>우디하고 차분한</span></label>
+                  <label class="quiz-option"><input type="radio" name="q1"> <span class="quiz-radio-custom"></span>
+                    <span>달콤하고 부드러운</span></label>
+                </div>
+              </div>
+              <div class="quiz-question">
+                <div class="quiz-question__top">
+                  <span class="quiz-question__num">02</span>
+                  <p class="quiz-question__text">선호하는 향의 존재감은 어느 정도인가요?</p>
+                </div>
+                <div class="quiz-options quiz-options--grid">
+                  <label class="quiz-option-box"><input type="radio" name="q2"> <span class="quiz-radio-custom"></span>
+                    <span class="lbl">은은하게</span></label>
+                  <label class="quiz-option-box"><input type="radio" name="q2" checked> <span
+                      class="quiz-radio-custom"></span> <span class="lbl">적당하게</span></label>
+                  <label class="quiz-option-box"><input type="radio" name="q2"> <span class="quiz-radio-custom"></span>
+                    <span class="lbl">오래도록</span></label>
+                  <label class="quiz-option-box"><input type="radio" name="q2"> <span class="quiz-radio-custom"></span>
+                    <span class="lbl">확실하게</span></label>
+                </div>
+              </div>
+              <div class="quiz-question">
+                <div class="quiz-question__top">
+                  <span class="quiz-question__num">03</span>
+                  <p class="quiz-question__text">가장 끌리는 향 계열은 무엇인가요?</p>
+                </div>
+                <div class="quiz-options quiz-options--pill">
+                  <label class="quiz-option-pill"><input type="radio" name="q3"> <span class="lbl">FLORAL</span></label>
+                  <label class="quiz-option-pill"><input type="radio" name="q3"> <span class="lbl">FRESH</span></label>
+                  <label class="quiz-option-pill"><input type="radio" name="q3"> <span class="lbl">WOODY</span></label>
+                  <label class="quiz-option-pill"><input type="radio" name="q3"> <span class="lbl">MUSK</span></label>
+                </div>
+              </div>
+              <div class="quiz-question">
+                <div class="quiz-question__top">
+                  <span class="quiz-question__num">04</span>
+                  <p class="quiz-question__text">어떤 분위기의 향을 선호하시나요?</p>
+                </div>
+                <div class="quiz-options quiz-options--wide">
+                  <label class="quiz-option-wide"><input type="radio" name="q4"> <span class="lbl">CLEAN &
+                      MINIMAL</span></label>
+                  <label class="quiz-option-wide"><input type="radio" name="q4"> <span class="lbl">NATURAL &
+                      RELAXED</span></label>
+                  <label class="quiz-option-wide"><input type="radio" name="q4"> <span class="lbl">ELEGANT &
+                      URBAN</span></label>
+                  <label class="quiz-option-wide"><input type="radio" name="q4"> <span class="lbl">WARM &
+                      SENSUAL</span></label>
+                </div>
+              </div>
+              <div class="quiz-question">
+                <div class="quiz-question__top">
+                  <span class="quiz-question__num">05</span>
+                  <p class="quiz-question__text">핸드크림에서 어떤 느낌을 원하시나요?</p>
+                </div>
+                <div class="quiz-options quiz-options--radio">
+                  <label class="quiz-option"><input type="radio" name="q5"> <span class="quiz-radio-custom"></span>
+                    <span>가볍고 산뜻하게</span></label>
+                  <label class="quiz-option"><input type="radio" name="q5" checked> <span
+                      class="quiz-radio-custom"></span> <span>부드럽고 편안하게</span></label>
+                  <label class="quiz-option"><input type="radio" name="q5"> <span class="quiz-radio-custom"></span>
+                    <span>포근하고 따뜻하게</span></label>
+                  <label class="quiz-option"><input type="radio" name="q5"> <span class="quiz-radio-custom"></span>
+                    <span>감각적이고 진하게</span></label>
+                </div>
+              </div>
+              <div class="quiz-action-bottom">
+                <button class="quiz-btn-primary" id="btn-quiz-result">RESULT <span class="arrow">→</span></button>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="quiz-step" id="quiz-step-3" style="display: none;">
+              <div class="quiz-result-intro">
+                <span class="quiz-result-intro__label">YOUR SCENT PROFILE</span>
+                <h3 class="quiz-result-intro__title">당신에게 어울리는 향을 찾았어요</h3>
+                <p class="quiz-result-intro__tags">CLEAN · SOFT · FRESH</p>
+              </div>
+              <div class="quiz-result-desc">
+                <p>깨끗하고 부드러운 향을 선호하는 당신에게<br>잘 어울리는 향입니다.</p>
+              </div>
+              <div class="quiz-result-match">
+                <span class="quiz-result-match__label">BEST MATCH</span>
+                <span class="quiz-result-match__brand">BYREDO</span>
+                <h4 class="quiz-result-match__name">BLANCHE</h4>
+                <p class="quiz-result-match__ko">블랑쉬</p>
+                <p class="quiz-result-match__price">30ml · ₩70,000</p>
+              </div>
+              <div class="quiz-result-actions">
+                <button class="quiz-btn-primary" id="btn-quiz-recommendation">VIEW RECOMMENDATION <span
+                    class="arrow">→</span></button>
+                <button class="quiz-btn-text" id="btn-quiz-retake-1">RETAKE QUIZ</button>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="quiz-step" id="quiz-step-4" style="display: none;">
+              <div class="quiz-rec-header">
+                <span class="quiz-rec-header__label">RECOMMENDED FOR YOU</span>
+                <h3 class="quiz-rec-header__title">당신에게 추천하는 핸드크림</h3>
+              </div>
+              <div class="quiz-rec-list">
+                <!-- Item 1 -->
+                <div class="quiz-rec-item">
+                  <div class="quiz-rec-item__num">01 <span class="quiz-badge">BEST MATCH</span></div>
+                  <h4 class="quiz-rec-item__name">BLANCHE</h4>
+                  <p class="quiz-rec-item__ko">블랑쉬</p>
+                  <p class="quiz-rec-item__tags">Clean · Soft · Fresh</p>
+                  <div class="quiz-rec-item__bottom">
+                    <div class="quiz-rec-item__price">
+                      <span class="size">30ml</span>
+                      <span class="price">₩70,000</span>
+                    </div>
+                    <button class="quiz-btn-text-small trigger-product-detail">VIEW PRODUCT <span
+                        class="arrow">→</span></button>
+                  </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="quiz-rec-item">
+                  <div class="quiz-rec-item__num">02</div>
+                  <h4 class="quiz-rec-item__name">GYPSY WATER</h4>
+                  <p class="quiz-rec-item__ko">집시 워터</p>
+                  <p class="quiz-rec-item__tags">Woody · Fresh</p>
+                  <div class="quiz-rec-item__bottom">
+                    <div class="quiz-rec-item__price">
+                      <span class="size">30ml</span>
+                      <span class="price">₩70,000</span>
+                    </div>
+                    <button class="quiz-btn-text-small trigger-product-detail">VIEW PRODUCT <span
+                        class="arrow">→</span></button>
+                  </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="quiz-rec-item">
+                  <div class="quiz-rec-item__num">03</div>
+                  <h4 class="quiz-rec-item__name">MOJAVE GHOST</h4>
+                  <p class="quiz-rec-item__ko">모하비 고스트</p>
+                  <p class="quiz-rec-item__tags">Soft · Musk</p>
+                  <div class="quiz-rec-item__bottom">
+                    <div class="quiz-rec-item__price">
+                      <span class="size">30ml</span>
+                      <span class="price">₩70,000</span>
+                    </div>
+                    <button class="quiz-btn-text-small trigger-product-detail">VIEW PRODUCT <span
+                        class="arrow">→</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <!-- ============================================================
+             인증(로그인/회원가입) 헤더
+             ============================================================ -->
+        <header class="auth-header" id="auth-header" style="display: none;">
+          <button class="auth-header__close" id="btn-auth-close" aria-label="닫기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 6L6 18M6 6l12 12" />
+            </svg>
+          </button>
+          <div class="auth-header__logo">
+            <img src="img/logo.png" alt="BYREDO">
+          </div>
+          <div style="width:24px"></div>
+        </header>
+
+        <!-- ============================================================
+             로그인 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="auth-main" id="login-main" style="display: none;">
+          <h2 class="auth-title">로그인</h2>
+          <form class="auth-form" onsubmit="event.preventDefault();">
+            <div class="auth-form__row">
+              <label>이메일</label>
+              <input type="email" required>
+            </div>
+            <div class="auth-form__row">
+              <label>비밀번호</label>
+              <input type="password" required>
+            </div>
+            <button type="submit" class="auth-btn auth-btn--submit" id="btn-login-submit">로그인</button>
+
+            <div class="auth-divider">
+              <span>또는</span>
+            </div>
+
+            <button type="button" class="auth-btn auth-btn--google">
+              <svg width="18" height="18" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#EA4335"
+                  d="M24 9.5c3.14 0 5.95 1.08 8.16 2.84l6.08-6.08C34.34 3.08 29.42 1 24 1 14.82 1 7.07 6.5 3.5 14.27l7.11 5.52C12.37 13.18 17.74 9.5 24 9.5z" />
+                <path fill="#4285F4"
+                  d="M46.5 24.5c0-1.61-.14-3.16-.4-4.65H24v9.31h12.68c-.55 2.97-2.2 5.48-4.67 7.17l7.22 5.62C43.1 38.32 46.5 31.88 46.5 24.5z" />
+                <path fill="#FBBC05"
+                  d="M10.61 28.22A14.6 14.6 0 0 1 9.5 24c0-1.47.25-2.9.71-4.21l-7.11-5.52A23.4 23.4 0 0 0 .5 24c0 3.8.91 7.38 2.5 10.54l7.61-6.32z" />
+                <path fill="#34A853"
+                  d="M24 47c5.42 0 10.26-1.79 14.05-4.96l-7.22-5.62C28.74 37.97 26.47 38.5 24 38.5c-6.26 0-11.63-3.68-13.39-8.78l-7.61 6.32C7.07 44.5 14.82 47 24 47z" />
+              </svg>
+              구글로 시작하기
+            </button>
+            <button type="button" class="auth-btn auth-btn--kakao">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="#000">
+                <path
+                  d="M12 3C6.48 3 2 6.72 2 11.28c0 2.9 1.8 5.45 4.5 6.97l-.87 3.2a.4.4 0 0 0 .58.45l3.73-2.47c.66.1 1.34.15 2.06.15 5.52 0 10-3.72 10-8.28C22 6.72 17.52 3 12 3z" />
+              </svg>
+              카카오로 시작하기
+            </button>
+          </form>
+          <div class="auth-links">
+            <a href="#" class="auth-link">비밀번호를 잊으셨나요?</a>
+            <div class="auth-links__bottom">
+              <span class="auth-text">아직 계정이 없으신가요?</span>
+              <a href="#" class="auth-link auth-link--strong" id="btn-go-signup">회원가입</a>
+            </div>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             회원가입 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="auth-main" id="signup-main" style="display: none;">
+          <h2 class="auth-title">회원가입</h2>
+          <p class="auth-subtitle">바이레도만의 특별한 큐레이션을 경험해보세요.</p>
+          <form class="auth-form" onsubmit="event.preventDefault();">
+            <div class="auth-form__row">
+              <label>성함</label>
+              <input type="text" placeholder="성함을 입력해 주세요" required>
+            </div>
+            <div class="auth-form__row">
+              <label>이메일</label>
+              <input type="email" placeholder="이메일 주소를 입력해 주세요" required>
+            </div>
+            <div class="auth-form__row">
+              <label>비밀번호</label>
+              <input type="password" placeholder="비밀번호를 설정해 주세요" required>
+            </div>
+            <div class="auth-form__row">
+              <label>비밀번호 확인</label>
+              <input type="password" placeholder="비밀번호를 한 번 더 입력해 주세요" required>
+            </div>
+            <div class="auth-form__agree">
+              <label class="checkbox-label">
+                <input type="checkbox" required>
+                <span class="checkbox-custom"></span>
+                <span class="checkbox-text"><u>이용약관</u> 및 <u>개인정보 처리방침</u>에 동의합니다.</span>
+              </label>
+            </div>
+            <button type="submit" class="auth-btn auth-btn--submit" id="btn-signup-submit">가입하기</button>
+          </form>
+          <div class="auth-links">
+            <div class="auth-links__bottom">
+              <span class="auth-text">이미 계정이 있으신가요?</span>
+              <a href="#" class="auth-link auth-link--strong" id="btn-go-login">로그인</a>
+            </div>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             구글로 시작하기 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="social-onboard-main" id="google-main" style="display: none;">
+          <div class="social-onboard__content">
+            <h2 class="social-onboard__title">반가워요!</h2>
+            <p class="social-onboard__subtitle">구글 계정으로 간편하게 시작합니다.</p>
+
+            <div class="social-onboard__user-card social-onboard__user-card--row">
+              <div class="social-onboard__avatar social-onboard__avatar--small">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                </svg>
+              </div>
+              <div class="social-onboard__user-info">
+                <p class="social-onboard__name">Guest User</p>
+                <p class="social-onboard__email">user@gmail.com</p>
+              </div>
+            </div>
+
+            <div class="social-onboard__terms">
+              <div class="social-onboard__terms-all">
+                <label class="social-checkbox-label">
+                  <input type="checkbox" id="google-agree-all" checked>
+                  <span class="social-checkbox-box"></span>
+                </label>
+                <span class="social-onboard__terms-label--bold">약관 전체 동의</span>
+              </div>
+              <div class="social-onboard__terms-divider"></div>
+              <ul class="social-onboard__terms-list">
+                <li>
+                  <label class="social-checkbox-label"><input type="checkbox" class="google-agree-item" checked><span
+                      class="social-checkbox-box"></span></label>
+                  <span>[필수] 이용약관 동의</span>
+                  <svg class="social-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aaa"
+                    stroke-width="2">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </li>
+                <li>
+                  <label class="social-checkbox-label"><input type="checkbox" class="google-agree-item" checked><span
+                      class="social-checkbox-box"></span></label>
+                  <span>[필수] 개인정보 수집 및 이용 동의</span>
+                  <svg class="social-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aaa"
+                    stroke-width="2">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </li>
+                <li>
+                  <label class="social-checkbox-label"><input type="checkbox" class="google-agree-item" checked><span
+                      class="social-checkbox-box"></span></label>
+                  <span>[선택] 마케팅 정보 수신 동의</span>
+                  <svg class="social-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aaa"
+                    stroke-width="2">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="social-onboard__action">
+            <button class="social-onboard__btn trigger-mypage">시작하기</button>
+          </div>
+        </main>
+
+        <!-- ============================================================
+             카카오로 시작하기 화면 (기본 숨김)
+             ============================================================ -->
+        <main class="social-onboard-main" id="kakao-main" style="display: none;">
+          <div class="social-onboard__content">
+            <h2 class="social-onboard__title">반가워요!</h2>
+            <p class="social-onboard__subtitle">카카오 계정으로 간편하게 시작합니다.</p>
+
+            <div class="social-onboard__user-card social-onboard__user-card--col">
+              <div class="social-onboard__avatar social-onboard__avatar--large">
+                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="1.5">
+                  <circle cx="12" cy="8" r="4" />
+                  <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+                </svg>
+              </div>
+              <p class="social-onboard__name">김바이레도</p>
+              <p class="social-onboard__email">byredo@kakao.com</p>
+            </div>
+
+            <div class="social-onboard__terms">
+              <div class="social-onboard__terms-all">
+                <label class="social-checkbox-label">
+                  <input type="checkbox" id="kakao-agree-all">
+                  <span class="social-checkbox-box"></span>
+                </label>
+                <span class="social-onboard__terms-label--bold">약관 전체 동의</span>
+              </div>
+              <div class="social-onboard__terms-divider"></div>
+              <ul class="social-onboard__terms-list">
+                <li>
+                  <label class="social-checkbox-label"><input type="checkbox" class="kakao-agree-item"><span
+                      class="social-checkbox-box"></span></label>
+                  <span>[필수] 서비스 이용약관 동의</span>
+                  <svg class="social-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aaa"
+                    stroke-width="2">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </li>
+                <li>
+                  <label class="social-checkbox-label"><input type="checkbox" class="kakao-agree-item"><span
+                      class="social-checkbox-box"></span></label>
+                  <span>[필수] 개인정보 수집 및 이용 동의</span>
+                  <svg class="social-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aaa"
+                    stroke-width="2">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </li>
+                <li>
+                  <label class="social-checkbox-label"><input type="checkbox" class="kakao-agree-item"><span
+                      class="social-checkbox-box"></span></label>
+                  <span>[선택] 마케팅 정보 수신 동의</span>
+                  <svg class="social-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#aaa"
+                    stroke-width="2">
+                    <polyline points="9 18 15 12 9 6" />
+                  </svg>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="social-onboard__action">
+            <button class="social-onboard__btn trigger-mypage">시작하기</button>
+          </div>
+        </main>
+
+
+        <!-- 2-8. 핵심 메뉴 : HOME / SHOP / ABOUT / MY
+           공통(데스크탑·모바일) 컴포넌트. 단, 데스크탑에서는 app-frame 내부에 갇혀
+           "떠 있는 페이지 전체 고정 바"가 아니지만, 모바일에서는 뷰포트 최하단에
+           고정되는 탭바로 새로 등장한다 (1단계 CSS 미디어쿼리에서 처리).
+           터치 영역 44px 이상 확보 -->
+        <nav class="bottom-tabbar" aria-label="핵심 메뉴">
+          <a href="#" class="bottom-tabbar__item is-active">
+            <img src="img/icon-cat-all.png" alt="">
+            <span>HOME</span>
+          </a>
+          <a href="#" class="bottom-tabbar__item trigger-product-list">
+            <img src="img/icon-cat-wish.png" alt="">
+            <span>SHOP</span>
+          </a>
+          <a href="#" class="bottom-tabbar__item trigger-about">
+            <img src="img/icon-cat-story.png" alt="">
+            <span>ABOUT</span>
+          </a>
+          <a href="#" class="bottom-tabbar__item trigger-mypage">
+            <img src="img/icon-user.png" alt="">
+            <span>MY</span>
+          </a>
+        </nav>
+
+        <!-- Hamburger Menu Overlay -->
+        <div class="hamburger-menu" id="hamburger-menu" aria-label="전체 메뉴">
+          <div class="hamburger-menu__header">
+            <span class="hamburger-menu__title">MENU</span>
+            <button class="hamburger-menu__close" id="btn-menu-close" aria-label="메뉴 닫기">✕</button>
+          </div>
+          <ul class="hamburger-menu__list">
+            <li>
+              <a href="#" class="trigger-product-list">
+                <img src="img/icon-cat-all.png" alt="" class="hamburger-menu__icon">
+                <span>All Products</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="trigger-quiz">
+                <img src="img/icon-cat-scent.png" alt="" class="hamburger-menu__icon">
+                <span>Scent Finder</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="trigger-wishlist">
+                <img src="img/icon-cat-wish.png" alt="" class="hamburger-menu__icon">
+                <span>Wish List</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="trigger-about">
+                <img src="img/icon-cat-story.png" alt="" class="hamburger-menu__icon">
+                <span>Brand Story</span>
+              </a>
+            </li>
+          </ul>
+          <div class="hamburger-menu__footer">
+            <a href="#" class="hamburger-menu__login trigger-login">Login / Join <span class="arrow">→</span></a>
+            <div class="hamburger-menu__logo">
+              <img src="img/logo.png" alt="BYREDO">
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.app-frame -->
+    </div><!-- /.app-column -->
+
+    <!-- ---------- 우측 40% : 브랜드 소개 영역 ----------
+       데스크탑 전용 컴포넌트. app-frame과 별개의 마케팅 패널이며,
+       모바일에서는 이 블록 전체(타이틀/서브카피/퀴즈 패널/다운로드 배너)가
+       렌더링되지 않고, app-frame 내부의 새 모바일 전용 요소
+       (메인 배너 문구, 아이콘 카테고리 4개, 캐러셀 화살표/인디케이터)로 대체된다. -->
+    <aside class="brand-column" id="brand-column" data-scope="desktop-only">
+      <div class="brand-column__inner">
+        <div class="brand-column__logo">
+          <img src="img/logo.png" alt="BYREDO logo">
+        </div>
+        <h1 class="brand-column__title">FIND YOUR SCENT</h1>
+        <p class="brand-column__subcopy">
+          나에게 딱 맞는 향의<br>
+          핸드크림을 찾아보세요
+        </p>
+
+        <!-- 향 취향 퀴즈 섹션 -->
+        <section class="brand-column__quiz" aria-label="향 취향 퀴즈">
+          <div class="brand-column__quiz-head">
+            <span class="brand-column__quiz-icon">
+              <img src="img/icon-quiz.png" alt="quiz icon">
+            </span>
+            <h4>향 취향 퀴즈</h4>
+          </div>
+          <p>간단한 질문으로 나의 향 취향을 찾고,<br>나에게 어울리는 핸드크림을 추천받아보세요.</p>
+          <a href="#" class="brand-column__quiz-btn trigger-quiz">
+            <span>START QUIZ</span>
+            <span class="brand-column__quiz-btn-arrow">→</span>
+          </a>
+          <!-- 스타트 퀴즈 버튼 옆 데코 -->
+          <img class="brand-column__deco-hand" src="img/hand.png" alt="">
+        </section>
+
+        <!-- 앱 다운로드 배너 -->
+        <section class="brand-column__download" aria-label="앱 다운로드 배너">
+          <h4>GET THE APP</h4>
+          <p>바이레도 앱에서 더 쉽게 만나고<br>새로운 경험을 만나보세요.</p>
+          <div class="brand-column__badges">
+            <a href="#"><img src="img/badge-appstore.png" alt="Download on the App Store"></a>
+            <a href="#"><img src="img/badge-googleplay.png" alt="Get it on Google Play"></a>
+          </div>
+        </section>
+      </div>
+
+      <!-- 배경 데코 요소 -->
+      <img class="brand-column__deco brand-column__deco--fabric" src="img/deco-fabric.png" alt="">
+      <img class="brand-column__deco brand-column__deco--bag" src="img/deco-bag.png" alt="">
+      <img class="brand-column__watermark" src="img/brand-watermark.png" alt="">
+    </aside>
+
+  </div><!-- /.page-wrap -->
+
+  <footer class="site-footer">
+    <p>&copy; 2026 BYREDO. Structure skeleton — content to be filled in the next step.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
