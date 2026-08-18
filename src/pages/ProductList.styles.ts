@@ -33,8 +33,9 @@ export const HeaderSort = styled.div`
     border: none;
     background: transparent;
     appearance: none;
-    padding-right: 14px;
+    padding-right: 10px;
     font-weight: 500;
+    text-align: right;
     
     &:focus {
       outline: none;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
+import Modal from '../components/common/Modal';
 import styled from 'styled-components';
 import { HeaderContainer, IconButton } from '../components/home/AppHeader.styles';
 import { 
@@ -43,6 +44,8 @@ const Review: React.FC = () => {
   ];
   
   const [reviews, setReviews] = useState(initialReviews);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [reviewToDelete, setReviewToDelete] = useState<number | null>(null);
   
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
@@ -51,16 +54,22 @@ const Review: React.FC = () => {
     }
   }, []);
 
-  const handleDelete = (id: number) => {
-    const isConfirmed = window.confirm('정말 삭제하시겠습니까?');
-    if (isConfirmed) {
-      const updatedReviews = reviews.filter(r => r.id !== id);
+  const handleDeleteClick = (id: number) => {
+    setReviewToDelete(id);
+    setDeleteModalOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (reviewToDelete !== null) {
+      const updatedReviews = reviews.filter(r => r.id !== reviewToDelete);
       setReviews(updatedReviews);
       
       const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
-      const updatedSaved = saved.filter((r: any) => r.id !== id);
+      const updatedSaved = saved.filter((r: any) => r.id !== reviewToDelete);
       localStorage.setItem('myReviews', JSON.stringify(updatedSaved));
     }
+    setDeleteModalOpen(false);
+    setReviewToDelete(null);
   };
 
   return (
@@ -94,13 +103,21 @@ const Review: React.FC = () => {
                 <ReviewText>{review.text}</ReviewText>
                 <ReviewActions>
                   <button onClick={() => navigate('/mypage/write-review', { state: { reviewToEdit: review } })}>수정</button>
-                  <button onClick={() => handleDelete(review.id)}>삭제</button>
+                  <button onClick={() => handleDeleteClick(review.id)}>삭제</button>
                 </ReviewActions>
               </ReviewContent>
             </ReviewItem>
           ))}
         </ReviewList>
       </ReviewMain>
+      <Modal 
+        isOpen={deleteModalOpen}
+        message="정말 삭제하시겠습니까?"
+        onClose={confirmDelete}
+        confirmText="삭제"
+        cancelText="취소"
+        onCancel={() => setDeleteModalOpen(false)}
+      />
     </AppLayout>
   );
 };
