@@ -7,7 +7,7 @@ const QuizEntry: React.FC = () => {
     <Section id="quiz-entry" aria-label="향 취향 퀴즈 진입">
       <Title>
         <Badge>
-          <img src="/org/img/icon-quiz.png" alt="quiz icon" />
+          <img src="/img/icon-quiz.png" alt="quiz icon" />
         </Badge>
         나에게 딱 맞는 향을 찾아보세요
       </Title>

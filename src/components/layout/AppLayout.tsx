@@ -28,9 +28,9 @@ const AppLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Header />
       <PageWrap>
         {/* 데코 이미지들 - 데스크탑 전용 */}
-        <img src="/org/img/gift.png" alt="" className="page-deco page-deco--gift" data-scope="desktop-only" />
-        <img src="/org/img/three.png" alt="" className="page-deco page-deco--three" data-scope="desktop-only" />
-        <img src="/org/img/center.png" alt="" className="page-deco page-deco--center" data-scope="desktop-only" />
+        <img src="/img/gift.png" alt="" className="page-deco page-deco--gift" data-scope="desktop-only" />
+        <img src="/img/three.png" alt="" className="page-deco page-deco--three" data-scope="desktop-only" />
+        <img src="/img/center.png" alt="" className="page-deco page-deco--center" data-scope="desktop-only" />
 
         {/* 좌측: 앱 프레임 */}
         <AppColumn>

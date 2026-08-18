@@ -28,25 +28,25 @@ const HamburgerMenu: React.FC<Props> = ({ isOpen, onClose }) => {
       <MenuList>
         <li>
           <Link to="/products" onClick={onClose}>
-            <MenuIcon src="/org/img/icon-cat-all.png" alt="" />
+            <MenuIcon src="/img/icon-cat-all.png" alt="" />
             <span>All Products</span>
           </Link>
         </li>
         <li>
           <Link to="/quiz" onClick={onClose}>
-            <MenuIcon src="/org/img/icon-cat-scent.png" alt="" />
+            <MenuIcon src="/img/icon-cat-scent.png" alt="" />
             <span>Scent Finder</span>
           </Link>
         </li>
         <li>
           <Link to="/wishlist" onClick={onClose}>
-            <MenuIcon src="/org/img/icon-cat-wish.png" alt="" />
+            <MenuIcon src="/img/icon-cat-wish.png" alt="" />
             <span>Wish List</span>
           </Link>
         </li>
         <li>
           <Link to="/about" onClick={onClose}>
-            <MenuIcon src="/org/img/icon-cat-story.png" alt="" />
+            <MenuIcon src="/img/icon-cat-story.png" alt="" />
             <span>Brand Story</span>
           </Link>
         </li>
@@ -57,7 +57,7 @@ const HamburgerMenu: React.FC<Props> = ({ isOpen, onClose }) => {
           Login / Join <span className="arrow">→</span>
         </LoginLink>
         <LogoWrapper>
-          <img src="/org/img/logo.png" alt="BYREDO" />
+          <img src="/img/logo.png" alt="BYREDO" />
         </LogoWrapper>
       </Footer>
     </Overlay>

@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { GridContainer, GridItem, GridIcon, GridLabel } from './CategoryGrid.styles';
 
 const categories = [
-  { label: '전체 상품', icon: '/org/img/icon-cat-all.png', path: '/products' },
-  { label: '향 취향찾기', icon: '/org/img/icon-cat-scent.png', path: '/quiz' },
-  { label: '위시리스트', icon: '/org/img/icon-cat-wish.png', path: '/wishlist' },
-  { label: '브랜드 스토리', icon: '/org/img/icon-cat-story.png', path: '/about' }
+  { label: '전체 상품', icon: '/img/icon-cat-all.png', path: '/products' },
+  { label: '향 취향찾기', icon: '/img/icon-cat-scent.png', path: '/quiz' },
+  { label: '위시리스트', icon: '/img/icon-cat-wish.png', path: '/wishlist' },
+  { label: '브랜드 스토리', icon: '/img/icon-cat-story.png', path: '/about' }
 ];
 
 const CategoryGrid: React.FC = () => {

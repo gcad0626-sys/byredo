@@ -17,7 +17,7 @@ const BrandIntroBanner: React.FC = () => {
         </LinkText>
       </TextContent>
       <ImageWrapper>
-        <img src="/org/img/banner-brand-intro.jpg" alt="brand intro banner" />
+        <img src="/img/banner-brand-intro.jpg" alt="brand intro banner" />
       </ImageWrapper>
     </BannerContainer>
   );

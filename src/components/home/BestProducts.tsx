@@ -17,7 +17,7 @@ const products = [
   {
     id: 3,
     rank: "01",
-    image: "/org/img/product-blanche.jpg",
+    image: "/img/product-blanche.jpg",
     name: "BLANCHE",
     desc: "블랑쉬\n핸드크림 30ml",
     price: "₩70,000"
@@ -25,7 +25,7 @@ const products = [
   {
     id: 4,
     rank: "02",
-    image: "/org/img/product-baldafrique.jpg",
+    image: "/img/product-baldafrique.jpg",
     name: "BAL D'AFRIQUE",
     desc: "발 다프리크\n핸드크림 30ml",
     price: "₩70,000"

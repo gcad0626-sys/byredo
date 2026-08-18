@@ -12,7 +12,7 @@ const About: React.FC = () => {
       <AboutMain id="about-main">
         <Section>
           <ImageWrapper>
-            <img src="/org/img/pf (1).png" alt="Byredo Perfumes" />
+            <img src="/img/pf (1).png" alt="Byredo Perfumes" />
           </ImageWrapper>
           <TextContent>
             <Title>벤 고햄</Title>
@@ -31,7 +31,7 @@ const About: React.FC = () => {
 
         <Section>
           <ImageWrapper>
-            <img src="/org/img/pf (3).png" alt="Ben Gorham" />
+            <img src="/img/pf (3).png" alt="Ben Gorham" />
           </ImageWrapper>
           <TextContent>
             <Description>
@@ -42,7 +42,7 @@ const About: React.FC = () => {
 
         <Section>
           <ImageWrapper>
-            <img src="/org/img/pf (2).png" alt="Byredo Hand Creams" />
+            <img src="/img/pf (2).png" alt="Byredo Hand Creams" />
           </ImageWrapper>
           <TextContent>
             <Description>

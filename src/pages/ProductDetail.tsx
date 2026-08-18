@@ -63,24 +63,24 @@ const ProductDetail: React.FC = () => {
           </svg>
         </IconButton>
         <LogoWrapper>
-          <img src="/org/img/logo.png" alt="BYREDO logo" />
+          <img src="/img/logo.png" alt="BYREDO logo" />
         </LogoWrapper>
         <ActionsWrapper>
           <IconButton as={Link} to="/search" className="trigger-search" id="btn-search-open" aria-label="검색">
-            <img src="/org/img/icon-search.png" alt="search icon" />
+            <img src="/img/icon-search.png" alt="search icon" />
           </IconButton>
           <IconButton as={Link} to="/cart" className="trigger-cart" id="btn-cart-open" aria-label="장바구니">
-            <img src="/org/img/icon-cart.png" alt="cart icon" />
+            <img src="/img/icon-cart.png" alt="cart icon" />
             {cartItemCount > 0 && <CartBadge>{cartItemCount}</CartBadge>}
           </IconButton>
           <IconButton as={Link} to="/mypage" className="trigger-mypage" aria-label="마이페이지">
-            <img src="/org/img/icon-user.png" alt="user icon" />
+            <img src="/img/icon-user.png" alt="user icon" />
           </IconButton>
         </ActionsWrapper>
       </DetailHeader>
       <DetailMain id="product-detail-main">
         <HeroSection>
-          <img src={product.image || "/org/img/product-baldafrique.jpg"} alt={product.name} />
+          <img src={product.image || "/img/product-baldafrique.jpg"} alt={product.name} />
         </HeroSection>
         
         <InfoSection>

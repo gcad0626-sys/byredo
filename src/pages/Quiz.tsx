@@ -195,7 +195,7 @@ const Quiz: React.FC = () => {
                       });
                       setShowCartModal(true);
                     }}>
-                      <img src="/org/img/icon-cart.png" alt="cart" />
+                      <img src="/img/icon-cart.png" alt="cart" />
                     </RecCartBtn>
                   </div>
                 </RecBottom>
@@ -226,7 +226,7 @@ const Quiz: React.FC = () => {
                         });
                         setShowCartModal(true);
                       }}>
-                        <img src="/org/img/icon-cart.png" alt="cart" />
+                        <img src="/img/icon-cart.png" alt="cart" />
                       </RecCartBtn>
                     </div>
                   </RecBottom>

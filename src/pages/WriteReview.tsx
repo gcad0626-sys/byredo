@@ -28,7 +28,7 @@ const WriteReview: React.FC = () => {
   const editReview = location.state?.reviewToEdit;
   const product = location.state?.product || editReview || { 
     name: 'BLANCHE', 
-    image: '/org/img/product-blanche.jpg', 
+    image: '/img/product-blanche.jpg', 
     option: 'HAND CREAM' 
   };
   

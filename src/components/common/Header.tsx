@@ -8,7 +8,7 @@ const Header: React.FC = () => {
       <HeaderInner>
         <Logo>
           <Link to="/">
-            <img src="/org/img/logo.png" alt="BYREDO logo" />
+            <img src="/img/logo.png" alt="BYREDO logo" />
           </Link>
         </Logo>
         <Nav>

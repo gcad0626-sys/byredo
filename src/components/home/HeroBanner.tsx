@@ -14,17 +14,17 @@ import {
 
 const slides = [
   {
-    image: "/org/img/banner-hero-1.jpg",
+    image: "/img/banner-hero-1.jpg",
     title: "BYREDO\nHAND CARE",
     desc: "섬세한 향으로 완성하는\n나만의 순간"
   },
   {
-    image: "/org/img/banner-hero-2.jpg",
+    image: "/img/banner-hero-2.jpg",
     title: "BYREDO\nHAND CARE",
     desc: "나만의 특별한 향기를 찾아보세요"
   },
   {
-    image: "/org/img/banner-hero-3.jpg",
+    image: "/img/banner-hero-3.jpg",
     title: "BYREDO\nHAND CARE",
     desc: "은은하게 퍼지는 매력적인 머스크"
   }

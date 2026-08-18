@@ -3,10 +3,10 @@ import { useLocation, Link } from 'react-router-dom';
 import { TabBarNav, TabItem } from './BottomTabBar.styles';
 
 const tabs = [
-  { label: 'HOME', icon: '/org/img/icon-cat-all.png', path: '/' },
-  { label: 'SHOP', icon: '/org/img/icon-cat-wish.png', path: '/products' },
-  { label: 'ABOUT', icon: '/org/img/icon-cat-story.png', path: '/about' },
-  { label: 'MY', icon: '/org/img/icon-user.png', path: '/mypage' }
+  { label: 'HOME', icon: '/img/icon-cat-all.png', path: '/' },
+  { label: 'SHOP', icon: '/img/icon-cat-wish.png', path: '/products' },
+  { label: 'ABOUT', icon: '/img/icon-cat-story.png', path: '/about' },
+  { label: 'MY', icon: '/img/icon-user.png', path: '/mypage' }
 ];
 
 const BottomTabBar: React.FC = () => {

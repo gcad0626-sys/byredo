@@ -24,7 +24,7 @@ const OrderComplete: React.FC = () => {
     <AppLayout>
       <CompleteHeader>
         <LogoWrapper>
-          <img src="/org/img/logo.png" alt="BYREDO logo" />
+          <img src="/img/logo.png" alt="BYREDO logo" />
         </LogoWrapper>
         <IconButton 
           onClick={() => navigate('/')} 
