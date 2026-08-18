@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface CartItemType {
   id: number;
@@ -23,8 +23,22 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [items, setItems] = useState<CartItemType[]>([]);
-  const [nextId, setNextId] = useState(1);
+  const [items, setItems] = useState<CartItemType[]>(() => {
+    const saved = localStorage.getItem('cartItems');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [nextId, setNextId] = useState(() => {
+    const saved = localStorage.getItem('cartNextId');
+    return saved ? JSON.parse(saved) : 1;
+  });
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(items));
+  }, [items]);
+
+  useEffect(() => {
+    localStorage.setItem('cartNextId', JSON.stringify(nextId));
+  }, [nextId]);
 
   const addToCart = (newItem: Omit<CartItemType, 'id'>) => {
     // Check if exactly same product and option exists

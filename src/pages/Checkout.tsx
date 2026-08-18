@@ -79,12 +79,15 @@ const Checkout: React.FC = () => {
   const handlePayment = () => {
     // 결제 로직: 주문 내역 생성 및 Context에 추가
     const newOrderId = Date.now().toString();
-    const orderNumber = `#${new Date().getFullYear()}${String(new Date().getMonth() + 1).padStart(2, '0')}${String(new Date().getDate()).padStart(2, '0')}-${newOrderId.slice(-4)}`;
+    const now = new Date();
+    const orderNumber = `#${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${newOrderId.slice(-4)}`;
+    
+    const formattedDate = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
     
     const newOrder = {
       id: newOrderId,
       orderNumber,
-      date: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }),
+      date: formattedDate,
       status: '결제 완료',
       items: checkoutItems.map(item => ({
         id: item.id,

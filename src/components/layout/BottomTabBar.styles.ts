@@ -14,7 +14,7 @@ export const TabBarNav = styled.nav`
   z-index: 50;
 
   @media (min-width: 481px) {
-    position: static;
+    position: absolute;
     display: grid;
     flex: 0 0 auto;
   }

@@ -19,7 +19,10 @@ export const HeaderWrapper = styled.header`
 export const HeaderInner = styled.div`
   max-width: var(--container-w);
   height: 100%;
-  margin: 0 auto;
+  margin: 0;
+  position: relative;
+  left: 50vw;
+  transform: translateX(-50%);
   padding: 0 22px;
   display: flex;
   align-items: center;

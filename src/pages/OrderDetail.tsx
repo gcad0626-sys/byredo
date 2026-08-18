@@ -118,7 +118,12 @@ const OrderDetail: React.FC = () => {
         
         <Actions>
           <ActionBtn onClick={() => navigate('/mypage/write-review')}>리뷰 작성하기</ActionBtn>
-          <ActionBtn outline onClick={() => navigate(`/mypage/exchange-return/${order.id}`)}>교환/반품 신청</ActionBtn>
+          {(order.status === '결제 완료' || order.status === '상품 준비중') && (
+            <ActionBtn outline onClick={() => navigate(`/mypage/cancel-order/${order.id}`)}>주문 취소</ActionBtn>
+          )}
+          {(order.status === '배송중' || order.status === '배송완료') && (
+            <ActionBtn outline onClick={() => navigate(`/mypage/exchange-return/${order.id}`)}>교환/반품 신청</ActionBtn>
+          )}
         </Actions>
       </DetailMain>
     </AppLayout>

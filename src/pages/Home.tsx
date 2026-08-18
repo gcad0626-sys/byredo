@@ -9,6 +9,12 @@ import BestProducts from '../components/home/BestProducts';
 import QuizEntry from '../components/home/QuizEntry';
 
 const Home: React.FC = () => {
+  React.useEffect(() => {
+    document.body.classList.add('home-page');
+    return () => {
+      document.body.classList.remove('home-page');
+    };
+  }, []);
   return (
     <AppLayout>
       <AppHeader />

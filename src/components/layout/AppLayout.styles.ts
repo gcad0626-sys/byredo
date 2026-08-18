@@ -12,7 +12,9 @@ export const PageWrap = styled.div`
     justify-content: center;
     gap: 40px;
     max-width: var(--container-w);
-    margin: 0 auto;
+    margin: 0;
+    left: 50vw;
+    transform: translateX(-50%);
     padding: calc(var(--header-h-desktop) + 40px) 24px 40px;
     height: 100vh;
   }

@@ -50,84 +50,99 @@ const Cart: React.FC = () => {
       <AppHeader />
       {/* 장바구니 헤더는 AppHeader와 다를 수 있으나 현재는 디자인상 AppHeader로 대체하거나 커스텀 렌더 가능 */}
       <CartMain id="cart-main">
-        <CartList>
-          {items.map(item => (
-            <CartItem key={item.id}>
-              <CartImg onClick={() => navigate(`/products/${item.id}`)}>
-                <img src={item.image} alt={item.name} />
-              </CartImg>
-              <CartInfo>
-                <CartHead>
-                  <CartName onClick={() => navigate(`/products/${item.id}`)}>{item.name}</CartName>
-                  <CartRemove onClick={() => handleRemove(item.id)}>✕</CartRemove>
-                </CartHead>
-                <CartOptionSelect value={item.option} onChange={(e) => updateOption(item.id, e.target.value)}>
-                  <option value="30ML">30ML</option>
-                  <option value="100ML">100ML</option>
-                </CartOptionSelect>
-                <CartBottom>
-                  <CartQty>
-                    <button onClick={() => handleQtyChange(item.id, -1)}>−</button>
-                    <span>{item.qty}</span>
-                    <button onClick={() => handleQtyChange(item.id, 1)}>+</button>
-                  </CartQty>
-                  <CartPrice>₩{(item.price * item.qty).toLocaleString()}</CartPrice>
-                </CartBottom>
-                
-                {item.giftMessage ? (
-                  <CartGift added>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="8" width="18" height="14" rx="2"/>
-                      <path d="M12 8v14M8 8V6a2 2 0 114 0v2M12 8V6a2 2 0 114 0v2"/>
-                    </svg>
-                    <div>
-                      <span>GIFT MESSAGE ADDED</span>
-                      <p>{item.giftMessage}</p>
-                    </div>
-                  </CartGift>
-                ) : (
-                  <CartGift>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="8" width="18" height="14" rx="2"/>
-                      <path d="M12 8v14M8 8V6a2 2 0 114 0v2M12 8V6a2 2 0 114 0v2"/>
-                    </svg>
-                    <span>ADD GIFT MESSAGE</span>
-                  </CartGift>
-                )}
-              </CartInfo>
-            </CartItem>
-          ))}
-        </CartList>
+        {items.length === 0 ? (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '100px 20px', textAlign: 'center' }}>
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ddd" strokeWidth="1.5" style={{ marginBottom: '16px' }}>
+              <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <p style={{ fontSize: '15px', color: '#666', marginBottom: '24px' }}>장바구니에 담긴 상품이 없습니다.</p>
+            <button 
+              onClick={() => navigate('/')}
+              style={{ padding: '14px 40px', background: '#111', color: '#fff', fontSize: '13px', fontWeight: '500', border: 'none', cursor: 'pointer' }}
+            >쇼핑 계속하기</button>
+          </div>
+        ) : (
+          <>
+            <CartList>
+              {items.map(item => (
+                <CartItem key={item.id}>
+                  <CartImg onClick={() => navigate(`/products/${item.id}`)}>
+                    <img src={item.image} alt={item.name} />
+                  </CartImg>
+                  <CartInfo>
+                    <CartHead>
+                      <CartName onClick={() => navigate(`/products/${item.id}`)}>{item.name}</CartName>
+                      <CartRemove onClick={() => handleRemove(item.id)}>✕</CartRemove>
+                    </CartHead>
+                    <CartOptionSelect value={item.option} onChange={(e) => updateOption(item.id, e.target.value)}>
+                      <option value="30ML">30ML</option>
+                      <option value="100ML">100ML</option>
+                    </CartOptionSelect>
+                    <CartBottom>
+                      <CartQty>
+                        <button onClick={() => handleQtyChange(item.id, -1)}>−</button>
+                        <span>{item.qty}</span>
+                        <button onClick={() => handleQtyChange(item.id, 1)}>+</button>
+                      </CartQty>
+                      <CartPrice>₩{(item.price * item.qty).toLocaleString()}</CartPrice>
+                    </CartBottom>
+                    
+                    {item.giftMessage ? (
+                      <CartGift added>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <rect x="3" y="8" width="18" height="14" rx="2"/>
+                          <path d="M12 8v14M8 8V6a2 2 0 114 0v2M12 8V6a2 2 0 114 0v2"/>
+                        </svg>
+                        <div>
+                          <span>GIFT MESSAGE ADDED</span>
+                          <p>{item.giftMessage}</p>
+                        </div>
+                      </CartGift>
+                    ) : (
+                      <CartGift>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <rect x="3" y="8" width="18" height="14" rx="2"/>
+                          <path d="M12 8v14M8 8V6a2 2 0 114 0v2M12 8V6a2 2 0 114 0v2"/>
+                        </svg>
+                        <span>ADD GIFT MESSAGE</span>
+                      </CartGift>
+                    )}
+                  </CartInfo>
+                </CartItem>
+              ))}
+            </CartList>
 
-        <CartSummary>
-          <SummaryTitle>주문 요약</SummaryTitle>
-          <SummaryList>
-            {items.map(item => (
-              <li key={item.id}>
-                <span>{item.name} ({item.qty}개)</span>
-                <span>₩{(item.price * item.qty).toLocaleString()}</span>
-              </li>
-            ))}
-          </SummaryList>
-          <SummaryTotals>
-            <li>
-              <span>상품 금액</span>
-              <span>₩{totalAmount.toLocaleString()}</span>
-            </li>
-            <li>
-              <span>배송비</span>
-              <span className="free-shipping">무료</span>
-            </li>
-          </SummaryTotals>
-          <SummaryFinal>
-            <span>총 결제 금액</span>
-            <strong>₩{totalAmount.toLocaleString()}</strong>
-          </SummaryFinal>
-        </CartSummary>
+            <CartSummary>
+              <SummaryTitle>주문 요약</SummaryTitle>
+              <SummaryList>
+                {items.map(item => (
+                  <li key={item.id}>
+                    <span>{item.name} ({item.qty}개)</span>
+                    <span>₩{(item.price * item.qty).toLocaleString()}</span>
+                  </li>
+                ))}
+              </SummaryList>
+              <SummaryTotals>
+                <li>
+                  <span>상품 금액</span>
+                  <span>₩{totalAmount.toLocaleString()}</span>
+                </li>
+                <li>
+                  <span>배송비</span>
+                  <span className="free-shipping">무료</span>
+                </li>
+              </SummaryTotals>
+              <SummaryFinal>
+                <span>총 결제 금액</span>
+                <strong>₩{totalAmount.toLocaleString()}</strong>
+              </SummaryFinal>
+            </CartSummary>
 
-        <CartAction>
-          <CheckoutBtn onClick={() => navigate('/checkout')}>주문하기</CheckoutBtn>
-        </CartAction>
+            <CartAction>
+              <CheckoutBtn onClick={() => navigate('/checkout')}>주문하기</CheckoutBtn>
+            </CartAction>
+          </>
+        )}
       </CartMain>
     </AppLayout>
   );

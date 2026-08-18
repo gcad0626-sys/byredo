@@ -12,6 +12,8 @@ import MyPage from './pages/MyPage';
 import OrderList from './pages/OrderList';
 import OrderDetail from './pages/OrderDetail';
 import ExchangeReturn from './pages/ExchangeReturn';
+import CancelOrder from './pages/CancelOrder';
+import CancelComplete from './pages/CancelComplete';
 import Wishlist from './pages/Wishlist';
 import Review from './pages/Review';
 import WriteReview from './pages/WriteReview';
@@ -43,6 +45,8 @@ function App() {
         <Route path="/mypage/orders" element={<OrderList />} />
         <Route path="/mypage/orders/:id" element={<OrderDetail />} />
         <Route path="/mypage/exchange-return/:id" element={<ExchangeReturn />} />
+        <Route path="/mypage/cancel-order/:id" element={<CancelOrder />} />
+        <Route path="/mypage/cancel-complete/:id" element={<CancelComplete />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/mypage/reviews" element={<Review />} />
         <Route path="/mypage/write-review" element={<WriteReview />} />

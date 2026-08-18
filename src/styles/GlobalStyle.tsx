@@ -40,6 +40,13 @@ export const GlobalStyle = createGlobalStyle`
     font-family: var(--font-family);
     background: var(--color-bg-page);
     color: var(--color-ink);
+    overflow-x: hidden;
+  }
+
+  @media (min-width: 481px) {
+    body.home-page {
+      overflow: hidden;
+    }
   }
 
   img {
