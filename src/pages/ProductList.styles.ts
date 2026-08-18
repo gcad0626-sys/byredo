@@ -23,14 +23,18 @@ export const HeaderTitle = styled.h2`
 
 export const HeaderSort = styled.div`
   position: relative;
+  transform: translateX(4px);
+  display: flex;
+  align-items: center;
 
   select {
-    font-size: 11px;
+    font-size: 12px;
     color: #666;
     border: none;
     background: transparent;
     appearance: none;
-    padding-right: 12px;
+    padding-right: 14px;
+    font-weight: 500;
     
     &:focus {
       outline: none;
@@ -38,12 +42,12 @@ export const HeaderSort = styled.div`
   }
 
   &::after {
-    content: "??;
+    content: "⌄";
     position: absolute;
     right: 0;
     top: 50%;
-    transform: translateY(-50%);
-    font-size: 9px;
+    transform: translateY(-65%);
+    font-size: 14px;
     color: #666;
     pointer-events: none;
   }
@@ -53,7 +57,7 @@ export const ProductGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  padding: 0 16px 40px;
+  padding: 0 16px 16px;
 `;
 
 export const ProductCard = styled.div`
@@ -61,6 +65,7 @@ export const ProductCard = styled.div`
   flex-direction: column;
   position: relative;
   cursor: pointer;
+  height: 100%;
 `;
 
 export const ProductBadge = styled.div`
@@ -79,7 +84,8 @@ export const ProductImgWrap = styled.div`
   width: 100%;
   aspect-ratio: 4 / 5;
   background: #f0f0f0;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
+  position: relative;
 
   img {
     width: 100%;
@@ -91,33 +97,36 @@ export const ProductImgWrap = styled.div`
 export const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1;
 `;
 
 export const ProductBrand = styled.span`
-  font-size: 9px;
-  letter-spacing: 1px;
-  color: #666;
-  margin-bottom: 4px;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  color: #333;
+  margin-bottom: 6px;
+  font-weight: 600;
 `;
 
 export const ProductName = styled.h3`
-  font-family: 'EB Garamond', serif;
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 6px;
+  text-transform: uppercase;
 `;
 
 export const ProductDesc = styled.p`
-  font-size: 12px;
-  color: #666;
-  margin: 0 0 8px;
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 12px;
 `;
 
 export const ProductPrice = styled.p`
-  font-family: var(--font-kr);
-  font-size: 15px;
-  font-weight: 600;
-  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  margin: auto 0 0;
 `;
 
 export const WishBtn = styled.button`
@@ -133,4 +142,27 @@ export const WishBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const CartBtn = styled.button`
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #111;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: opacity 0.2s;
+  
+  &:active {
+    opacity: 0.7;
+  }
 `;

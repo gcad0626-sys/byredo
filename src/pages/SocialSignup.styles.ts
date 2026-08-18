@@ -7,6 +7,7 @@ export const Container = styled.div`
   background: #fafaf9;
   padding: 40px 24px;
   overflow-y: auto;
+  position: relative;
 `;
 
 export const Title = styled.h1`
@@ -26,31 +27,53 @@ export const Subtitle = styled.p`
   margin-bottom: 40px;
 `;
 
-export const ProfileCard = styled.div`
-  background: #fff;
-  border: 1px solid #e5e5e5;
-  padding: 32px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 40px;
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+  padding: 8px;
 `;
 
-export const Avatar = styled.div`
-  width: 64px;
-  height: 64px;
+export const ProfileCard = styled.div<{ $provider?: string }>`
+  background: ${props => props.$provider === 'google' ? '#f6f5f2' : '#fff'};
+  border: ${props => props.$provider === 'google' ? 'none' : '1px solid #e5e5e5'};
+  padding: ${props => props.$provider === 'google' ? '24px 32px' : '32px 20px'};
+  display: flex;
+  flex-direction: ${props => props.$provider === 'google' ? 'row' : 'column'};
+  align-items: center;
+  justify-content: ${props => props.$provider === 'google' ? 'flex-start' : 'center'};
+  margin-bottom: 40px;
+  border-radius: ${props => props.$provider === 'google' ? '4px' : '0'};
+`;
+
+export const Avatar = styled.div<{ $provider?: string }>`
+  width: ${props => props.$provider === 'google' ? '48px' : '64px'};
+  height: ${props => props.$provider === 'google' ? '48px' : '64px'};
   border-radius: 50%;
-  background: #e8e8e8;
+  background: ${props => props.$provider === 'google' ? '#e9e6df' : '#e8e8e8'};
+  border: ${props => props.$provider === 'google' ? '2px solid #e0ddd5' : 'none'};
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 16px;
+  margin-bottom: ${props => props.$provider === 'google' ? '0' : '16px'};
+  margin-right: ${props => props.$provider === 'google' ? '20px' : '0'};
   color: #666;
   
   svg {
-    width: 32px;
-    height: 32px;
+    width: ${props => props.$provider === 'google' ? '24px' : '32px'};
+    height: ${props => props.$provider === 'google' ? '24px' : '32px'};
   }
+`;
+
+export const ProfileInfo = styled.div<{ $provider?: string }>`
+  display: flex;
+  flex-direction: column;
+  align-items: ${props => props.$provider === 'google' ? 'flex-start' : 'center'};
 `;
 
 export const ProfileName = styled.div`
@@ -133,7 +156,8 @@ export const TermItem = styled.div`
 
 export const SubmitBtn = styled.button`
   width: 100%;
-  height: 56px;
+  height: auto;
+  padding: 14px 0;
   background: #222;
   color: #fff;
   font-size: 15px;

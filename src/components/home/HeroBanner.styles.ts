@@ -88,7 +88,7 @@ export const Cta = styled.a`
 
 export const Indicator = styled.div`
   position: absolute;
-  bottom: 34px;
+  bottom: 16px;
   left: 24px;
   transform: none;
   margin: 0;

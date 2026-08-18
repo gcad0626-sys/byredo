@@ -1,27 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import AppHeader from '../components/home/AppHeader';
 import { 
   ProductListMain, ProductListHeader, HeaderTitle, HeaderSort, 
   ProductGrid, ProductCard, ProductBadge, ProductImgWrap, 
-  ProductInfo, ProductBrand, ProductName, ProductDesc, ProductPrice, WishBtn
+  ProductInfo, ProductBrand, ProductName, ProductDesc, ProductPrice, WishBtn, CartBtn
 } from './ProductList.styles';
 import { products } from '../data/products';
 import { useWishlist } from '../context/WishlistContext';
+import { useCart } from '../context/CartContext';
 
 const ProductList: React.FC = () => {
   const navigate = useNavigate();
   const { toggleWishlist, isInWishlist } = useWishlist();
+  const { addToCart } = useCart();
+  const [showCartModal, setShowCartModal] = useState(false);
 
-  const handleProductClick = (id: number) => {
-    navigate(`/products/${id}`);
+  const handleAddToCart = (e: React.MouseEvent, product: any) => {
+    e.stopPropagation();
+    addToCart({
+      productId: product.id,
+      name: product.name,
+      image: product.image,
+      option: product.desc || '단품',
+      qty: 1,
+      price: product.price,
+      giftMessage: null,
+    });
+    setShowCartModal(true);
   };
 
   return (
     <AppLayout>
       <AppHeader />
-      <ProductListMain id="product-list-main">
+      <ProductListMain id="product-list-main" style={{ position: 'relative' }}>
         <ProductListHeader>
           <HeaderTitle>Hand Creams</HeaderTitle>
           <HeaderSort>
@@ -56,6 +69,11 @@ const ProductList: React.FC = () => {
 
               <ProductImgWrap>
                 <img src={product.image} alt={product.name} />
+                <CartBtn onClick={(e) => handleAddToCart(e, product)}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+                  </svg>
+                </CartBtn>
               </ProductImgWrap>
               <ProductInfo>
                 <ProductBrand>{product.brand}</ProductBrand>
@@ -66,6 +84,31 @@ const ProductList: React.FC = () => {
             </ProductCard>
           ))}
         </ProductGrid>
+
+        {showCartModal && (
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
+            backgroundColor: 'rgba(0,0,0,0.6)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+          }}>
+            <div style={{
+              background: '#fff', width: '280px', borderRadius: '16px', padding: '24px',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.2)', textAlign: 'center', position: 'relative'
+            }}>
+              <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold', color: '#111' }}>장바구니에 담겼습니다</h3>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button 
+                  onClick={() => setShowCartModal(false)}
+                  style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #ddd', background: '#fff', cursor: 'pointer', fontWeight: '500' }}
+                >계속 쇼핑</button>
+                <button 
+                  onClick={() => navigate('/cart')}
+                  style={{ flex: 1, padding: '12px', borderRadius: '8px', border: 'none', background: '#222', color: '#fff', cursor: 'pointer', fontWeight: '500' }}
+                >바로가기</button>
+              </div>
+            </div>
+          </div>
+        )}
       </ProductListMain>
     </AppLayout>
   );

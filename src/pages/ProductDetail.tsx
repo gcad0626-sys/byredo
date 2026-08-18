@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
-import AppHeader from '../components/home/AppHeader';
+import styled from 'styled-components';
 import { 
-  DetailMain, HeroSection, HeroIndicator, 
+  DetailMain, HeroSection, 
   InfoSection, InfoCate, InfoTitle, InfoDesc, InfoPrice, DetailWishBtn,
   OptionsSection, OptionsLabel, Sizes, QtyControl,
   AccordionContainer, AccordionItem, AccordionHeader, AccordionContent,
@@ -15,9 +15,36 @@ import { getProductById } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 
+const DetailHeader = styled.header`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  padding: 0 16px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin-left: -8px;
+  }
+  
+  h1 {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  
+  .spacer { width: 40px; }
+`;
+
 const ProductDetail: React.FC = () => {
   const navigate = useNavigate();
-  // We need to parse URL for product id, let's use useParams
   const idMatch = window.location.pathname.match(/\/products\/(\d+)/);
   const id = idMatch ? parseInt(idMatch[1], 10) : 1;
   const product = getProductById(id) || getProductById(1)!;
@@ -30,16 +57,24 @@ const ProductDetail: React.FC = () => {
   const [expandedIngred, setExpandedIngred] = useState(true);
   const [isGifting, setIsGifting] = useState(false);
   const [giftMessage, setGiftMessage] = useState('');
+  const [showCartModal, setShowCartModal] = useState(false);
+
+  const currentPrice = size === '100ML' ? 98000 : product.price;
 
   return (
     <AppLayout>
-      <AppHeader />
+      <DetailHeader>
+        <button onClick={() => navigate('/products')}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </button>
+        <h1>상품 상세</h1>
+        <div className="spacer"></div>
+      </DetailHeader>
       <DetailMain id="product-detail-main">
         <HeroSection>
-          <img src="/org/img/product-baldafrique.jpg" alt="BAL D'AFRIQUE" />
-          <HeroIndicator>
-            <span className="active"></span>
-          </HeroIndicator>
+          <img src={product.image || "/org/img/product-baldafrique.jpg"} alt={product.name} />
         </HeroSection>
         
         <InfoSection>
@@ -57,13 +92,13 @@ const ProductDetail: React.FC = () => {
             )}
           </DetailWishBtn>
           <InfoDesc>{product.desc}</InfoDesc>
-          <InfoPrice>₩{product.price.toLocaleString()}</InfoPrice>
+          <InfoPrice>₩{currentPrice.toLocaleString()}</InfoPrice>
         </InfoSection>
         
         <OptionsSection>
           <OptionsLabel>SIZE</OptionsLabel>
           <Sizes>
-            {product.options.map(opt => (
+            {['30ML', '100ML'].map(opt => (
               <button key={opt} className={size === opt ? 'is-active' : ''} onClick={() => setSize(opt)}>{opt}</button>
             ))}
           </Sizes>
@@ -150,6 +185,31 @@ const ProductDetail: React.FC = () => {
           </ReviewItem>
           <BtnMoreReviews onClick={() => navigate('/mypage/reviews')}>전체 리뷰 보기</BtnMoreReviews>
         </ReviewsSection>
+
+        {showCartModal && (
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
+            backgroundColor: 'rgba(0,0,0,0.6)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center'
+          }}>
+            <div style={{
+              background: '#fff', width: '280px', borderRadius: '16px', padding: '24px',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.2)', textAlign: 'center', position: 'relative'
+            }}>
+              <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold', color: '#111' }}>장바구니에 담겼습니다</h3>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button 
+                  onClick={() => setShowCartModal(false)}
+                  style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #ddd', background: '#fff', cursor: 'pointer', fontWeight: '500' }}
+                >계속 쇼핑</button>
+                <button 
+                  onClick={() => navigate('/cart')}
+                  style={{ flex: 1, padding: '12px', borderRadius: '8px', border: 'none', background: '#222', color: '#fff', cursor: 'pointer', fontWeight: '500' }}
+                >바로가기</button>
+              </div>
+            </div>
+          </div>
+        )}
         
       </DetailMain>
 
@@ -161,17 +221,17 @@ const ProductDetail: React.FC = () => {
             image: product.image,
             option: size,
             qty: qty,
-            price: product.price,
+            price: currentPrice,
             giftMessage: isGifting && giftMessage ? giftMessage : null
           });
-          alert('장바구니에 담았습니다.');
+          setShowCartModal(true);
         }}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
           </svg>
           <span>장바구니 담기</span>
         </ActionBtn>
-        <ActionBtn primary onClick={() => navigate('/checkout', { state: { product, size, qty, isGifting, giftMessage } })}>바로 구매하기</ActionBtn>
+        <ActionBtn primary onClick={() => navigate('/checkout', { state: { product, size, qty, isGifting, giftMessage, price: currentPrice } })}>바로 구매하기</ActionBtn>
       </ActionBottom>
     </AppLayout>
   );

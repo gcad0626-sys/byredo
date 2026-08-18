@@ -129,6 +129,7 @@ export const OrderProduct = styled.div`
 export const ProductImg = styled.div`
   width: 72px;
   height: 72px;
+  flex-shrink: 0;
   background: #e0e0e0;
 
   img {

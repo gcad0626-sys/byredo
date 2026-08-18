@@ -143,6 +143,18 @@ export const AuthText = styled.span`
   color: #666;
 `;
 
+export const CloseButton = styled.button`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #999;
+  cursor: pointer;
+  padding: 8px;
+`;
+
 export const AuthFormAgree = styled.div`
   margin-top: 32px;
 

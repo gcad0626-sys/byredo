@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import AppHeader from '../components/home/AppHeader';
@@ -11,7 +11,7 @@ import {
 const Review: React.FC = () => {
   const navigate = useNavigate();
 
-  const reviews = [
+  const initialReviews = [
     {
       id: 1,
       productName: 'BLANCHE',
@@ -29,6 +29,15 @@ const Review: React.FC = () => {
       text: '처음 써보는데 잔향이 정말 오래갑니다. 주변에서 다들 향수 뭐 쓰냐고 물어보네요. 재구매 의사 100% 입니다.'
     }
   ];
+  
+  const [reviews, setReviews] = useState(initialReviews);
+  
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
+    if (saved.length > 0) {
+      setReviews([...saved, ...initialReviews]);
+    }
+  }, []);
 
   return (
     <AppLayout>

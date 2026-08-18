@@ -27,6 +27,8 @@ const Checkout: React.FC = () => {
   const [address, setAddress] = useState('서울특별시 강남구 도산대로 45길 10-5');
   const [addressDetail, setAddressDetail] = useState('');
   const [memo, setMemo] = useState('배송 전 연락바랍니다.');
+  
+  const [showPostcode, setShowPostcode] = useState(false);
 
   useEffect(() => {
     // Load Daum Postcode script
@@ -40,27 +42,35 @@ const Checkout: React.FC = () => {
   }, []);
 
   const openPostcode = () => {
-    if ((window as any).daum && (window as any).daum.Postcode) {
-      new (window as any).daum.Postcode({
-        oncomplete: function(data: any) {
-          setZipcode(data.zonecode);
-          setAddress(data.address);
-          setAddressDetail(''); // Reset detail address
-        }
-      }).open();
-    } else {
-      alert('우편번호 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
-    }
+    setShowPostcode(true);
+    setTimeout(() => {
+      if ((window as any).daum && (window as any).daum.Postcode) {
+        new (window as any).daum.Postcode({
+          oncomplete: function(data: any) {
+            setZipcode(data.zonecode);
+            setAddress(data.address);
+            setAddressDetail(''); // Reset detail address
+            setShowPostcode(false);
+          },
+          width: '100%',
+          height: '100%'
+        }).embed(document.getElementById('postcode-container'));
+      } else {
+        alert('우편번호 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+        setShowPostcode(false);
+      }
+    }, 100);
   };
 
   const isDirectPurchase = location.state && location.state.product;
+  const directPrice = location.state?.price || location.state?.product?.price;
   const directItem = isDirectPurchase ? {
     id: 'direct',
     name: location.state.product.name,
     image: location.state.product.image,
     option: location.state.size,
     qty: location.state.qty,
-    price: location.state.product.price
+    price: directPrice
   } : null;
 
   const checkoutItems = isDirectPurchase ? [directItem!] : items;
@@ -104,7 +114,7 @@ const Checkout: React.FC = () => {
     <AppLayout>
       <AppHeader />
       {/* 실제 구현시 커스텀 Checkout Header 사용 가능 */}
-      <CheckoutMain id="checkout-main">
+      <CheckoutMain id="checkout-main" style={{ position: 'relative' }}>
         <CheckoutSection>
           <SectionTitle>배송 정보</SectionTitle>
           <CheckoutForm>
@@ -200,6 +210,19 @@ const Checkout: React.FC = () => {
         <CheckoutAction>
           <button onClick={handlePayment}>{totalAmount.toLocaleString()}원 결제하기</button>
         </CheckoutAction>
+
+        {showPostcode && (
+          <div style={{
+            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: '#fff', zIndex: 9999, display: 'flex', flexDirection: 'column'
+          }}>
+            <header style={{ display: 'flex', justifyContent: 'space-between', padding: '16px', borderBottom: '1px solid #ddd' }}>
+              <h2 style={{ fontSize: '16px', fontWeight: 'bold' }}>우편번호 찾기</h2>
+              <button onClick={() => setShowPostcode(false)} style={{ background: 'none', border: 'none', fontSize: '20px', cursor: 'pointer' }}>✕</button>
+            </header>
+            <div id="postcode-container" style={{ flex: 1, width: '100%' }}></div>
+          </div>
+        )}
       </CheckoutMain>
     </AppLayout>
   );

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import AppHeader from '../components/home/AppHeader';
 import { 
-  AuthMain, AuthTitle, AuthSubtitle, AuthFormRow, AuthBtn, AuthFormAgree 
+  AuthMain, AuthTitle, AuthSubtitle, AuthFormRow, AuthBtn, AuthFormAgree, CloseButton
 } from './Auth.styles';
 
 const Signup: React.FC = () => {
@@ -12,7 +12,8 @@ const Signup: React.FC = () => {
   return (
     <AppLayout>
       <AppHeader />
-      <AuthMain id="signup-main">
+      <AuthMain id="signup-main" style={{ position: 'relative' }}>
+        <CloseButton onClick={() => navigate(-1)}>✕</CloseButton>
         <AuthTitle>CREATE ACCOUNT</AuthTitle>
         <AuthSubtitle>바이레도의 회원이 되어 다양한 혜택을 누려보세요.</AuthSubtitle>
         

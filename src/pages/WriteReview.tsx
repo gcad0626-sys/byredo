@@ -22,7 +22,19 @@ const WriteReview: React.FC = () => {
       alert('리뷰 내용을 10자 이상 작성해주세요.');
       return;
     }
-    // API 제출 로직
+    
+    const newReview = {
+      id: Date.now(),
+      productName: 'BLANCHE',
+      image: '/org/img/product-blanche.jpg',
+      date: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }),
+      stars: '★'.repeat(rating) + '☆'.repeat(5 - rating),
+      text: content
+    };
+    
+    const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
+    localStorage.setItem('myReviews', JSON.stringify([newReview, ...saved]));
+
     alert('리뷰가 등록되었습니다.');
     navigate('/mypage/reviews');
   };

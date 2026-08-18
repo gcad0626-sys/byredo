@@ -47,7 +47,13 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const updateOption = (id: number, option: string) => {
-    setItems(items.map(item => item.id === id ? { ...item, option } : item));
+    setItems(items.map(item => {
+      if (item.id === id) {
+        const newPrice = option === '100ML' ? 98000 : 70000;
+        return { ...item, option, price: newPrice };
+      }
+      return item;
+    }));
   };
 
   const removeItem = (id: number) => {

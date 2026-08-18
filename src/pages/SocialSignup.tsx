@@ -3,13 +3,15 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import { 
   Container, Title, Subtitle, ProfileCard, Avatar, ProfileName, ProfileEmail, 
-  TermsSection, TermAll, TermItem, SubmitBtn 
+  TermsSection, TermAll, TermItem, SubmitBtn, CloseButton, ProfileInfo
 } from './SocialSignup.styles';
 
 const SocialSignup: React.FC = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const provider = searchParams.get('provider') || 'google';
+  const emailParam = searchParams.get('email');
+  const nameParam = searchParams.get('name');
 
   const [term1, setTerm1] = useState(false);
   const [term2, setTerm2] = useState(false);
@@ -26,33 +28,37 @@ const SocialSignup: React.FC = () => {
 
   const isKakao = provider === 'kakao';
   const providerName = isKakao ? '카카오' : '구글';
-  const profileName = isKakao ? '김바이레도' : 'Guest User';
-  const profileEmail = isKakao ? 'byredo@kakao.com' : 'user@gmail.com';
+  
+  // URL에서 전달된 정보 사용, 없으면 기본값
+  const profileName = nameParam || (isKakao ? '김바이레도' : 'Guest User');
+  const profileEmail = emailParam || (isKakao ? 'byredo@kakao.com' : 'user@gmail.com');
 
   const handleSubmit = () => {
     if (!term1 || !term2) {
       alert('필수 약관에 동의해주세요.');
       return;
     }
-    // 회원가입 완료/로그인 성공 후 홈으로
     navigate('/');
   };
 
   return (
     <AppLayout>
       <Container id="social-signup-main">
+        <CloseButton onClick={() => navigate(-1)}>✕</CloseButton>
         <Title>반가워요!</Title>
         <Subtitle>{providerName} 계정으로 간편하게 시작합니다.</Subtitle>
 
-        <ProfileCard>
-          <Avatar>
+        <ProfileCard $provider={provider}>
+          <Avatar $provider={provider}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
               <circle cx="12" cy="7" r="4" />
             </svg>
           </Avatar>
-          <ProfileName>{profileName}</ProfileName>
-          <ProfileEmail>{profileEmail}</ProfileEmail>
+          <ProfileInfo $provider={provider}>
+            <ProfileName>{profileName}</ProfileName>
+            <ProfileEmail>{profileEmail}</ProfileEmail>
+          </ProfileInfo>
         </ProfileCard>
 
         <TermsSection>

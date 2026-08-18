@@ -5,7 +5,6 @@ export const WishlistMain = styled.main`
   overflow-y: auto;
   padding-bottom: var(--tabbar-h);
   background: #fafaf9;
-  padding-bottom: calc(var(--tabbar-h) + 100px);
 `;
 
 export const WishlistHeader = styled.div`
@@ -27,8 +26,8 @@ export const Count = styled.p`
 `;
 
 export const ActionBottom = styled.div`
-  position: absolute;
-  bottom: var(--tabbar-h);
+  position: sticky;
+  bottom: 0;
   left: 0;
   right: 0;
   padding: 16px;
