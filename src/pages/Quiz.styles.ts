@@ -4,7 +4,7 @@ export const QuizMain = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 0;
   background: #fafaf9;
   position: relative;
   overflow-y: auto;
@@ -47,7 +47,7 @@ export const QuizContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0 24px 40px;
+  padding: 0 24px calc(var(--tabbar-h) + 16px);
   color: #111;
 `;
 

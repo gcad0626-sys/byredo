@@ -1,12 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
-import AppHeader from '../components/home/AppHeader';
+import styled from 'styled-components';
+import { HeaderContainer, IconButton } from '../components/home/AppHeader.styles';
 import { 
   ReviewMain, ReviewHeader, Title, Subtitle, 
   ReviewList, ReviewItem, ReviewImg, ReviewContent, ReviewTop, 
   ReviewName, ReviewDate, ReviewStars, ReviewText, ReviewActions 
 } from './Review.styles';
+
+const BackHeader = styled(HeaderContainer)`
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0 8px 0 4px;
+`;
+const BackTitle = styled.h2`
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+`;
 
 const Review: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +53,14 @@ const Review: React.FC = () => {
 
   return (
     <AppLayout>
-      <AppHeader />
+      <BackHeader>
+        <IconButton onClick={() => navigate(-1)} aria-label="뒤로가기">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </IconButton>
+        <BackTitle>My Reviews</BackTitle>
+      </BackHeader>
       <ReviewMain id="review-main">
         <ReviewHeader>
           <Title>My Reviews</Title>

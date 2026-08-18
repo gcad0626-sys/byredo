@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import AppHeader from '../components/home/AppHeader';
@@ -10,26 +10,6 @@ import {
 } from './Cart.styles';
 import { useCart } from '../context/CartContext';
 
-const initialItems = [
-  {
-    id: 1,
-    name: 'BLANCHE',
-    image: '/org/img/product-blanche.jpg',
-    option: '30ML',
-    qty: 1,
-    price: 70000,
-    giftMessage: '"생일 축하해! 항상 고마워."'
-  },
-  {
-    id: 2,
-    name: "BAL D'AFRIQUE",
-    image: '/org/img/product-baldafrique.jpg',
-    option: '50ML',
-    qty: 1,
-    price: 70000,
-    giftMessage: null
-  }
-];
 
 const Cart: React.FC = () => {
   const navigate = useNavigate();

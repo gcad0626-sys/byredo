@@ -1,7 +1,8 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
-import AppHeader from '../components/home/AppHeader';
+import styled from 'styled-components';
+import { HeaderContainer, IconButton } from '../components/home/AppHeader.styles';
 import { 
   DetailMain, TitleBox, Title, InfoGroup, Row, Label, Value, Divider, 
   Section, SectionTitle, Product, ProductImg, ProductInfo, ProductName, ProductOption, 
@@ -9,6 +10,18 @@ import {
   Actions, ActionBtn 
 } from './OrderDetail.styles';
 import { useOrders } from '../context/OrderContext';
+
+const BackHeader = styled(HeaderContainer)`
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0 8px 0 4px;
+`;
+
+const BackTitle = styled.h2`
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+`;
 
 const OrderDetail: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +32,14 @@ const OrderDetail: React.FC = () => {
   if (!order) {
     return (
       <AppLayout>
-        <AppHeader />
+        <BackHeader>
+          <IconButton onClick={() => navigate(-1)} aria-label="뒤로가기">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </IconButton>
+          <BackTitle>주문 상세 내역</BackTitle>
+        </BackHeader>
         <DetailMain style={{ padding: '40px 16px', textAlign: 'center' }}>
           주문 내역을 찾을 수 없습니다.
         </DetailMain>
@@ -29,7 +49,14 @@ const OrderDetail: React.FC = () => {
 
   return (
     <AppLayout>
-      <AppHeader />
+      <BackHeader>
+        <IconButton onClick={() => navigate(-1)} aria-label="뒤로가기">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </IconButton>
+        <BackTitle>주문 상세 내역</BackTitle>
+      </BackHeader>
       <DetailMain id="order-detail-main">
         <TitleBox>
           <Title>주문 상세 내역</Title>

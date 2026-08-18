@@ -4,8 +4,7 @@ import {
   HeaderContainer, 
   IconButton, 
   LogoWrapper, 
-  ActionsWrapper, 
-  CartBadge 
+  ActionsWrapper
 } from './AppHeader.styles';
 
 const AppHeader: React.FC = () => {

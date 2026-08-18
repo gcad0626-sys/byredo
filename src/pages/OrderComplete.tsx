@@ -1,20 +1,32 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
-import AppHeader from '../components/home/AppHeader';
+import styled from 'styled-components';
+import { HeaderContainer, LogoWrapper } from '../components/home/AppHeader.styles';
 import { 
   CompleteMain, MessageBlock, Title, Subtitle, 
   Card, Row, Divider, Label, Value, 
   AddressBlock, AddressText, Actions, ActionBtn 
 } from './OrderComplete.styles';
+import { useOrders } from '../context/OrderContext';
+
+const CompleteHeader = styled(HeaderContainer)`
+  justify-content: center;
+  position: relative;
+`;
 
 const OrderComplete: React.FC = () => {
   const navigate = useNavigate();
+  const { orders } = useOrders();
+  const latestOrder = orders.length > 0 ? orders[0] : null;
 
   return (
     <AppLayout>
-      <AppHeader />
-      {/* 실제 구현시 결제 완료 전용 헤더 사용 가능 */}
+      <CompleteHeader>
+        <LogoWrapper>
+          <img src="/org/img/logo.png" alt="BYREDO logo" />
+        </LogoWrapper>
+      </CompleteHeader>
       <CompleteMain id="order-complete-main">
         <MessageBlock>
           <Title>주문이 완료되었습니다</Title>
@@ -24,28 +36,31 @@ const OrderComplete: React.FC = () => {
         <Card>
           <Row>
             <Label>ORDER NUMBER</Label>
-            <Value>#20240512-1029</Value>
+            <Value>{latestOrder ? latestOrder.orderNumber : '#-'}</Value>
           </Row>
           <Divider />
           <Row>
             <Label>DATE</Label>
-            <Value>2024. 05. 12 14:30</Value>
+            <Value>{latestOrder ? latestOrder.date : '-'}</Value>
           </Row>
           <Divider />
           <Row>
             <Label>TOTAL AMOUNT</Label>
-            <Value isAmount>₩140,000</Value>
+            <Value isAmount>₩{latestOrder ? latestOrder.totalAmount.toLocaleString() : '0'}</Value>
           </Row>
-          <Divider />
-          <AddressBlock>
-            <Label>SHIPPING TO</Label>
-            <AddressText>
-              홍길동<br/>
-              010-1234-5678<br/>
-              [06035] 서울특별시 강남구 도산대로 45길 10-5<br/>
-              101호
-            </AddressText>
-          </AddressBlock>
+          {latestOrder && (
+            <>
+              <Divider />
+              <AddressBlock>
+                <Label>SHIPPING TO</Label>
+                <AddressText>
+                  {latestOrder.shippingInfo.name}<br/>
+                  {latestOrder.shippingInfo.phone}<br/>
+                  {latestOrder.shippingInfo.address}
+                </AddressText>
+              </AddressBlock>
+            </>
+          )}
         </Card>
         
         <Actions>

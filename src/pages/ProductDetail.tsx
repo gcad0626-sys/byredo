@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import styled from 'styled-components';
+import {
+  HeaderContainer, IconButton, ActionsWrapper, LogoWrapper
+} from '../components/home/AppHeader.styles';
 import { 
   DetailMain, HeroSection, 
   InfoSection, InfoCate, InfoTitle, InfoDesc, InfoPrice, DetailWishBtn,
@@ -15,32 +18,9 @@ import { getProductById } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
 
-const DetailHeader = styled.header`
-  display: flex;
-  align-items: center;
+const DetailHeader = styled(HeaderContainer)`
   justify-content: space-between;
-  height: var(--header-h);
   padding: 0 16px;
-  background: #fff;
-  border-bottom: 1px solid #f0f0f0;
-
-  button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    margin-left: -8px;
-  }
-  
-  h1 {
-    font-size: 14px;
-    font-weight: 600;
-  }
-  
-  .spacer { width: 40px; }
 `;
 
 const ProductDetail: React.FC = () => {
@@ -64,13 +44,31 @@ const ProductDetail: React.FC = () => {
   return (
     <AppLayout>
       <DetailHeader>
-        <button onClick={() => navigate('/products')}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <path d="M15 18l-6-6 6-6"/>
+        <IconButton onClick={() => navigate(-1)} aria-label="뒤로가기">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5">
+            <path d="M15 18l-6-6 6-6" />
           </svg>
-        </button>
-        <h1>상품 상세</h1>
-        <div className="spacer"></div>
+        </IconButton>
+        <LogoWrapper>
+          <img src="/org/img/logo.png" alt="BYREDO logo" />
+        </LogoWrapper>
+        <ActionsWrapper>
+          <Link to="/search">
+            <IconButton className="trigger-search" id="btn-search-open" aria-label="검색">
+              <img src="/org/img/icon-search.png" alt="search icon" />
+            </IconButton>
+          </Link>
+          <Link to="/cart">
+            <IconButton className="trigger-cart" id="btn-cart-open" aria-label="장바구니">
+              <img src="/org/img/icon-cart.png" alt="cart icon" />
+            </IconButton>
+          </Link>
+          <Link to="/mypage">
+            <IconButton className="trigger-mypage" aria-label="마이페이지">
+              <img src="/org/img/icon-user.png" alt="user icon" />
+            </IconButton>
+          </Link>
+        </ActionsWrapper>
       </DetailHeader>
       <DetailMain id="product-detail-main">
         <HeroSection>

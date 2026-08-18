@@ -1,12 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
-import AppHeader from '../components/home/AppHeader';
+import styled from 'styled-components';
+import { HeaderContainer, IconButton } from '../components/home/AppHeader.styles';
 import { 
   WriteMain, WriteHeader, Title, ProductCard, ProductImg, ProductInfo, ProductCate, ProductName, 
   RatingSection, RatingLabel, Stars, StarBtn, 
   TextSection, Textarea, Action, SubmitBtn 
 } from './WriteReview.styles';
+
+const BackHeader = styled(HeaderContainer)`
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 0 8px 0 4px;
+`;
+const BackTitle = styled.h2`
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+`;
 
 const WriteReview: React.FC = () => {
   const navigate = useNavigate();
@@ -41,7 +53,14 @@ const WriteReview: React.FC = () => {
 
   return (
     <AppLayout>
-      <AppHeader />
+      <BackHeader>
+        <IconButton onClick={() => navigate(-1)} aria-label="뒤로가기">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </IconButton>
+        <BackTitle>Write a Review</BackTitle>
+      </BackHeader>
       <WriteMain id="write-review-main">
         <WriteHeader>
           <Title>Write a Review</Title>
