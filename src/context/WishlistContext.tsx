@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, type ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { getStorageKey } from '../utils/storage';
 
 interface WishlistContextType {
   wishlistIds: number[];
@@ -9,7 +10,14 @@ interface WishlistContextType {
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
 export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [wishlistIds, setWishlistIds] = useState<number[]>([]);
+  const [wishlistIds, setWishlistIds] = useState<number[]>(() => {
+    const saved = localStorage.getItem(getStorageKey('wishlist'));
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(getStorageKey('wishlist'), JSON.stringify(wishlistIds));
+  }, [wishlistIds]);
 
   const toggleWishlist = (id: number) => {
     setWishlistIds(prev => 

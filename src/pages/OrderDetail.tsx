@@ -88,7 +88,7 @@ const OrderDetail: React.FC = () => {
               </ProductImg>
               <ProductInfo>
                 <ProductName onClick={() => navigate(`/products/${item.id}`)}>{item.name}</ProductName>
-                <ProductOption>{item.option}</ProductOption>
+                <ProductOption>{item.option?.includes('ML') ? item.option : '30ML'}</ProductOption>
                 <ProductBottom>
                   <ProductQty>{item.qty}개</ProductQty>
                   <ProductPrice>₩{(item.price * item.qty).toLocaleString()}</ProductPrice>

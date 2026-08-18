@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { getStorageKey } from '../utils/storage';
 
 export interface CartItemType {
   id: number;
@@ -25,14 +26,14 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItemType[]>(() => {
     try {
-      const saved = localStorage.getItem('cartItems');
+      const saved = localStorage.getItem(getStorageKey('cartItems'));
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
       return [];
     }
   });
   useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(items));
+    localStorage.setItem(getStorageKey('cartItems'), JSON.stringify(items));
   }, [items]);
 
   const addToCart = (newItem: Omit<CartItemType, 'id'>) => {

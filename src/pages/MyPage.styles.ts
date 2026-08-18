@@ -13,25 +13,41 @@ export const Profile = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 40px 16px 32px;
+  position: relative;
 `;
 
-export const Avatar = styled.div`
+export const Avatar = styled.div<{ provider?: string }>`
   width: 72px;
   height: 72px;
-  background: #f0f0f0;
+  background: ${props => 
+    props.provider === 'kakao' ? '#FEE500' :
+    props.provider === 'google' ? '#fff' :
+    props.provider === 'apple' ? '#000' : '#f0f0f0'
+  };
+  border: ${props => props.provider === 'google' ? '1px solid #ddd' : 'none'};
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #333;
+  color: ${props => props.provider === 'apple' ? '#fff' : '#333'};
   margin-bottom: 20px;
   font-size: 24px;
 `;
 
-export const Name = styled.h2`
+export const Name = styled.div`
   font-size: 22px;
-  font-weight: 500;
-  margin: 0 0 8px;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const Email = styled.p`
+  font-size: 13px;
+  color: #888;
+  margin: 0 0 8px 0;
 `;
 
 export const Membership = styled.p`
@@ -39,6 +55,35 @@ export const Membership = styled.p`
   color: #666;
   letter-spacing: 0.5px;
   margin: 0;
+`;
+
+export const ProviderBadge = styled.span`
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 500;
+  background: #eee;
+  color: #555;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 8px;
+`;
+
+export const LogoutBtn = styled.button`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: 1px solid #d8d8d0;
+  padding: 4px 8px;
+  font-size: 10px;
+  color: #666;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:active {
+    background: #f0f0f0;
+  }
 `;
 
 export const Actions = styled.div`

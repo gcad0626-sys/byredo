@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getStorageKey } from '../utils/storage';
 import AppLayout from '../components/layout/AppLayout';
 import Modal from '../components/common/Modal';
 import styled from 'styled-components';
@@ -48,7 +49,7 @@ const Review: React.FC = () => {
   const [reviewToDelete, setReviewToDelete] = useState<number | null>(null);
   
   useEffect(() => {
-    const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
+    const saved = JSON.parse(localStorage.getItem(getStorageKey('myReviews')) || '[]');
     if (saved.length > 0) {
       setReviews([...saved, ...initialReviews]);
     }
@@ -64,9 +65,9 @@ const Review: React.FC = () => {
       const updatedReviews = reviews.filter(r => r.id !== reviewToDelete);
       setReviews(updatedReviews);
       
-      const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
+      const saved = JSON.parse(localStorage.getItem(getStorageKey('myReviews')) || '[]');
       const updatedSaved = saved.filter((r: any) => r.id !== reviewToDelete);
-      localStorage.setItem('myReviews', JSON.stringify(updatedSaved));
+      localStorage.setItem(getStorageKey('myReviews'), JSON.stringify(updatedSaved));
     }
     setDeleteModalOpen(false);
     setReviewToDelete(null);

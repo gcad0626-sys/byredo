@@ -54,7 +54,7 @@ const Cart: React.FC = () => {
                       <CartName onClick={() => navigate(`/products/${item.id}`)}>{item.name}</CartName>
                       <CartRemove onClick={() => handleRemove(item.id)}>✕</CartRemove>
                     </CartHead>
-                    <CartOptionSelect value={item.option} onChange={(e) => updateOption(item.id, e.target.value)}>
+                    <CartOptionSelect value={item.option?.includes('ML') ? item.option : '30ML'} onChange={(e) => updateOption(item.id, e.target.value)}>
                       <option value="30ML">30ML</option>
                       <option value="100ML">100ML</option>
                     </CartOptionSelect>

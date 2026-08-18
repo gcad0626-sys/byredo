@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import { HeaderContainer, IconButton } from '../components/home/AppHeader.styles';
 import { OrderListMain, OlCard, DeleteOrderBtn } from './OrderList.styles';
 import { 
-  OrderCard, OrderTop, OrderDate, OrderStatus, 
+  OrderCard, OrderTop, OrderDate, OrderStatus,
   OrderProduct, ProductImg, ProductInfo, ProductName, ProductOption, ProductPrice, OrderActions
 } from './MyPage.styles';
 import { useOrders } from '../context/OrderContext';
+import { getProductById } from '../data/products';
 
 const BackHeader = styled(HeaderContainer)`
   justify-content: flex-start;
@@ -19,6 +20,23 @@ const BackTitle = styled.h2`
   font-size: 15px;
   font-weight: 600;
   color: #111;
+`;
+
+const MinimalReviewBtn = styled.button`
+  background: none;
+  border: 1px solid #d8d8d0;
+  padding: 4px 8px;
+  font-size: 10px;
+  color: #666;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-top: 6px;
+  align-self: flex-start;
+  transition: all 0.2s;
+  
+  &:active {
+    background: #f0f0f0;
+  }
 `;
 
 const OrderList: React.FC = () => {
@@ -61,8 +79,19 @@ const OrderList: React.FC = () => {
                     <ProductImg><img src={item.image} alt={item.name} /></ProductImg>
                     <ProductInfo>
                       <ProductName>{item.name}</ProductName>
-                      <ProductOption>{item.option} / {item.qty}개</ProductOption>
+                      <ProductOption>{item.option?.includes('ML') ? item.option : '30ML'} / {item.qty}개</ProductOption>
                       <ProductPrice>₩{(item.price * item.qty).toLocaleString()}</ProductPrice>
+                      {order.status !== '취소 완료' && (
+                        <MinimalReviewBtn onClick={(e) => {
+                          e.stopPropagation();
+                          const product = getProductById(Number(item.id));
+                          if (product) {
+                            navigate('/mypage/write-review', { state: { product } });
+                          }
+                        }}>
+                          리뷰 작성하기
+                        </MinimalReviewBtn>
+                      )}
                     </ProductInfo>
                   </OrderProduct>
                 ))}

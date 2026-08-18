@@ -55,7 +55,7 @@ export const AuthFormRow = styled.div`
   }
 `;
 
-export const AuthBtn = styled.button<{ variant?: 'submit' | 'google' | 'kakao' }>`
+export const AuthBtn = styled.button<{ variant?: 'submit' | 'google' | 'kakao' | 'apple' }>`
   width: 100%;
   height: 52px;
   font-size: 14px;
@@ -92,6 +92,13 @@ export const AuthBtn = styled.button<{ variant?: 'submit' | 'google' | 'kakao' }
   ${props => props.variant === 'kakao' && `
     background: #FEE500;
     color: #191919;
+    border: none;
+    font-size: 13px;
+  `}
+
+  ${props => props.variant === 'apple' && `
+    background: #000000;
+    color: #ffffff;
     border: none;
     font-size: 13px;
   `}

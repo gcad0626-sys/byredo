@@ -15,6 +15,7 @@ import {
 
 const products = [
   {
+    id: 3,
     rank: "01",
     image: "/org/img/product-blanche.jpg",
     name: "BLANCHE",
@@ -22,6 +23,7 @@ const products = [
     price: "₩70,000"
   },
   {
+    id: 4,
     rank: "02",
     image: "/org/img/product-baldafrique.jpg",
     name: "BAL D'AFRIQUE",
@@ -40,7 +42,7 @@ const BestProducts: React.FC = () => {
       </Head>
       <List>
         {products.map((item, index) => (
-          <Card key={index} className="trigger-product-detail" onClick={() => navigate('/products/1')}>
+          <Card key={index} className="trigger-product-detail" onClick={() => navigate(`/products/${item.id}`)}>
             <ImgWrap>
               <Rank>{item.rank}</Rank>
               <img src={item.image} alt={`${item.name} 핸드크림`} />

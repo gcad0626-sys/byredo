@@ -188,7 +188,7 @@ const Quiz: React.FC = () => {
                         productId: mainProduct.id,
                         name: mainProduct.name,
                         image: mainProduct.image,
-                        option: '30ML',
+                        option: mainProduct.options?.[0] || '30ML',
                         qty: 1,
                         price: mainProduct.price,
                         giftMessage: null

@@ -28,7 +28,7 @@ const Wishlist: React.FC = () => {
       productId: product.id,
       name: product.name,
       image: product.image,
-      option: product.desc || '단품',
+      option: product.options?.[0] || '30ML',
       qty: 1,
       price: product.price,
       giftMessage: null,

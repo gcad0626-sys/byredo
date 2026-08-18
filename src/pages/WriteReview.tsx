@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { getStorageKey } from '../utils/storage';
 import Modal from '../components/common/Modal';
 import AppLayout from '../components/layout/AppLayout';
 import styled from 'styled-components';
@@ -49,7 +50,8 @@ const WriteReview: React.FC = () => {
       return;
     }
     
-    const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
+    const storageKey = getStorageKey('myReviews');
+    const saved = JSON.parse(localStorage.getItem(storageKey) || '[]');
     
     if (editReview) {
       const updated = saved.map((r: any) => 
@@ -57,7 +59,7 @@ const WriteReview: React.FC = () => {
           ? { ...r, stars: '★'.repeat(rating) + '☆'.repeat(5 - rating), text: content }
           : r
       );
-      localStorage.setItem('myReviews', JSON.stringify(updated));
+      localStorage.setItem(storageKey, JSON.stringify(updated));
     } else {
       const newReview = {
         id: Date.now(),
@@ -67,7 +69,7 @@ const WriteReview: React.FC = () => {
         stars: '★'.repeat(rating) + '☆'.repeat(5 - rating),
         text: content
       };
-      localStorage.setItem('myReviews', JSON.stringify([newReview, ...saved]));
+      localStorage.setItem(storageKey, JSON.stringify([newReview, ...saved]));
     }
 
     setModalMessage(editReview ? '리뷰가 수정되었습니다.' : '리뷰가 등록되었습니다.');

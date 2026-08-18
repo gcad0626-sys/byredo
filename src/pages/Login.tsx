@@ -1,18 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import AppLayout from '../components/layout/AppLayout';
 import AppHeader from '../components/home/AppHeader';
 import { 
   AuthMain, AuthTitle, AuthFormRow, AuthBtn, AuthDivider, AuthLinks, AuthLink, AuthLinksBottom, AuthText
 } from './Auth.styles';
 
+const Toast = styled.div<{ show: boolean }>`
+  position: fixed;
+  bottom: calc(var(--tabbar-h) + 20px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.8);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 13px;
+  opacity: ${props => props.show ? 1 : 0};
+  visibility: ${props => props.show ? 'visible' : 'hidden'};
+  transition: opacity 0.3s, visibility 0.3s;
+  z-index: 1000;
+  white-space: nowrap;
+`;
+
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [showAccountModal, setShowAccountModal] = useState(false);
   const [modalMode, setModalMode] = useState<'select' | 'new'>('select');
-  const [provider, setProvider] = useState<'kakao' | 'google' | null>(null);
+  const [provider, setProvider] = useState<'kakao' | 'google' | 'apple' | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showToast, setShowToast] = useState(false);
 
-  const handleSocialClick = (p: 'kakao' | 'google') => {
+  useEffect(() => {
+    setIsLoggedIn(localStorage.getItem('isLoggedIn') === 'true');
+  }, []);
+
+  const handleLoginSuccess = (providerName: string, userName: string = '인영', userEmail: string = 'user@example.com') => {
+    localStorage.setItem('isLoggedIn', 'true');
+    localStorage.setItem('loginProvider', providerName);
+    localStorage.setItem('userName', userName);
+    localStorage.setItem('userEmail', userEmail);
+    setIsLoggedIn(true);
+    setShowToast(true);
+    setTimeout(() => {
+      setShowToast(false);
+      window.location.href = '/mypage';
+    }, 1500);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('loginProvider');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userEmail');
+    setIsLoggedIn(false);
+  };
+
+  const handleSocialClick = (p: 'kakao' | 'google' | 'apple') => {
     setProvider(p);
     setModalMode('select');
     setShowAccountModal(true);
@@ -24,14 +69,30 @@ const Login: React.FC = () => {
     } else {
       setShowAccountModal(false);
       const name = email === 'user1@example.com' ? '김바이레도' : '이향수';
-      navigate(`/social-signup?provider=${provider}&email=${email}&name=${name}`);
+      handleLoginSuccess(provider || 'email', name, email);
     }
   };
 
   const handleNewAccountLogin = () => {
     setShowAccountModal(false);
-    navigate('/mypage');
+    handleLoginSuccess(provider || 'email', '신규유저', 'new@example.com');
   };
+
+  if (isLoggedIn) {
+    return (
+      <AppLayout>
+        <AppHeader />
+        <AuthMain id="login-main" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+          <AuthTitle>LOGOUT</AuthTitle>
+          <p style={{ textAlign: 'center', marginBottom: '32px', color: '#666', fontSize: '14px' }}>
+            환영합니다!<br/>현재 로그인되어 있습니다.
+          </p>
+          <AuthBtn variant="submit" onClick={handleLogout} style={{ marginTop: 0 }}>로그아웃</AuthBtn>
+        </AuthMain>
+        <Toast show={showToast}>환영합니다! 로그인 되었습니다.</Toast>
+      </AppLayout>
+    );
+  }
 
   return (
     <AppLayout>
@@ -48,7 +109,7 @@ const Login: React.FC = () => {
           <input type="password" placeholder="비밀번호를 입력해주세요" />
         </AuthFormRow>
         
-        <AuthBtn variant="submit" onClick={() => navigate('/mypage')}>로그인</AuthBtn>
+        <AuthBtn variant="submit" onClick={() => handleLoginSuccess('email', '일반유저', 'normal@byredo.com')}>로그인</AuthBtn>
         
         <AuthDivider>또는</AuthDivider>
         
@@ -67,6 +128,12 @@ const Login: React.FC = () => {
             <path fill="none" d="M0 0h48v48H0z"/>
           </svg>
           구글로 로그인하기
+        </AuthBtn>
+        <AuthBtn variant="apple" onClick={() => handleSocialClick('apple')}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.05 13.57c-.02-2.12 1.74-3.15 1.82-3.2-1-1.46-2.56-1.65-3.1-1.68-1.32-.13-2.6.78-3.27.78-.68 0-1.74-.75-2.84-.73-1.42.02-2.74.83-3.48 2.1-1.49 2.58-.38 6.4 1.08 8.5 .72 1.03 1.55 2.18 2.66 2.14 1.08-.04 1.48-.68 2.78-.68 1.3 0 1.67.68 2.8.66 1.15-.02 1.88-1.07 2.58-2.1 1.2-1.76 1.69-3.46 1.7-3.56-.02-.02-1.71-.65-1.73-2.23M15.11 6.53c.6-.72 1-1.72.89-2.73-1.02.04-2.2.66-2.82 1.38-.55.63-1.03 1.65-.91 2.65 1.13.09 2.22-.57 2.84-1.3" />
+          </svg>
+          Apple로 로그인하기
         </AuthBtn>
         
         <AuthLinks>
@@ -104,7 +171,7 @@ const Login: React.FC = () => {
             {modalMode === 'select' ? (
               <>
                 <h3 style={{ marginBottom: '20px', fontSize: '18px', fontWeight: 'bold', color: '#111' }}>
-                  {provider === 'kakao' ? '카카오 계정 선택' : 'Google 계정 선택'}
+                  {provider === 'kakao' ? '카카오 계정 선택' : provider === 'google' ? 'Google 계정 선택' : 'Apple 계정 선택'}
                 </h3>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, textAlign: 'left' }}>
                   <li 
@@ -153,6 +220,8 @@ const Login: React.FC = () => {
           </div>
         </div>
       )}
+      
+      <Toast show={showToast}>환영합니다! 로그인 되었습니다.</Toast>
     </AppLayout>
   );
 };

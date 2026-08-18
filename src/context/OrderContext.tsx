@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
+import { getStorageKey } from '../utils/storage';
 
 export interface OrderItem {
   id: number | string;
@@ -40,7 +41,7 @@ const OrderContext = createContext<OrderContextType | undefined>(undefined);
 export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [orders, setOrders] = useState<Order[]>(() => {
     try {
-      const saved = localStorage.getItem('orders');
+      const saved = localStorage.getItem(getStorageKey('orders'));
       return saved ? JSON.parse(saved) : [];
     } catch (e) {
       return [];
@@ -48,7 +49,7 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   });
 
   useEffect(() => {
-    localStorage.setItem('orders', JSON.stringify(orders));
+    localStorage.setItem(getStorageKey('orders'), JSON.stringify(orders));
   }, [orders]);
 
   const addOrder = (order: Order) => {

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import AppHeader from '../components/home/AppHeader';
 import { 
-  MyPageMain, Profile, Avatar, Name, Membership, 
+  MyPageMain, Profile, Avatar, Name, Email, Membership, ProviderBadge, LogoutBtn,
   Actions, ActionBtn, 
   OrdersSection, OrdersHeader, OrderCard, OrderTop, OrderDate, OrderStatus, 
   OrderProduct, ProductImg, ProductInfo, ProductName, ProductOption, ProductPrice, OrderActions
@@ -15,19 +15,51 @@ const MyPage: React.FC = () => {
   const { orders } = useOrders();
   const recentOrder = orders.length > 0 ? orders[0] : null;
 
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  const loginProvider = localStorage.getItem('loginProvider') || 'email';
+  const userName = localStorage.getItem('userName') || '게스트';
+  const userEmail = localStorage.getItem('userEmail') || '';
+
+  const getProviderText = (provider: string) => {
+    switch(provider) {
+      case 'kakao': return '카카오';
+      case 'google': return 'Google';
+      case 'apple': return 'Apple';
+      default: return '일반';
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('loginProvider');
+    localStorage.removeItem('userName');
+    window.location.reload();
+  };
+
   return (
     <AppLayout>
       <AppHeader />
       <MyPageMain id="mypage-main">
         <Profile>
-          <Avatar>
+          <Avatar provider={isLoggedIn ? loginProvider : undefined}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
               <circle cx="12" cy="7" r="4"></circle>
             </svg>
           </Avatar>
-          <Name>인영님, 안녕하세요</Name>
-          <Membership>Membership: SILVER</Membership>
+          <Name>
+            {isLoggedIn ? `${userName}님, 안녕하세요` : '로그인이 필요합니다'}
+          </Name>
+          {isLoggedIn && userEmail && <Email>{userEmail}</Email>}
+          {isLoggedIn && <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>}
+          {isLoggedIn ? (
+            <>
+              <Membership>Membership: SILVER</Membership>
+              <ProviderBadge style={{ marginTop: '8px', marginLeft: 0 }}>{getProviderText(loginProvider)} 로그인</ProviderBadge>
+            </>
+          ) : (
+            <LogoutBtn style={{ position: 'static', marginTop: '16px' }} onClick={() => navigate('/login')}>로그인하러 가기</LogoutBtn>
+          )}
         </Profile>
         
         <Actions>
@@ -63,7 +95,7 @@ const MyPage: React.FC = () => {
                   <ProductImg><img src={item.image} alt={item.name} /></ProductImg>
                   <ProductInfo>
                     <ProductName>{item.name}</ProductName>
-                    <ProductOption>{item.option} / {item.qty}개</ProductOption>
+                    <ProductOption>{item.option?.includes('ML') ? item.option : '30ML'} / {item.qty}개</ProductOption>
                     <ProductPrice>₩{(item.price * item.qty).toLocaleString()}</ProductPrice>
                   </ProductInfo>
                 </OrderProduct>

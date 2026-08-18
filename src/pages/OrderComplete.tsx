@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import styled from 'styled-components';
-import { HeaderContainer, LogoWrapper } from '../components/home/AppHeader.styles';
+import { HeaderContainer, LogoWrapper, IconButton } from '../components/home/AppHeader.styles';
 import { 
   CompleteMain, MessageBlock, Title, Subtitle, 
   Card, Row, Divider, Label, Value, 
@@ -26,6 +26,16 @@ const OrderComplete: React.FC = () => {
         <LogoWrapper>
           <img src="/org/img/logo.png" alt="BYREDO logo" />
         </LogoWrapper>
+        <IconButton 
+          onClick={() => navigate('/')} 
+          style={{ position: 'absolute', right: '16px', top: '50%', transform: 'translateY(-50%)' }}
+          aria-label="닫기"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </IconButton>
       </CompleteHeader>
       <CompleteMain id="order-complete-main">
         <MessageBlock>
@@ -62,12 +72,11 @@ const OrderComplete: React.FC = () => {
             </>
           )}
         </Card>
-        
-        <Actions>
-          <ActionBtn onClick={() => navigate('/mypage/orders')}>주문 내역 보기</ActionBtn>
-          <ActionBtn outline onClick={() => navigate('/')}>쇼핑 계속하기</ActionBtn>
-        </Actions>
       </CompleteMain>
+      <Actions>
+        <ActionBtn onClick={() => navigate('/mypage/orders')}>주문 내역 보기</ActionBtn>
+        <ActionBtn outline onClick={() => navigate('/')}>쇼핑 계속하기</ActionBtn>
+      </Actions>
     </AppLayout>
   );
 };

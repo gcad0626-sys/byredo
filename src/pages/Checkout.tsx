@@ -159,7 +159,7 @@ const Checkout: React.FC = () => {
               <ProductInfo>
                 <ProductCate>HAND CREAM</ProductCate>
                 <ProductName>{item.name}</ProductName>
-                <ProductOption>{item.option} / {item.qty}개</ProductOption>
+                <ProductOption>{item.option?.includes('ML') ? item.option : '30ML'} / {item.qty}개</ProductOption>
                 <ProductPrice>₩{(item.price * item.qty).toLocaleString()}</ProductPrice>
               </ProductInfo>
             </CheckoutProduct>

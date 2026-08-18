@@ -3,9 +3,9 @@ import styled from 'styled-components';
 export const CompleteMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
+  padding-bottom: calc(var(--tabbar-h) + 140px);
   background: #fff;
-  padding: 0 20px 40px;
+  padding: 0 20px calc(var(--tabbar-h) + 140px);
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -88,10 +88,16 @@ export const AddressText = styled.p`
 `;
 
 export const Actions = styled.div`
+  position: fixed;
+  bottom: var(--tabbar-h);
+  left: 0;
+  width: 100%;
+  padding: 16px 20px;
+  background: #fff;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: auto;
+  z-index: 100;
 `;
 
 export const ActionBtn = styled.button<{ outline?: boolean }>`
