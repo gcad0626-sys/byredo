@@ -76,8 +76,8 @@ const Search: React.FC = () => {
   
   const searchResults = keyword.trim() ? products.filter(p => 
     p.name.toLowerCase().includes(keyword.toLowerCase()) || 
-    p.desc.includes(keyword) || 
-    p.brand.toLowerCase().includes(keyword.toLowerCase())
+    p.brand.toLowerCase().includes(keyword.toLowerCase()) ||
+    (p.koName && p.koName.includes(keyword))
   ) : [];
 
   return (
