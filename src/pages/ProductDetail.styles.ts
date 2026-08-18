@@ -3,9 +3,8 @@ import styled from 'styled-components';
 export const DetailMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
+  padding-bottom: calc(var(--tabbar-h) + 100px);
   background: #fafaf9;
-  padding-bottom: 80px; /* space for fixed bottom action */
   position: relative;
 `;
 
@@ -203,11 +202,14 @@ export const AccordionContent = styled.div<{ isExpanded: boolean }>`
 `;
 
 export const ActionBottom = styled.div`
+  position: fixed;
+  bottom: var(--tabbar-h);
+  left: 0;
   width: 100%;
   display: flex;
   background: #fff;
   border-top: 1px solid #e0e0e0;
-  z-index: 10;
+  z-index: 100;
   flex-shrink: 0;
 `;
 

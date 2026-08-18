@@ -51,6 +51,18 @@ const Review: React.FC = () => {
     }
   }, []);
 
+  const handleDelete = (id: number) => {
+    const isConfirmed = window.confirm('정말 삭제하시겠습니까?');
+    if (isConfirmed) {
+      const updatedReviews = reviews.filter(r => r.id !== id);
+      setReviews(updatedReviews);
+      
+      const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
+      const updatedSaved = saved.filter((r: any) => r.id !== id);
+      localStorage.setItem('myReviews', JSON.stringify(updatedSaved));
+    }
+  };
+
   return (
     <AppLayout>
       <BackHeader>
@@ -81,8 +93,8 @@ const Review: React.FC = () => {
                 <ReviewStars>{review.stars}</ReviewStars>
                 <ReviewText>{review.text}</ReviewText>
                 <ReviewActions>
-                  <button>수정</button>
-                  <button>삭제</button>
+                  <button onClick={() => navigate('/mypage/write-review', { state: { reviewToEdit: review } })}>수정</button>
+                  <button onClick={() => handleDelete(review.id)}>삭제</button>
                 </ReviewActions>
               </ReviewContent>
             </ReviewItem>

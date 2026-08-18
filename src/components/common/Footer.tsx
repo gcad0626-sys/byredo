@@ -4,7 +4,7 @@ import { FooterWrapper } from './Footer.styles';
 const Footer: React.FC = () => {
   return (
     <FooterWrapper>
-      <p>&copy; 2026 BYREDO. Structure skeleton — content to be filled in the next step.</p>
+      <p>COPYRIGHTⓒ2026.INYEONG. ALL RIGHT RESERVE.</p>
     </FooterWrapper>
   );
 };

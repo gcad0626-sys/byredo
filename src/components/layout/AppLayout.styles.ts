@@ -17,6 +17,7 @@ export const PageWrap = styled.div`
     transform: translateX(-50%);
     padding: calc(var(--header-h-desktop) + 40px) 24px 40px;
     height: 100vh;
+    height: 100dvh;
   }
 
   /* 데스크탑 배경 장식 이미지 */
@@ -68,8 +69,7 @@ export const AppColumn = styled.div`
 
 export const AppFrame = styled.div`
   width: 100%;
-  height: auto;
-  min-height: 100vh;
+  height: 100dvh;
   border: none;
   border-radius: 0;
   box-shadow: none;
@@ -90,5 +90,6 @@ export const AppFrame = styled.div`
     box-shadow: 0 20px 45px rgba(0, 0, 0, 0.08);
     overflow: hidden; /* Desktop specific overflow */
     flex: 0 0 var(--app-frame-w);
+    transform: translateZ(0); /* Contain position: fixed elements inside frame */
   }
 `;

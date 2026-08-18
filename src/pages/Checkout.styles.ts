@@ -3,9 +3,8 @@ import styled from 'styled-components';
 export const CheckoutMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
+  padding-bottom: calc(var(--tabbar-h) + 100px);
   background: #fff;
-  padding-bottom: 40px;
 `;
 
 export const CheckoutSection = styled.div`
@@ -251,7 +250,13 @@ export const CheckboxLabel = styled.label`
 `;
 
 export const CheckoutAction = styled.div`
-  padding: 0 16px;
+  position: fixed;
+  bottom: var(--tabbar-h);
+  left: 0;
+  width: 100%;
+  background: #fafaf9;
+  padding: 16px;
+  z-index: 100;
   
   button {
     width: 100%;

@@ -70,7 +70,15 @@ const MyPage: React.FC = () => {
               ))}
               <OrderActions>
                 <button onClick={() => navigate(`/mypage/orders/${recentOrder.id}`)}>주문 상세 보기</button>
-                <button onClick={() => navigate(`/mypage/exchange-return/${recentOrder.id}`)}>교환/반품</button>
+                {(recentOrder.status === '결제 완료' || recentOrder.status === '상품 준비중') && (
+                  <button onClick={() => navigate(`/mypage/cancel-order/${recentOrder.id}`)}>주문 취소</button>
+                )}
+                {(recentOrder.status === '배송중' || recentOrder.status === '배송완료') && (
+                  <button onClick={() => navigate(`/mypage/exchange-return/${recentOrder.id}`)}>교환/반품</button>
+                )}
+                {recentOrder.status === '취소 완료' && (
+                  <button disabled style={{ color: '#ccc', border: '1px solid #eee' }}>취소 완료</button>
+                )}
               </OrderActions>
             </OrderCard>
           ) : (

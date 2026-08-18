@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import Modal from '../components/common/Modal';
 import AppLayout from '../components/layout/AppLayout';
 import styled from 'styled-components';
 import { HeaderContainer, IconButton } from '../components/home/AppHeader.styles';
@@ -22,33 +23,63 @@ const BackTitle = styled.h2`
 
 const WriteReview: React.FC = () => {
   const navigate = useNavigate();
-  const [rating, setRating] = useState(0);
-  const [content, setContent] = useState('');
+  const location = useLocation();
+  const editReview = location.state?.reviewToEdit;
+  const product = location.state?.product || editReview || { 
+    name: 'BLANCHE', 
+    image: '/org/img/product-blanche.jpg', 
+    option: 'HAND CREAM' 
+  };
+  
+  const [rating, setRating] = useState(editReview ? editReview.stars.split('★').length - 1 : 0);
+  const [content, setContent] = useState(editReview ? editReview.text : '');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [redirectOnClose, setRedirectOnClose] = useState(false);
 
   const handleSubmit = () => {
     if (rating === 0) {
-      alert('별점을 선택해주세요.');
+      setModalMessage('별점을 선택해주세요.');
+      setModalOpen(true);
       return;
     }
     if (content.trim().length < 10) {
-      alert('리뷰 내용을 10자 이상 작성해주세요.');
+      setModalMessage('리뷰 내용을 10자 이상 작성해주세요.');
+      setModalOpen(true);
       return;
     }
     
-    const newReview = {
-      id: Date.now(),
-      productName: 'BLANCHE',
-      image: '/org/img/product-blanche.jpg',
-      date: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }),
-      stars: '★'.repeat(rating) + '☆'.repeat(5 - rating),
-      text: content
-    };
-    
     const saved = JSON.parse(localStorage.getItem('myReviews') || '[]');
-    localStorage.setItem('myReviews', JSON.stringify([newReview, ...saved]));
+    
+    if (editReview) {
+      const updated = saved.map((r: any) => 
+        r.id === editReview.id 
+          ? { ...r, stars: '★'.repeat(rating) + '☆'.repeat(5 - rating), text: content }
+          : r
+      );
+      localStorage.setItem('myReviews', JSON.stringify(updated));
+    } else {
+      const newReview = {
+        id: Date.now(),
+        productName: product.name,
+        image: product.image,
+        date: new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' }),
+        stars: '★'.repeat(rating) + '☆'.repeat(5 - rating),
+        text: content
+      };
+      localStorage.setItem('myReviews', JSON.stringify([newReview, ...saved]));
+    }
 
-    alert('리뷰가 등록되었습니다.');
-    navigate('/mypage/reviews');
+    setModalMessage(editReview ? '리뷰가 수정되었습니다.' : '리뷰가 등록되었습니다.');
+    setRedirectOnClose(true);
+    setModalOpen(true);
+  };
+  
+  const handleModalClose = () => {
+    setModalOpen(false);
+    if (redirectOnClose) {
+      navigate('/mypage/reviews');
+    }
   };
 
   return (
@@ -63,16 +94,16 @@ const WriteReview: React.FC = () => {
       </BackHeader>
       <WriteMain id="write-review-main">
         <WriteHeader>
-          <Title>Write a Review</Title>
+          <Title>{editReview ? 'Edit Review' : 'Write a Review'}</Title>
         </WriteHeader>
 
         <ProductCard>
           <ProductImg>
-            <img src="/org/img/product-blanche.jpg" alt="BLANCHE" />
+            <img src={product.image} alt={product.name} />
           </ProductImg>
           <ProductInfo>
-            <ProductCate>HAND CREAM</ProductCate>
-            <ProductName>BLANCHE<br />블랑쉬 핸드 크림</ProductName>
+            <ProductCate>{product.option || 'HAND CREAM'}</ProductCate>
+            <ProductName>{product.name}</ProductName>
           </ProductInfo>
         </ProductCard>
 
@@ -98,11 +129,15 @@ const WriteReview: React.FC = () => {
             onChange={(e) => setContent(e.target.value)}
           />
         </TextSection>
-
-        <Action>
-          <SubmitBtn onClick={handleSubmit}>리뷰 등록하기</SubmitBtn>
-        </Action>
       </WriteMain>
+      <Action>
+        <SubmitBtn onClick={handleSubmit}>{editReview ? '리뷰 수정하기' : '리뷰 등록하기'}</SubmitBtn>
+      </Action>
+      <Modal 
+        isOpen={modalOpen} 
+        message={modalMessage} 
+        onClose={handleModalClose} 
+      />
     </AppLayout>
   );
 };

@@ -32,14 +32,19 @@ interface OrderContextType {
   addOrder: (order: Order) => void;
   getOrderById: (id: string) => Order | undefined;
   updateOrderStatus: (id: string, newStatus: string) => void;
+  deleteOrder: (id: string) => void;
 }
 
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [orders, setOrders] = useState<Order[]>(() => {
-    const saved = localStorage.getItem('orders');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('orders');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
   });
 
   useEffect(() => {
@@ -58,8 +63,12 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     setOrders(prev => prev.map(o => o.id === id ? { ...o, status: newStatus } : o));
   };
 
+  const deleteOrder = (id: string) => {
+    setOrders(prev => prev.filter(o => o.id !== id));
+  };
+
   return (
-    <OrderContext.Provider value={{ orders, addOrder, getOrderById, updateOrderStatus }}>
+    <OrderContext.Provider value={{ orders, addOrder, getOrderById, updateOrderStatus, deleteOrder }}>
       {children}
     </OrderContext.Provider>
   );

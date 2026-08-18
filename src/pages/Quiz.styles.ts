@@ -415,3 +415,22 @@ export const RecViewBtn = styled.button`
   align-items: center;
   gap: 4px;
 `;
+
+export const RecCartBtn = styled.button`
+  background: #111;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 8px;
+  
+  img {
+    width: 16px;
+    height: 16px;
+    filter: invert(1);
+  }
+`;

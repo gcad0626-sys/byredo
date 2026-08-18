@@ -4,10 +4,15 @@ import {
   HeaderContainer, 
   IconButton, 
   LogoWrapper, 
-  ActionsWrapper
+  ActionsWrapper,
+  CartBadge
 } from './AppHeader.styles';
+import { useCart } from '../../context/CartContext';
 
 const AppHeader: React.FC = () => {
+  const { items } = useCart();
+  const cartItemCount = items.reduce((sum, item) => sum + item.qty, 0);
+
   return (
     <HeaderContainer id="home-header">
       <IconButton id="btn-menu" aria-label="메뉴 열기">
@@ -24,6 +29,7 @@ const AppHeader: React.FC = () => {
         </IconButton>
         <IconButton as={Link} to="/cart" className="trigger-cart" id="btn-cart-open" aria-label="장바구니">
           <img src="/org/img/icon-cart.png" alt="cart icon" />
+          {cartItemCount > 0 && <CartBadge>{cartItemCount}</CartBadge>}
         </IconButton>
         <IconButton as={Link} to="/mypage" className="trigger-mypage" aria-label="마이페이지">
           <img src="/org/img/icon-user.png" alt="user icon" />

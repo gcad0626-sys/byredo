@@ -3,9 +3,8 @@ import styled from 'styled-components';
 export const CartMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
+  padding-bottom: calc(var(--tabbar-h) + 100px);
   background: #fafaf9;
-  padding-bottom: 40px;
 `;
 
 export const CartList = styled.ul`
@@ -210,7 +209,13 @@ export const SummaryFinal = styled.div`
 `;
 
 export const CartAction = styled.div`
-  padding: 0 16px 40px;
+  position: fixed;
+  bottom: var(--tabbar-h);
+  left: 0;
+  width: 100%;
+  background: #fafaf9;
+  padding: 16px;
+  z-index: 100;
 `;
 
 export const CheckoutBtn = styled.button`

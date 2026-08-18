@@ -24,31 +24,27 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItemType[]>(() => {
-    const saved = localStorage.getItem('cartItems');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('cartItems');
+      return saved ? JSON.parse(saved) : [];
+    } catch (e) {
+      return [];
+    }
   });
-  const [nextId, setNextId] = useState(() => {
-    const saved = localStorage.getItem('cartNextId');
-    return saved ? JSON.parse(saved) : 1;
-  });
-
   useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(items));
   }, [items]);
 
-  useEffect(() => {
-    localStorage.setItem('cartNextId', JSON.stringify(nextId));
-  }, [nextId]);
-
   const addToCart = (newItem: Omit<CartItemType, 'id'>) => {
-    // Check if exactly same product and option exists
-    const existing = items.find(i => i.productId === newItem.productId && i.option === newItem.option && i.giftMessage === newItem.giftMessage);
-    if (existing) {
-      setItems(items.map(i => i.id === existing.id ? { ...i, qty: i.qty + newItem.qty } : i));
-    } else {
-      setItems([...items, { ...newItem, id: nextId }]);
-      setNextId(nextId + 1);
-    }
+    setItems(prevItems => {
+      const existing = prevItems.find(i => i.productId === newItem.productId && i.option === newItem.option && i.giftMessage === newItem.giftMessage);
+      if (existing) {
+        return prevItems.map(i => i.id === existing.id ? { ...i, qty: i.qty + newItem.qty } : i);
+      } else {
+        const newId = Date.now();
+        return [...prevItems, { ...newItem, id: newId }];
+      }
+    });
   };
 
   const updateQty = (id: number, delta: number) => {

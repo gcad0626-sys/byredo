@@ -1,25 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
+import Modal from '../components/common/Modal';
+import { useCart } from '../context/CartContext';
+import { products } from '../data/products';
 import { 
   QuizMain, QuizHeader, CloseBtn, HeaderTitle, QuizContent, 
   IntroWrapper, IntroTitle, IntroDesc, IntroDivider, IntroMeta, BlackBtn,
   QTitle, QItem, QNumDesc, OptionRow, OptionGrid, OptionBox, OptionPill, OptionLine,
   ResultWrapper, ResultSub, ResultTitle, ResultTags, ResultLine, ResultDesc,
   ResultBestMatch, ResultProductName, ResultProductDesc, ResultPrice, RetakeBtn,
-  RecTitle, RecItem, RecNum, RecName, RecKo, RecTags, RecBottom, RecPriceInfo, RecViewBtn
+  RecTitle, RecItem, RecNum, RecName, RecKo, RecTags, RecBottom, RecPriceInfo, RecViewBtn, RecCartBtn
 } from './Quiz.styles';
 
 const Quiz: React.FC = () => {
   const navigate = useNavigate();
+  const { addToCart } = useCart();
   const [step, setStep] = useState(1);
   const [answers, setAnswers] = useState({ q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 });
+  const [showCartModal, setShowCartModal] = useState(false);
 
   // Scroll to top on step change
   useEffect(() => {
     const main = document.getElementById('quiz-main');
     if (main) main.scrollTo(0, 0);
   }, [step]);
+
+  const getBestMatches = () => {
+    let mainId = 3; // BLANCHE
+    if (answers.q1 === 1) mainId = 3;
+    if (answers.q1 === 2) mainId = 5;
+    if (answers.q1 === 3) mainId = 6;
+    if (answers.q1 === 4) mainId = 4;
+    
+    const mainProduct = products.find(p => p.id === mainId) || products[2];
+    const others = products.filter(p => p.id !== mainProduct.id).slice(0, 2);
+    return { mainProduct, others };
+  };
+
+  const { mainProduct, others } = getBestMatches();
 
   return (
     <AppLayout>
@@ -136,15 +155,14 @@ const Quiz: React.FC = () => {
               <ResultTags>CLEAN · SOFT · FRESH</ResultTags>
               <ResultLine />
               <ResultDesc>
-                깨끗하고 부드러운 향을 선호하는 당신에게<br/>
-                잘 어울리는 향입니다.
+                당신의 취향에 가장 잘 어울리는 향입니다.
               </ResultDesc>
               <ResultLine />
               <ResultBestMatch>BEST MATCH</ResultBestMatch>
               <div style={{ fontSize: '13px', fontWeight: 600, letterSpacing: '0.1em', marginBottom: '8px' }}>BYREDO</div>
-              <ResultProductName>BLANCHE</ResultProductName>
-              <ResultProductDesc>블랑쉬</ResultProductDesc>
-              <ResultPrice>30ml · ₩70,000</ResultPrice>
+              <ResultProductName>{mainProduct.name}</ResultProductName>
+              <ResultProductDesc>{mainProduct.desc}</ResultProductDesc>
+              <ResultPrice>30ml · ₩{mainProduct.price.toLocaleString()}</ResultPrice>
             </ResultWrapper>
           )}
 
@@ -155,45 +173,65 @@ const Quiz: React.FC = () => {
               
               <RecItem>
                 <RecNum><span className="num">01</span> <span className="badge">BEST MATCH</span></RecNum>
-                <RecName>BLANCHE</RecName>
-                <RecKo>블랑쉬</RecKo>
-                <RecTags>Clean · Soft · Fresh</RecTags>
+                <RecName>{mainProduct.name}</RecName>
+                <RecKo>{mainProduct.desc}</RecKo>
+                <RecTags>Signature Scent</RecTags>
                 <RecBottom>
                   <RecPriceInfo>
                     <span className="vol">30ml</span>
-                    <span className="price">₩70,000</span>
+                    <span className="price">₩{mainProduct.price.toLocaleString()}</span>
                   </RecPriceInfo>
-                  <RecViewBtn onClick={() => navigate('/products/1')}>VIEW PRODUCT →</RecViewBtn>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <RecViewBtn onClick={() => navigate(`/products/${mainProduct.id}`, { state: { fromQuiz: true } })}>VIEW PRODUCT →</RecViewBtn>
+                    <RecCartBtn onClick={() => {
+                      addToCart({
+                        productId: mainProduct.id,
+                        name: mainProduct.name,
+                        image: mainProduct.image,
+                        option: '30ML',
+                        qty: 1,
+                        price: mainProduct.price,
+                        giftMessage: null
+                      });
+                      setShowCartModal(true);
+                    }}>
+                      <img src="/org/img/icon-cart.png" alt="cart" />
+                    </RecCartBtn>
+                  </div>
                 </RecBottom>
               </RecItem>
 
-              <RecItem>
-                <RecNum><span className="num">02</span></RecNum>
-                <RecName>GYPSY WATER</RecName>
-                <RecKo>집시 워터</RecKo>
-                <RecTags>Woody · Fresh</RecTags>
-                <RecBottom>
-                  <RecPriceInfo>
-                    <span className="vol">30ml</span>
-                    <span className="price">₩70,000</span>
-                  </RecPriceInfo>
-                  <RecViewBtn onClick={() => navigate('/products/2')}>VIEW PRODUCT →</RecViewBtn>
-                </RecBottom>
-              </RecItem>
-
-              <RecItem style={{ borderBottom: 'none' }}>
-                <RecNum><span className="num">03</span></RecNum>
-                <RecName>MOJAVE GHOST</RecName>
-                <RecKo>모하비 고스트</RecKo>
-                <RecTags>Soft · Musk</RecTags>
-                <RecBottom>
-                  <RecPriceInfo>
-                    <span className="vol">30ml</span>
-                    <span className="price">₩70,000</span>
-                  </RecPriceInfo>
-                  <RecViewBtn onClick={() => navigate('/products/3')}>VIEW PRODUCT →</RecViewBtn>
-                </RecBottom>
-              </RecItem>
+              {others.map((item, index) => (
+                <RecItem key={item.id} style={index === 1 ? { borderBottom: 'none' } : {}}>
+                  <RecNum><span className="num">0{index + 2}</span></RecNum>
+                  <RecName>{item.name}</RecName>
+                  <RecKo>{item.desc}</RecKo>
+                  <RecTags>Recommended</RecTags>
+                  <RecBottom>
+                    <RecPriceInfo>
+                      <span className="vol">30ml</span>
+                      <span className="price">₩{item.price.toLocaleString()}</span>
+                    </RecPriceInfo>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <RecViewBtn onClick={() => navigate(`/products/${item.id}`, { state: { fromQuiz: true } })}>VIEW PRODUCT →</RecViewBtn>
+                      <RecCartBtn onClick={() => {
+                        addToCart({
+                          productId: item.id,
+                          name: item.name,
+                          image: item.image,
+                          option: '30ML',
+                          qty: 1,
+                          price: item.price,
+                          giftMessage: null
+                        });
+                        setShowCartModal(true);
+                      }}>
+                        <img src="/org/img/icon-cart.png" alt="cart" />
+                      </RecCartBtn>
+                    </div>
+                  </RecBottom>
+                </RecItem>
+              ))}
             </>
           )}
 
@@ -207,6 +245,17 @@ const Quiz: React.FC = () => {
           )}
         </QuizContent>
       </QuizMain>
+      <Modal 
+        isOpen={showCartModal} 
+        message="장바구니에 담겼습니다" 
+        onClose={() => {
+          setShowCartModal(false);
+          navigate('/cart');
+        }} 
+        confirmText="바로가기"
+        cancelText="계속 쇼핑"
+        onCancel={() => setShowCartModal(false)}
+      />
     </AppLayout>
   );
 };

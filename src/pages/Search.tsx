@@ -56,16 +56,29 @@ const ClearBtn = styled.button`
 
 const Search: React.FC = () => {
   const [keyword, setKeyword] = useState('');
+  const [recentSearches, setRecentSearches] = useState<string[]>(['블랑쉬', '핸드크림']);
   const navigate = useNavigate();
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && keyword.trim()) {
-      navigate('/products');
+      if (!recentSearches.includes(keyword.trim())) {
+        setRecentSearches(prev => [keyword.trim(), ...prev]);
+      }
+      // If we just want to show results inline, maybe we don't navigate
+      // but if user presses enter, they might want to go to product list.
+      // We will keep navigation if they hit enter for now.
     }
   };
+
+  const removeRecentSearch = (term: string) => {
+    setRecentSearches(prev => prev.filter(t => t !== term));
+  };
   
-  const isHandCreamSearch = keyword.includes('핸드크림') || keyword.toLowerCase().includes('hand cream');
-  const searchResults = isHandCreamSearch ? products : [];
+  const searchResults = keyword.trim() ? products.filter(p => 
+    p.name.toLowerCase().includes(keyword.toLowerCase()) || 
+    p.desc.includes(keyword) || 
+    p.brand.toLowerCase().includes(keyword.toLowerCase())
+  ) : [];
 
   return (
     <AppLayout>
@@ -115,18 +128,15 @@ const Search: React.FC = () => {
           <SearchRecent>
             <SearchRecentTitle>최근 검색어</SearchRecentTitle>
             <SearchRecentList>
-              <li onClick={() => setKeyword('블랑쉬')}>
-                <span>블랑쉬</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="1.5">
-                  <path d="M9 18l6-6-6-6"></path>
-                </svg>
-              </li>
-              <li onClick={() => setKeyword('핸드크림')}>
-                <span>핸드크림</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="1.5">
-                  <path d="M9 18l6-6-6-6"></path>
-                </svg>
-              </li>
+              {recentSearches.map(term => (
+                <li key={term}>
+                  <span onClick={() => setKeyword(term)} style={{ flex: 1 }}>{term}</span>
+                  <svg onClick={(e) => { e.stopPropagation(); removeRecentSearch(term); }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="1.5" style={{ cursor: 'pointer' }}>
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                  </svg>
+                </li>
+              ))}
             </SearchRecentList>
           </SearchRecent>
         )}

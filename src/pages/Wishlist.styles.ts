@@ -3,8 +3,10 @@ import styled from 'styled-components';
 export const WishlistMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
+  padding-bottom: calc(var(--tabbar-h) + 100px);
   background: #fafaf9;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const WishlistHeader = styled.div`
@@ -26,13 +28,14 @@ export const Count = styled.p`
 `;
 
 export const ActionBottom = styled.div`
-  position: sticky;
-  bottom: 0;
+  position: fixed;
+  bottom: var(--tabbar-h);
   left: 0;
-  right: 0;
+  width: 100%;
   padding: 16px;
   background: #fafaf9;
   z-index: 10;
+  margin-top: auto;
 `;
 
 export const AddAllBtn = styled.button`

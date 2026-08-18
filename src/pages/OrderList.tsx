@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import styled from 'styled-components';
 import { HeaderContainer, IconButton } from '../components/home/AppHeader.styles';
-import { OrderListMain, OlCard } from './OrderList.styles';
+import { OrderListMain, OlCard, DeleteOrderBtn } from './OrderList.styles';
 import { 
   OrderCard, OrderTop, OrderDate, OrderStatus, 
   OrderProduct, ProductImg, ProductInfo, ProductName, ProductOption, ProductPrice, OrderActions
@@ -23,7 +23,7 @@ const BackTitle = styled.h2`
 
 const OrderList: React.FC = () => {
   const navigate = useNavigate();
-  const { orders } = useOrders();
+  const { orders, deleteOrder } = useOrders();
 
   return (
     <AppLayout>
@@ -45,8 +45,16 @@ const OrderList: React.FC = () => {
             <OlCard key={order.id}>
               <OrderCard>
                 <OrderTop>
-                  <OrderDate>{order.date} (주문번호: {order.orderNumber})</OrderDate>
-                  <OrderStatus>{order.status}</OrderStatus>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                    <OrderDate>{order.date} (주문번호: {order.orderNumber})</OrderDate>
+                    <OrderStatus>{order.status}</OrderStatus>
+                  </div>
+                  <DeleteOrderBtn onClick={(e) => { e.stopPropagation(); deleteOrder(order.id); }} aria-label="주문 내역 삭제">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </DeleteOrderBtn>
                 </OrderTop>
                 {order.items.map((item, idx) => (
                   <OrderProduct key={idx} onClick={() => navigate(`/mypage/orders/${order.id}`)} style={{ cursor: 'pointer' }}>
@@ -60,7 +68,15 @@ const OrderList: React.FC = () => {
                 ))}
                 <OrderActions>
                   <button onClick={() => navigate(`/mypage/orders/${order.id}`)}>주문 상세 보기</button>
-                  <button onClick={() => navigate('/mypage/write-review')}>리뷰작성</button>
+                  {(order.status === '결제 완료' || order.status === '상품 준비중') && (
+                    <button onClick={() => navigate(`/mypage/cancel-order/${order.id}`)}>주문 취소</button>
+                  )}
+                  {(order.status === '배송중' || order.status === '배송완료') && (
+                    <button onClick={() => navigate(`/mypage/exchange-return/${order.id}`)}>교환/반품</button>
+                  )}
+                  {order.status === '취소 완료' && (
+                    <button disabled style={{ color: '#ccc', border: '1px solid #eee' }}>취소 완료</button>
+                  )}
                 </OrderActions>
               </OrderCard>
             </OlCard>

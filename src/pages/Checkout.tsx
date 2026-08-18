@@ -210,10 +210,6 @@ const Checkout: React.FC = () => {
           </CheckboxLabel>
         </CheckoutAgree>
 
-        <CheckoutAction>
-          <button onClick={handlePayment}>{totalAmount.toLocaleString()}원 결제하기</button>
-        </CheckoutAction>
-
         {showPostcode && (
           <div style={{
             position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
@@ -227,6 +223,9 @@ const Checkout: React.FC = () => {
           </div>
         )}
       </CheckoutMain>
+      <CheckoutAction>
+        <button onClick={handlePayment}>{totalAmount.toLocaleString()}원 결제하기</button>
+      </CheckoutAction>
     </AppLayout>
   );
 };

@@ -118,12 +118,14 @@ const Cart: React.FC = () => {
               </SummaryFinal>
             </CartSummary>
 
-            <CartAction>
-              <CheckoutBtn onClick={() => navigate('/checkout')}>주문하기</CheckoutBtn>
-            </CartAction>
           </>
         )}
       </CartMain>
+      {items.length > 0 && (
+        <CartAction>
+          <CheckoutBtn onClick={() => navigate('/checkout')}>주문하기</CheckoutBtn>
+        </CartAction>
+      )}
     </AppLayout>
   );
 };

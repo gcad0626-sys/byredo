@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const DetailMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
+  padding-bottom: calc(var(--tabbar-h) + 100px);
   background: var(--color-bg-page);
   display: flex;
   flex-direction: column;
@@ -132,6 +132,24 @@ export const ProductPrice = styled.span`
   color: #1a1a1a;
 `;
 
+export const ReviewBtn = styled.button`
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid #1a1a1a;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #1a1a1a;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: all 0.2s;
+
+  &:active {
+    background: #f5f5f5;
+  }
+`;
+
 export const SummaryDivider = styled.div`
   height: 1px;
   background-color: #d0d0c8;
@@ -152,11 +170,16 @@ export const TotalRow = styled(Row)`
 `;
 
 export const Actions = styled.div`
-  padding: 24px;
+  position: fixed;
+  bottom: var(--tabbar-h);
+  left: 0;
+  width: 100%;
+  padding: 16px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 24px;
+  background: var(--color-bg-page);
+  z-index: 100;
 `;
 
 export const ActionBtn = styled.button<{ outline?: boolean }>`

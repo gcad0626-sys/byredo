@@ -124,11 +124,11 @@ const CancelOrder: React.FC = () => {
           </RefundBox>
         </Section>
 
-        <Actions>
-          <SubmitBtn onClick={handleSubmit}>취소 신청하기</SubmitBtn>
-          <BackBtn onClick={() => navigate(-1)}>돌아가기</BackBtn>
-        </Actions>
       </CancelMain>
+      <Actions>
+        <SubmitBtn onClick={handleSubmit}>취소 신청하기</SubmitBtn>
+        <BackBtn onClick={() => navigate(-1)}>돌아가기</BackBtn>
+      </Actions>
     </AppLayout>
   );
 };

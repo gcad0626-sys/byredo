@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import styled from 'styled-components';
 import {
-  HeaderContainer, IconButton, ActionsWrapper, LogoWrapper
+  HeaderContainer, IconButton, ActionsWrapper, LogoWrapper, CartBadge
 } from '../components/home/AppHeader.styles';
+import Modal from '../components/common/Modal';
 import { 
   DetailMain, HeroSection, 
   InfoSection, InfoCate, InfoTitle, InfoDesc, InfoPrice, DetailWishBtn,
@@ -25,6 +26,7 @@ const DetailHeader = styled(HeaderContainer)`
 
 const ProductDetail: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const idMatch = window.location.pathname.match(/\/products\/(\d+)/);
   const id = idMatch ? parseInt(idMatch[1], 10) : 1;
   const product = getProductById(id) || getProductById(1)!;
@@ -41,10 +43,21 @@ const ProductDetail: React.FC = () => {
 
   const currentPrice = size === '100ML' ? 98000 : product.price;
 
+  const { items } = useCart();
+  const cartItemCount = items.reduce((sum, item) => sum + item.qty, 0);
+
+  const handleBack = () => {
+    if (location.state?.fromQuiz) {
+      navigate('/quiz');
+    } else {
+      navigate('/products');
+    }
+  };
+
   return (
     <AppLayout>
       <DetailHeader>
-        <IconButton onClick={() => navigate(-1)} aria-label="뒤로가기">
+        <IconButton onClick={handleBack} aria-label="뒤로가기">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" strokeWidth="1.5">
             <path d="M15 18l-6-6 6-6" />
           </svg>
@@ -53,21 +66,16 @@ const ProductDetail: React.FC = () => {
           <img src="/org/img/logo.png" alt="BYREDO logo" />
         </LogoWrapper>
         <ActionsWrapper>
-          <Link to="/search">
-            <IconButton className="trigger-search" id="btn-search-open" aria-label="검색">
-              <img src="/org/img/icon-search.png" alt="search icon" />
-            </IconButton>
-          </Link>
-          <Link to="/cart">
-            <IconButton className="trigger-cart" id="btn-cart-open" aria-label="장바구니">
-              <img src="/org/img/icon-cart.png" alt="cart icon" />
-            </IconButton>
-          </Link>
-          <Link to="/mypage">
-            <IconButton className="trigger-mypage" aria-label="마이페이지">
-              <img src="/org/img/icon-user.png" alt="user icon" />
-            </IconButton>
-          </Link>
+          <IconButton as={Link} to="/search" className="trigger-search" id="btn-search-open" aria-label="검색">
+            <img src="/org/img/icon-search.png" alt="search icon" />
+          </IconButton>
+          <IconButton as={Link} to="/cart" className="trigger-cart" id="btn-cart-open" aria-label="장바구니">
+            <img src="/org/img/icon-cart.png" alt="cart icon" />
+            {cartItemCount > 0 && <CartBadge>{cartItemCount}</CartBadge>}
+          </IconButton>
+          <IconButton as={Link} to="/mypage" className="trigger-mypage" aria-label="마이페이지">
+            <img src="/org/img/icon-user.png" alt="user icon" />
+          </IconButton>
         </ActionsWrapper>
       </DetailHeader>
       <DetailMain id="product-detail-main">
@@ -163,7 +171,7 @@ const ProductDetail: React.FC = () => {
         <ReviewsSection>
           <ReviewsHeader>
             <h3>리뷰 (124)</h3>
-            <a href="#" onClick={(e) => { e.preventDefault(); navigate('/mypage/write-review'); }}>리뷰 작성하기</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate('/mypage/write-review', { state: { product } }); }}>리뷰 작성하기</a>
           </ReviewsHeader>
           <ReviewItem>
             <ReviewMeta>
@@ -184,30 +192,17 @@ const ProductDetail: React.FC = () => {
           <BtnMoreReviews onClick={() => navigate('/mypage/reviews')}>전체 리뷰 보기</BtnMoreReviews>
         </ReviewsSection>
 
-        {showCartModal && (
-          <div style={{
-            position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, 
-            backgroundColor: 'rgba(0,0,0,0.6)', zIndex: 9999,
-            display: 'flex', alignItems: 'center', justifyContent: 'center'
-          }}>
-            <div style={{
-              background: '#fff', width: '280px', borderRadius: '16px', padding: '24px',
-              boxShadow: '0 10px 25px rgba(0,0,0,0.2)', textAlign: 'center', position: 'relative'
-            }}>
-              <h3 style={{ marginBottom: '16px', fontSize: '18px', fontWeight: 'bold', color: '#111' }}>장바구니에 담겼습니다</h3>
-              <div style={{ display: 'flex', gap: '8px' }}>
-                <button 
-                  onClick={() => setShowCartModal(false)}
-                  style={{ flex: 1, padding: '12px', borderRadius: '8px', border: '1px solid #ddd', background: '#fff', cursor: 'pointer', fontWeight: '500' }}
-                >계속 쇼핑</button>
-                <button 
-                  onClick={() => navigate('/cart')}
-                  style={{ flex: 1, padding: '12px', borderRadius: '8px', border: 'none', background: '#222', color: '#fff', cursor: 'pointer', fontWeight: '500' }}
-                >바로가기</button>
-              </div>
-            </div>
-          </div>
-        )}
+        <Modal 
+          isOpen={showCartModal} 
+          message="장바구니에 담겼습니다" 
+          onClose={() => {
+            setShowCartModal(false);
+            navigate('/cart');
+          }} 
+          confirmText="바로가기"
+          cancelText="계속 쇼핑"
+          onCancel={() => setShowCartModal(false)}
+        />
         
       </DetailMain>
 

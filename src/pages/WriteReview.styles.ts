@@ -3,11 +3,10 @@ import styled from 'styled-components';
 export const WriteMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
+  padding-bottom: calc(var(--tabbar-h) + 100px);
   background: var(--color-bg-page);
   display: flex;
   flex-direction: column;
-  padding-bottom: 40px;
 `;
 
 export const WriteHeader = styled.div`
@@ -143,7 +142,13 @@ export const Textarea = styled.textarea`
 `;
 
 export const Action = styled.div`
-  padding: 0 16px 8px;
+  position: fixed;
+  bottom: var(--tabbar-h);
+  left: 0;
+  width: 100%;
+  padding: 16px;
+  background: var(--color-bg-page);
+  z-index: 100;
 `;
 
 export const SubmitBtn = styled.button`
