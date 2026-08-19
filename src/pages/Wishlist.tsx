@@ -7,7 +7,7 @@ import {
 } from './Wishlist.styles';
 import { 
   ProductGrid, ProductCard, ProductImgWrap, 
-  ProductInfo, ProductBrand, ProductName, ProductDesc, ProductPrice, WishBtn, CartBtn
+  ProductInfo, ProductBrand, ProductName, ProductDesc, ProductPrice, CartBtn
 } from './ProductList.styles';
 import { useWishlist } from '../context/WishlistContext';
 import { useCart } from '../context/CartContext';
@@ -16,7 +16,7 @@ import Modal from '../components/common/Modal';
 
 const Wishlist: React.FC = () => {
   const navigate = useNavigate();
-  const { wishlistIds, toggleWishlist, isInWishlist } = useWishlist();
+  const { wishlistIds, toggleWishlist } = useWishlist();
   const { addToCart } = useCart();
   const [showCartModal, setShowCartModal] = useState(false);
 

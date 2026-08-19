@@ -81,10 +81,10 @@ const Login: React.FC = () => {
     if (!kakao) return;
     
     kakao.Auth.login({
-      success: function(authObj: any) {
+      success: function() {
         kakao.API.request({
           url: '/v2/user/me',
-          success: function(res: any) {
+          success: function() {
             showToastMessage('환영합니다! 카카오 계정으로 로그인 되었습니다.');
             setTimeout(() => navigate('/mypage'), 1500);
           },
