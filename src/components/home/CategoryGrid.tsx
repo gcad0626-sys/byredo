@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { GridContainer, GridItem, GridIcon, GridLabel } from './CategoryGrid.styles';
 
 const categories = [
@@ -10,16 +10,21 @@ const categories = [
 ];
 
 const CategoryGrid: React.FC = () => {
+  const location = useLocation();
+  
   return (
     <GridContainer id="category-grid" aria-label="카테고리 메뉴">
-      {categories.map((cat, index) => (
-        <GridItem as={Link} to={cat.path} key={index}>
-          <GridIcon>
-            <img src={cat.icon} alt={cat.label} />
-          </GridIcon>
-          <GridLabel>{cat.label}</GridLabel>
-        </GridItem>
-      ))}
+      {categories.map((cat, index) => {
+        const isActive = location.pathname === cat.path;
+        return (
+          <GridItem as={Link} to={cat.path} key={index} $isActive={isActive}>
+            <GridIcon $isActive={isActive}>
+              <img src={cat.icon} alt={cat.label} />
+            </GridIcon>
+            <GridLabel $isActive={isActive}>{cat.label}</GridLabel>
+          </GridItem>
+        );
+      })}
     </GridContainer>
   );
 };
