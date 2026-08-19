@@ -73,11 +73,12 @@ export const ProductBadge = styled.div`
   position: absolute;
   top: 8px;
   left: 8px;
-  background: rgba(0, 0, 0, 0.1);
-  color: #111;
+  background: #333333;
+  color: #ffffff;
   font-size: 10px;
   font-weight: 700;
-  padding: 4px 6px;
+  padding: 4px 8px;
+  letter-spacing: 0.05em;
   z-index: 1;
 `;
 
