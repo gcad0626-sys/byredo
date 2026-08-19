@@ -219,3 +219,75 @@ export const DecoImage = styled.img<{ className: string }>`
     animation: ${floatHand} 2.5s ease-in-out infinite;
   }
 `;
+
+export const QRCodeOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: inherit;
+  animation: fadeIn 0.3s ease-out forwards;
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+`;
+
+export const QRCodeContent = styled.div`
+  background: #fff;
+  border: var(--box-line);
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+
+  h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  img {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  p {
+    font-size: 13px;
+    color: var(--color-ink-soft);
+    margin: 0;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: var(--color-ink);
+    padding: 5px;
+    
+    &:hover {
+      color: #000;
+    }
+  }
+`;
+

@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   Aside, Inner, Logo, Title, SubCopy, 
   QuizSection, QuizHead, QuizIcon, QuizBtn, 
-  DownloadSection, Badges, DecoImage 
+  DownloadSection, Badges, DecoImage,
+  QRCodeOverlay, QRCodeContent
 } from './BrandColumn.styles';
 
 import { Link } from 'react-router-dom';
 
 const BrandColumn: React.FC = () => {
+  const [activeQR, setActiveQR] = useState<'appstore' | 'googleplay' | null>(null);
+
   return (
     <Aside id="brand-column" data-scope="desktop-only">
       <Inner>
@@ -36,11 +39,31 @@ const BrandColumn: React.FC = () => {
           <h4>GET THE APP</h4>
           <p dangerouslySetInnerHTML={{ __html: '바이레도 앱에서 더 쉽게 만나고<br>새로운 경험을 만나보세요.' }} />
           <Badges>
-            <a href="#"><img src="/img/badge-appstore.png" alt="Download on the App Store" /></a>
-            <a href="#"><img src="/img/badge-googleplay.png" alt="Get it on Google Play" /></a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveQR('appstore'); }}>
+              <img src="/img/badge-appstore.png" alt="Download on the App Store" />
+            </a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setActiveQR('googleplay'); }}>
+              <img src="/img/badge-googleplay.png" alt="Get it on Google Play" />
+            </a>
           </Badges>
         </DownloadSection>
       </Inner>
+
+      {activeQR && (
+        <QRCodeOverlay onClick={() => setActiveQR(null)}>
+          <QRCodeContent onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setActiveQR(null)}>✕</button>
+            <h4>{activeQR === 'appstore' ? 'App Store' : 'Google Play'}</h4>
+            <img 
+              src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${
+                activeQR === 'appstore' ? 'https://apps.apple.com/app/id123456789' : 'https://play.google.com/store/apps/details?id=com.example'
+              }`} 
+              alt={`${activeQR} QR Code`} 
+            />
+            <p>카메라 앱으로 QR 코드를 스캔하세요.</p>
+          </QRCodeContent>
+        </QRCodeOverlay>
+      )}
 
       <DecoImage className="brand-column__deco--fabric" src="/img/deco-fabric.png" alt="" />
       <DecoImage className="brand-column__deco--bag" src="/img/deco-bag.png" alt="" />
