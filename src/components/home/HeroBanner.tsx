@@ -33,7 +33,7 @@ const slides = [
 const HeroBanner: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const resetTimer = () => {
     if (timerRef.current) {
