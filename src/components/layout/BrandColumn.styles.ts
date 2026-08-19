@@ -1,4 +1,10 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const floatHand = keyframes`
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+`;
 
 export const Aside = styled.aside`
   display: none;
@@ -175,6 +181,7 @@ export const DecoImage = styled.img<{ className: string }>`
     right: -150px;
     width: 200px;
     z-index: -2;
+    animation: ${floatHand} 4s ease-in-out infinite;
   }
 
   &.brand-column__watermark {
@@ -191,5 +198,6 @@ export const DecoImage = styled.img<{ className: string }>`
     right: -50px;
     width: 90px;
     z-index: 5;
+    animation: ${floatHand} 2.5s ease-in-out infinite;
   }
 `;

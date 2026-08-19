@@ -128,7 +128,7 @@ export const AuthLinks = styled.div`
 `;
 
 export const AuthLink = styled.a<{ strong?: boolean }>`
-  font-size: ${props => props.strong ? '18px' : '13px'};
+  font-size: ${props => props.strong ? '15px' : '13px'};
   font-family: ${props => props.strong ? 'var(--font-kr)' : 'inherit'};
   font-weight: ${props => props.strong ? '500' : 'inherit'};
   letter-spacing: ${props => props.strong ? '0.02em' : 'inherit'};

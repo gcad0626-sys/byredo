@@ -51,10 +51,12 @@ export const Nav = styled.nav`
     font-weight: 500;
     letter-spacing: 0.04em;
     color: var(--color-ink-soft);
-  }
+    text-decoration: none;
+    transition: color 0.2s, font-weight 0.2s;
 
-  li:first-child a {
-    color: var(--color-ink);
-    font-weight: 700;
+    &.active {
+      color: var(--color-ink);
+      font-weight: 700;
+    }
   }
 `;

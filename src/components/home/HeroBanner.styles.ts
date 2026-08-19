@@ -6,23 +6,22 @@ export const BannerSection = styled.section`
 `;
 
 export const Track = styled.div`
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  
-  &::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-export const Slide = styled.div`
   position: relative;
-  flex: 0 0 100%;
-  scroll-snap-align: start;
-  background: var(--color-bg-banner);
+  width: 100%;
   aspect-ratio: 4 / 5;
   overflow: hidden;
+`;
+
+export const Slide = styled.div<{ isActive?: boolean }>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: ${props => props.isActive ? 1 : 0};
+  visibility: ${props => props.isActive ? 'visible' : 'hidden'};
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+  background: var(--color-bg-banner);
 
   img {
     width: 100%;

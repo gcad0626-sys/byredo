@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import Modal from '../components/common/Modal';
 import { useCart } from '../context/CartContext';
@@ -15,9 +15,10 @@ import {
 
 const Quiz: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { addToCart } = useCart();
-  const [step, setStep] = useState(1);
-  const [answers, setAnswers] = useState({ q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 });
+  const [step, setStep] = useState(location.state?.returnToResult ? 4 : 1);
+  const [answers, setAnswers] = useState(location.state?.quizAnswers || { q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 });
   const [showCartModal, setShowCartModal] = useState(false);
 
   // Scroll to top on step change
@@ -182,7 +183,7 @@ const Quiz: React.FC = () => {
                     <span className="price">₩{mainProduct.price.toLocaleString()}</span>
                   </RecPriceInfo>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <RecViewBtn onClick={() => navigate(`/products/${mainProduct.id}`, { state: { fromQuiz: true } })}>VIEW PRODUCT →</RecViewBtn>
+                    <RecViewBtn onClick={() => navigate(`/products/${mainProduct.id}`, { state: { fromQuiz: true, quizAnswers: answers } })}>VIEW PRODUCT →</RecViewBtn>
                     <RecCartBtn onClick={() => {
                       addToCart({
                         productId: mainProduct.id,
@@ -213,7 +214,7 @@ const Quiz: React.FC = () => {
                       <span className="price">₩{item.price.toLocaleString()}</span>
                     </RecPriceInfo>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <RecViewBtn onClick={() => navigate(`/products/${item.id}`, { state: { fromQuiz: true } })}>VIEW PRODUCT →</RecViewBtn>
+                      <RecViewBtn onClick={() => navigate(`/products/${item.id}`, { state: { fromQuiz: true, quizAnswers: answers } })}>VIEW PRODUCT →</RecViewBtn>
                       <RecCartBtn onClick={() => {
                         addToCart({
                           productId: item.id,

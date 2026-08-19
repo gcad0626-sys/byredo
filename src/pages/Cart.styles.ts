@@ -60,12 +60,18 @@ export const CartName = styled.h3`
 `;
 
 export const CartRemove = styled.button`
-  color: #999;
-  font-size: 16px;
-  padding: 0 4px;
+  color: #ccc;
+  font-size: 12px;
+  padding: 4px;
   background: none;
   border: none;
   cursor: pointer;
+  transition: color 0.2s;
+  line-height: 1;
+
+  &:hover {
+    color: #333;
+  }
 `;
 
 export const CartOptionSelect = styled.select`

@@ -1,4 +1,10 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const floatDeco = keyframes`
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0px); }
+`;
 
 export const PageWrap = styled.div`
   display: block;
@@ -37,20 +43,29 @@ export const PageWrap = styled.div`
     left: -170px;
     width: 400px;
     opacity: 0.9;
+    animation: ${floatDeco} 3.5s ease-in-out infinite;
   }
 
   .page-deco--three {
     bottom: -20px;
     left: -100px;
     width: 300px;
+    animation: ${floatDeco} 4.5s ease-in-out infinite;
   }
 
   .page-deco--center {
     top: 50%;
     left: calc(60% - 4px);
-    transform: translate(-90%, -50%);
     width: 180px;
     z-index: 0;
+    /* center.png already has a transform so we need to combine them */
+    animation: floatCenter 4s ease-in-out infinite;
+  }
+
+  @keyframes floatCenter {
+    0% { transform: translate(-90%, -50%) translateY(0px); }
+    50% { transform: translate(-90%, -50%) translateY(-15px); }
+    100% { transform: translate(-90%, -50%) translateY(0px); }
   }
 `;
 

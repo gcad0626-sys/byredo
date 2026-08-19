@@ -1,6 +1,6 @@
 import React from 'react';
 import { HeaderWrapper, HeaderInner, Logo, Nav } from './Header.styles';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const Header: React.FC = () => {
   return (
@@ -13,9 +13,9 @@ const Header: React.FC = () => {
         </Logo>
         <Nav>
           <ul>
-            <li><Link to="/products">HAND CARE</Link></li>
-            <li><Link to="/about">ABOUT BYREDO</Link></li>
-            <li><Link to="/login">JOIN & LOGIN</Link></li>
+            <li><NavLink to="/products">HAND CARE</NavLink></li>
+            <li><NavLink to="/about">ABOUT BYREDO</NavLink></li>
+            <li><NavLink to="/login">JOIN & LOGIN</NavLink></li>
           </ul>
         </Nav>
       </HeaderInner>

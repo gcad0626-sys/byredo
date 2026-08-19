@@ -48,7 +48,7 @@ const ProductDetail: React.FC = () => {
 
   const handleBack = () => {
     if (location.state?.fromQuiz) {
-      navigate('/quiz');
+      navigate('/quiz', { state: { returnToResult: true, quizAnswers: location.state.quizAnswers } });
     } else {
       navigate('/products');
     }
