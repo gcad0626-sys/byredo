@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
@@ -69,7 +69,39 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleKakaoAppleLogin = () => {
+  useEffect(() => {
+    const kakao = (window as any).Kakao;
+    if (kakao && !kakao.isInitialized()) {
+      kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
+    }
+  }, []);
+
+  const handleKakaoLogin = () => {
+    const kakao = (window as any).Kakao;
+    if (!kakao) return;
+    
+    kakao.Auth.login({
+      success: function(authObj: any) {
+        kakao.API.request({
+          url: '/v2/user/me',
+          success: function(res: any) {
+            showToastMessage('환영합니다! 카카오 계정으로 로그인 되었습니다.');
+            setTimeout(() => navigate('/mypage'), 1500);
+          },
+          fail: function(error: any) {
+            console.error(error);
+            showToastMessage('카카오 로그인 정보 요청에 실패했습니다.');
+          }
+        });
+      },
+      fail: function(err: any) {
+        console.error(err);
+        showToastMessage('카카오 로그인에 실패했습니다.');
+      }
+    });
+  };
+
+  const handleAppleLogin = () => {
     showToastMessage('현재 지원하지 않는 로그인 방식입니다.');
   };
 
@@ -127,7 +159,7 @@ const Login: React.FC = () => {
         
         <AuthDivider>또는</AuthDivider>
         
-        <AuthBtn variant="kakao" onClick={handleKakaoAppleLogin}>
+        <AuthBtn variant="kakao" onClick={handleKakaoLogin}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 4c-4.97 0-9 3.18-9 7.1 0 2.53 1.62 4.75 4.05 6.03-.13.43-1.02 3.8-.13 3.65.62-.1 3.5-2.31 3.5-2.31.51.08 1.04.13 1.58.13 4.97 0 9-3.18 9-7.1 0-3.92-4.03-7.1-9-7.1z" />
           </svg>
@@ -143,7 +175,7 @@ const Login: React.FC = () => {
           </svg>
           구글로 로그인하기
         </AuthBtn>
-        <AuthBtn variant="apple" onClick={handleKakaoAppleLogin}>
+        <AuthBtn variant="apple" onClick={handleAppleLogin}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.05 13.57c-.02-2.12 1.74-3.15 1.82-3.2-1-1.46-2.56-1.65-3.1-1.68-1.32-.13-2.6.78-3.27.78-.68 0-1.74-.75-2.84-.73-1.42.02-2.74.83-3.48 2.1-1.49 2.58-.38 6.4 1.08 8.5 .72 1.03 1.55 2.18 2.66 2.14 1.08-.04 1.48-.68 2.78-.68 1.3 0 1.67.68 2.8.66 1.15-.02 1.88-1.07 2.58-2.1 1.2-1.76 1.69-3.46 1.7-3.56-.02-.02-1.71-.65-1.73-2.23M15.11 6.53c.6-.72 1-1.72.89-2.73-1.02.04-2.2.66-2.82 1.38-.55.63-1.03 1.65-.91 2.65 1.13.09 2.22-.57 2.84-1.3" />
           </svg>
