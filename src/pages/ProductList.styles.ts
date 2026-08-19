@@ -83,7 +83,7 @@ export const ProductBadge = styled.div`
 
 export const ProductImgWrap = styled.div`
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   background: #f0f0f0;
   margin-bottom: 16px;
   position: relative;
@@ -92,7 +92,7 @@ export const ProductImgWrap = styled.div`
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 `;
 
