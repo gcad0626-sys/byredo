@@ -53,8 +53,8 @@ export const ActionsWrapper = styled.div`
 
 export const CartBadge = styled.span`
   position: absolute;
-  top: -6px;
-  right: -6px;
+  top: 0;
+  right: 0;
   width: 15px;
   height: 15px;
   border-radius: 50%;

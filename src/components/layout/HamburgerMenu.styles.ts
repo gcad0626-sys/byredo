@@ -48,13 +48,35 @@ export const MenuList = styled.ul`
   flex: 1;
 
   a {
-    display: flex;
+    position: relative;
+    display: inline-flex;
     align-items: center;
     gap: 16px;
     font-family: var(--font-family);
     font-size: 18px;
     color: var(--color-ink);
     text-decoration: none;
+    opacity: 0.8;
+    transition: opacity 0.25s ease;
+    width: fit-content;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background-color: var(--color-ink);
+      transition: width 0.3s ease;
+    }
+
+    &:hover {
+      opacity: 1;
+      &::after {
+        width: 100%;
+      }
+    }
   }
 `;
 

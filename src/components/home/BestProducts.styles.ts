@@ -34,7 +34,6 @@ export const Card = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 4px;
   cursor: pointer;
 `;
 
@@ -65,25 +64,25 @@ export const Rank = styled.span`
   z-index: 2;
 `;
 
-export const Name = styled.p`
-  font-family: var(--font-family);
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  font-size: clamp(0.85rem, 0.75rem + 0.5vw, 0.95rem);
+export const Name = styled.h3`
+  font-size: 14px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 6px;
+  text-transform: uppercase;
 `;
 
 export const Desc = styled.p`
-  font-family: var(--font-kr);
-  line-height: 1.5;
-  color: var(--color-ink-soft);
-  font-size: clamp(0.75rem, 0.68rem + 0.4vw, 0.8rem);
+  font-size: 13px;
+  color: #555;
+  margin: 0 0 12px;
 `;
 
 export const Price = styled.p`
-  margin-top: 2px;
-  font-family: var(--font-kr);
+  font-size: 14px;
   font-weight: 700;
-  font-size: clamp(0.85rem, 0.75rem + 0.5vw, 0.95rem);
+  color: #111;
+  margin: auto 0 0;
 `;
 
 export const WishBtn = styled.button`

@@ -46,16 +46,37 @@ export const Nav = styled.nav`
   }
 
   a {
+    position: relative;
     font-family: var(--font-kr);
     font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.04em;
     color: var(--color-ink-soft);
     text-decoration: none;
-    transition: color 0.2s, font-weight 0.2s;
+    opacity: 0.8;
+    transition: color 0.25s ease, font-weight 0.25s ease, opacity 0.25s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0%;
+      height: 1px;
+      background-color: var(--color-ink);
+      transition: width 0.3s ease;
+    }
+
+    &:hover, &.active {
+      opacity: 1;
+      color: var(--color-ink);
+      
+      &::after {
+        width: 100%;
+      }
+    }
 
     &.active {
-      color: var(--color-ink);
       font-weight: 700;
     }
   }
