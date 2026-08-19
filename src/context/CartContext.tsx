@@ -29,10 +29,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const getCartKey = () => {
     if (!user) return 'cartItems_guest';
-    const provider = user.providerData?.[0]?.providerId === 'google.com' ? 'google' : 
-                     user.providerData?.[0]?.providerId === 'apple.com' ? 'apple' : 'email';
-    const userName = user.email || user.displayName || user.uid;
-    return `cartItems_${provider}_${encodeURIComponent(userName)}`;
+    return `cartItems_${user.uid}`;
   };
 
   useEffect(() => {
@@ -45,13 +42,18 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [user, loading]);
 
-  useEffect(() => {
-    if (loading) return;
-    localStorage.setItem(getCartKey(), JSON.stringify(items));
-  }, [items, user, loading]);
+  const saveItems = (action: CartItemType[] | ((prev: CartItemType[]) => CartItemType[])) => {
+    setItems(prevItems => {
+      const nextItems = typeof action === 'function' ? action(prevItems) : action;
+      if (!loading) {
+        localStorage.setItem(getCartKey(), JSON.stringify(nextItems));
+      }
+      return nextItems;
+    });
+  };
 
   const addToCart = (newItem: Omit<CartItemType, 'id'>) => {
-    setItems(prevItems => {
+    saveItems(prevItems => {
       const existing = prevItems.find(i => i.productId === newItem.productId && i.option === newItem.option && i.giftMessage === newItem.giftMessage);
       if (existing) {
         return prevItems.map(i => i.id === existing.id ? { ...i, qty: i.qty + newItem.qty } : i);
@@ -63,7 +65,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const updateQty = (id: number, delta: number) => {
-    setItems(items.map(item => {
+    saveItems(prevItems => prevItems.map(item => {
       if (item.id === id) {
         return { ...item, qty: Math.max(1, item.qty + delta) };
       }
@@ -72,7 +74,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const updateOption = (id: number, option: string) => {
-    setItems(items.map(item => {
+    saveItems(prevItems => prevItems.map(item => {
       if (item.id === id) {
         const newPrice = option === '100ML' ? 98000 : 70000;
         return { ...item, option, price: newPrice };
@@ -82,10 +84,10 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   };
 
   const removeItem = (id: number) => {
-    setItems(items.filter(item => item.id !== id));
+    saveItems(prevItems => prevItems.filter(item => item.id !== id));
   };
 
-  const clearCart = () => setItems([]);
+  const clearCart = () => saveItems([]);
 
   return (
     <CartContext.Provider value={{ items, addToCart, updateQty, updateOption, removeItem, clearCart }}>

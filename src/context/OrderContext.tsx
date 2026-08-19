@@ -44,10 +44,7 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   const getOrdersKey = () => {
     if (!user) return 'orders_guest';
-    const provider = user.providerData?.[0]?.providerId === 'google.com' ? 'google' : 
-                     user.providerData?.[0]?.providerId === 'apple.com' ? 'apple' : 'email';
-    const userName = user.email || user.displayName || user.uid;
-    return `orders_${provider}_${encodeURIComponent(userName)}`;
+    return `orders_${user.uid}`;
   };
 
   useEffect(() => {
@@ -60,13 +57,18 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
   }, [user, loading]);
 
-  useEffect(() => {
-    if (loading) return;
-    localStorage.setItem(getOrdersKey(), JSON.stringify(orders));
-  }, [orders, user, loading]);
+  const saveOrders = (action: Order[] | ((prev: Order[]) => Order[])) => {
+    setOrders(prev => {
+      const next = typeof action === 'function' ? action(prev) : action;
+      if (!loading) {
+        localStorage.setItem(getOrdersKey(), JSON.stringify(next));
+      }
+      return next;
+    });
+  };
 
   const addOrder = (order: Order) => {
-    setOrders(prev => [order, ...prev]);
+    saveOrders(prev => [order, ...prev]);
   };
 
   const getOrderById = (id: string) => {
@@ -74,11 +76,11 @@ export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   };
 
   const updateOrderStatus = (id: string, newStatus: string) => {
-    setOrders(prev => prev.map(o => o.id === id ? { ...o, status: newStatus } : o));
+    saveOrders(prev => prev.map(o => o.id === id ? { ...o, status: newStatus } : o));
   };
 
   const deleteOrder = (id: string) => {
-    setOrders(prev => prev.filter(o => o.id !== id));
+    saveOrders(prev => prev.filter(o => o.id !== id));
   };
 
   return (

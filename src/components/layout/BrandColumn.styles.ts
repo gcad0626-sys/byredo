@@ -115,13 +115,13 @@ export const QuizBtn = styled.a`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 18px;
+  padding: 0 24px;
+  height: 52px;
   background: var(--color-ink);
   color: #ffffff;
-  font-family: var(--font-kr);
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   border-radius: 6px;
   border: 1px solid transparent;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);

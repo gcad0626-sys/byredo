@@ -15,10 +15,7 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const getWishlistKey = () => {
     if (!user) return 'wishlist_guest';
-    const provider = user.providerData?.[0]?.providerId === 'google.com' ? 'google' : 
-                     user.providerData?.[0]?.providerId === 'apple.com' ? 'apple' : 'email';
-    const userName = user.email || user.displayName || user.uid;
-    return `wishlist_${provider}_${encodeURIComponent(userName)}`;
+    return `wishlist_${user.uid}`;
   };
 
   useEffect(() => {
@@ -31,13 +28,18 @@ export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }
     }
   }, [user, loading]);
 
-  useEffect(() => {
-    if (loading) return;
-    localStorage.setItem(getWishlistKey(), JSON.stringify(wishlistIds));
-  }, [wishlistIds, user, loading]);
+  const saveWishlistIds = (action: number[] | ((prev: number[]) => number[])) => {
+    setWishlistIds(prev => {
+      const next = typeof action === 'function' ? action(prev) : action;
+      if (!loading) {
+        localStorage.setItem(getWishlistKey(), JSON.stringify(next));
+      }
+      return next;
+    });
+  };
 
   const toggleWishlist = (id: number) => {
-    setWishlistIds(prev => 
+    saveWishlistIds(prev => 
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
   };

@@ -47,6 +47,39 @@ export const GlobalStyle = createGlobalStyle`
     body.home-page {
       overflow: hidden;
     }
+
+    /* Desktop App Frame Scrollbar Styling */
+    #app-frame * {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.15) transparent;
+    }
+
+    #app-frame *::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    #app-frame *::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #app-frame *::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    #app-frame *:hover::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    #app-frame *::-webkit-scrollbar-thumb:hover {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    #app-frame *::-webkit-scrollbar-thumb:active {
+      background-color: var(--color-ink);
+    }
   }
 
   img {

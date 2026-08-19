@@ -71,7 +71,10 @@ const HeroBanner: React.FC = () => {
             <Copy>
               <Title dangerouslySetInnerHTML={{ __html: slide.title.replace(/\n/g, '<br>') }} />
               <Desc dangerouslySetInnerHTML={{ __html: slide.desc.replace(/\n/g, '<br>') }} />
-              <Cta as={Link} to="/products" className="trigger-product-list">SHOP NOW →</Cta>
+              <Cta as={Link} to="/products" className="trigger-product-list">
+                <span>SHOP NOW</span>
+                <span>→</span>
+              </Cta>
             </Copy>
           </Slide>
         ))}

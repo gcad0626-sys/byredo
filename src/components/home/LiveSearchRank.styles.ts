@@ -17,14 +17,14 @@ export const Scroller = styled.div`
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  scrollbar-width: none;
+  scrollbar-width: none !important;
   padding-bottom: 2px;
   padding-left: 16px;
   padding-right: 16px;
   -webkit-overflow-scrolling: touch;
 
   &::-webkit-scrollbar {
-    display: none;
+    display: none !important;
   }
 `;
 

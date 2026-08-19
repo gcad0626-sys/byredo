@@ -7,13 +7,7 @@ export const getUserKey = (): string => {
     return 'guest';
   }
   
-  const provider = user.providerData?.[0]?.providerId === 'google.com' ? 'google' : 
-                   user.providerData?.[0]?.providerId === 'apple.com' ? 'apple' : 'email';
-  const userName = user.email || user.displayName || user.uid;
-  
-  // Create a safe key without spaces or special characters if needed, 
-  // but standard encodeURIComponent is safe.
-  return `${provider}_${encodeURIComponent(userName)}`;
+  return user.uid;
 };
 
 export const getStorageKey = (baseKey: string): string => {

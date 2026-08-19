@@ -2,43 +2,26 @@ import styled from 'styled-components';
 
 export const Section = styled.section`
   position: relative;
-  text-align: left;
+  text-align: center;
   background: #ffffff;
   border: var(--box-line);
   border-radius: 10px;
   margin: 0 16px 24px;
-  padding: 28px 20px 20px !important;
+  padding: 12px 20px 12px !important;
   display: flex;
   flex-direction: column;
   gap: 6px;
 `;
 
 export const Title = styled.p`
-  margin-top: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-kr);
-  font-weight: 700;
-  font-size: clamp(0.9rem, 0.8rem + 0.5vw, 1rem);
-`;
-
-export const Badge = styled.span`
-  position: static;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--color-ink);
+  margin-top: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  img {
-    width: 14px;
-    height: 14px;
-    object-fit: contain;
-    filter: brightness(0) invert(1);
-  }
+  gap: 8px;
+  font-family: var(--font-kr);
+  font-weight: 700;
+  font-size: 14px;
 `;
 
 export const Sub = styled.p`
@@ -46,21 +29,39 @@ export const Sub = styled.p`
   line-height: 1.6;
   color: var(--color-ink-soft);
   font-size: clamp(0.75rem, 0.68rem + 0.4vw, 0.8rem);
-  padding-left: 32px;
+  padding-left: 0;
   margin: 0;
 `;
 
 export const Btn = styled.a`
-  margin-top: 14px;
+  margin-top: 10px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 14px;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 44px;
   background: var(--color-ink);
   color: #ffffff;
-  font-family: var(--font-kr);
-  font-size: clamp(0.8rem, 0.72rem + 0.4vw, 0.9rem);
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
   border-radius: 4px;
+  border: 1px solid transparent;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+  span:last-child {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  &:hover {
+    background: #ffffff;
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+
+    span:last-child {
+      transform: translateX(6px);
+    }
+  }
 `;
