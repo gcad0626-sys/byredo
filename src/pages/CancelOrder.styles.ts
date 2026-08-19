@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const CancelMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
   background: #fafaf9;
 `;
 
@@ -158,7 +157,7 @@ export const RefundTotalRow = styled(RefundRow)`
 `;
 
 export const Actions = styled.div`
-  padding: 32px 16px;
+  padding: 32px 16px calc(var(--tabbar-h) + 32px);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -180,9 +179,10 @@ export const BackBtn = styled.button`
   width: 100%;
   height: 48px;
   background: transparent;
-  color: #333;
+  color: #666;
   font-size: 13px;
   font-weight: 500;
-  border: none;
+  border: 1px solid #ddd;
   cursor: pointer;
+  border-radius: 2px;
 `;

@@ -41,6 +41,7 @@ export const Pill = styled.a`
   white-space: nowrap;
   font-family: var(--font-kr);
   font-size: clamp(0.75rem, 0.65rem + 0.4vw, 0.85rem);
+  user-select: none;
 `;
 
 export const Num = styled.span`

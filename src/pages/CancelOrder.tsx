@@ -55,7 +55,7 @@ const CancelOrder: React.FC = () => {
     );
   }
 
-  const firstItem = order.items[0];
+
 
   const handleSubmit = () => {
     updateOrderStatus(order.id, '취소 완료');
@@ -78,16 +78,18 @@ const CancelOrder: React.FC = () => {
       <CancelMain>
         <Section>
           <SectionTitle>ORDER SUMMARY</SectionTitle>
-          <SummaryBox>
-            <SummaryImg>
-              <img src={firstItem.image} alt={firstItem.name} />
-            </SummaryImg>
-            <SummaryInfo>
-              <SummaryName>{firstItem.name}</SummaryName>
-              <SummaryOption>Hand Cream {firstItem.option}</SummaryOption>
-              <SummaryPrice>₩ {firstItem.price.toLocaleString()}</SummaryPrice>
-            </SummaryInfo>
-          </SummaryBox>
+          {order.items.map((item, index) => (
+            <SummaryBox key={index} style={index > 0 ? { marginTop: '12px' } : {}}>
+              <SummaryImg>
+                <img src={item.image} alt={item.name} />
+              </SummaryImg>
+              <SummaryInfo>
+                <SummaryName>{item.name}</SummaryName>
+                <SummaryOption>Hand Cream {item.option} / {item.qty}개</SummaryOption>
+                <SummaryPrice>₩ {(item.price * item.qty).toLocaleString()}</SummaryPrice>
+              </SummaryInfo>
+            </SummaryBox>
+          ))}
         </Section>
 
         <Section>

@@ -9,7 +9,7 @@ import {
   OrderProduct, ProductImg, ProductInfo, ProductName, ProductOption, ProductPrice, OrderActions
 } from './MyPage.styles';
 import { useOrders } from '../context/OrderContext';
-import { getProductById } from '../data/products';
+import { getProductById, products } from '../data/products';
 
 const BackHeader = styled(HeaderContainer)`
   justify-content: flex-start;
@@ -84,7 +84,7 @@ const OrderList: React.FC = () => {
                       {order.status !== '취소 완료' && (
                         <MinimalReviewBtn onClick={(e) => {
                           e.stopPropagation();
-                          const product = getProductById(Number(item.id));
+                          const product = getProductById(Number((item as any).productId)) || products.find(p => p.name === item.name);
                           if (product) {
                             navigate('/mypage/write-review', { state: { product } });
                           }

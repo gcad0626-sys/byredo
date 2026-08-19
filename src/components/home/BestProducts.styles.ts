@@ -85,3 +85,41 @@ export const Price = styled.p`
   font-weight: 700;
   font-size: clamp(0.85rem, 0.75rem + 0.5vw, 0.95rem);
 `;
+
+export const WishBtn = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+  z-index: 2;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const CartBtn = styled.button`
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #111;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: opacity 0.2s;
+  
+  &:active {
+    opacity: 0.7;
+  }
+`;
