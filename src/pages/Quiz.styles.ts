@@ -7,7 +7,7 @@ export const QuizMain = styled.main`
   min-height: 0;
   background: #fafaf9;
   position: relative;
-  overflow-y: auto;
+  overflow-y: scroll;
 `;
 
 export const QuizHeader = styled.div`
@@ -15,6 +15,7 @@ export const QuizHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 56px;
+  flex-shrink: 0;
   padding: 0 16px;
   background: #fafaf9;
   position: sticky;
@@ -128,7 +129,7 @@ export const QTitle = styled.h2`
   font-size: 16px;
   font-weight: 600;
   text-align: center;
-  margin-top: 24px;
+  margin-top: 56px;
   margin-bottom: 40px;
 `;
 
@@ -271,7 +272,7 @@ export const ResultWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding-top: 40px;
+  padding-top: 56px;
 `;
 
 export const ResultSub = styled.div`
@@ -339,7 +340,10 @@ export const RetakeBtn = styled.button`
   border: none;
   font-size: 12px;
   letter-spacing: 0.1em;
-  color: #666;
+  color: #111;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 4px;
   margin-top: 24px;
   cursor: pointer;
 `;
@@ -448,5 +452,15 @@ export const RecCartBtn = styled.button`
     width: 16px;
     height: 16px;
     filter: invert(1);
+  }
+
+  &.is-added {
+    animation: cartPop 0.3s ease-out forwards;
+  }
+
+  @keyframes cartPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.12); }
+    100% { transform: scale(1); }
   }
 `;

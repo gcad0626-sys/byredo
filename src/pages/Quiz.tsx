@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
-import Modal from '../components/common/Modal';
+import Toast from '../components/common/Toast';
 import { useCart } from '../context/CartContext';
 import { products } from '../data/products';
 import { 
@@ -20,6 +20,7 @@ const Quiz: React.FC = () => {
   const [step, setStep] = useState(location.state?.returnToResult ? 4 : 1);
   const [answers, setAnswers] = useState(location.state?.quizAnswers || { q1: 0, q2: 0, q3: 0, q4: 0, q5: 0 });
   const [showCartModal, setShowCartModal] = useState(false);
+  const [addedItems, setAddedItems] = useState<Record<number, boolean>>({});
 
   // Scroll to top on step change
   useEffect(() => {
@@ -169,7 +170,7 @@ const Quiz: React.FC = () => {
 
           {step === 4 && (
             <>
-              <ResultSub style={{ textAlign: 'center', marginTop: '24px' }}>RECOMMENDED FOR YOU</ResultSub>
+              <ResultSub style={{ textAlign: 'center', marginTop: '56px' }}>RECOMMENDED FOR YOU</ResultSub>
               <RecTitle>당신에게 추천하는 핸드크림</RecTitle>
               
               <RecItem>
@@ -184,7 +185,9 @@ const Quiz: React.FC = () => {
                   </RecPriceInfo>
                   <div style={{ display: 'flex', alignItems: 'center' }}>
                     <RecViewBtn onClick={() => navigate(`/products/${mainProduct.id}`, { state: { fromQuiz: true, quizAnswers: answers } })}>VIEW PRODUCT →</RecViewBtn>
-                    <RecCartBtn onClick={() => {
+                    <RecCartBtn 
+                      className={addedItems[mainProduct.id] ? 'is-added' : ''}
+                      onClick={() => {
                       addToCart({
                         productId: mainProduct.id,
                         name: mainProduct.name,
@@ -194,9 +197,19 @@ const Quiz: React.FC = () => {
                         price: mainProduct.price,
                         giftMessage: null
                       });
+                      setAddedItems(prev => ({ ...prev, [mainProduct.id]: true }));
+                      setTimeout(() => {
+                        setAddedItems(prev => ({ ...prev, [mainProduct.id]: false }));
+                      }, 1000);
                       setShowCartModal(true);
                     }}>
-                      <img src="/img/icon-cart.png" alt="cart" />
+                      {addedItems[mainProduct.id] ? (
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+                          <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                      ) : (
+                        <img src="/img/icon-cart.png" alt="cart" />
+                      )}
                     </RecCartBtn>
                   </div>
                 </RecBottom>
@@ -215,7 +228,9 @@ const Quiz: React.FC = () => {
                     </RecPriceInfo>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <RecViewBtn onClick={() => navigate(`/products/${item.id}`, { state: { fromQuiz: true, quizAnswers: answers } })}>VIEW PRODUCT →</RecViewBtn>
-                      <RecCartBtn onClick={() => {
+                      <RecCartBtn 
+                        className={addedItems[item.id] ? 'is-added' : ''}
+                        onClick={() => {
                         addToCart({
                           productId: item.id,
                           name: item.name,
@@ -225,9 +240,19 @@ const Quiz: React.FC = () => {
                           price: item.price,
                           giftMessage: null
                         });
+                        setAddedItems(prev => ({ ...prev, [item.id]: true }));
+                        setTimeout(() => {
+                          setAddedItems(prev => ({ ...prev, [item.id]: false }));
+                        }, 1000);
                         setShowCartModal(true);
                       }}>
-                        <img src="/img/icon-cart.png" alt="cart" />
+                        {addedItems[item.id] ? (
+                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                          </svg>
+                        ) : (
+                          <img src="/img/icon-cart.png" alt="cart" />
+                        )}
                       </RecCartBtn>
                     </div>
                   </RecBottom>
@@ -236,26 +261,20 @@ const Quiz: React.FC = () => {
             </>
           )}
 
-          {step === 1 && <BlackBtn onClick={() => setStep(2)}>START QUIZ <span>→</span></BlackBtn>}
+          {step === 1 && <BlackBtn onClick={() => setStep(2)} style={{ marginBottom: '32px' }}>START QUIZ <span>→</span></BlackBtn>}
           {step === 2 && <BlackBtn onClick={() => setStep(3)}>RESULT <span>→</span></BlackBtn>}
           {step === 3 && (
-            <div style={{ marginTop: 'auto', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <div style={{ marginTop: 'auto', marginBottom: '32px', width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <BlackBtn onClick={() => setStep(4)} style={{ marginTop: 0 }}>VIEW RECOMMENDATION <span>→</span></BlackBtn>
               <RetakeBtn onClick={() => setStep(1)}>RETAKE QUIZ</RetakeBtn>
             </div>
           )}
         </QuizContent>
       </QuizMain>
-      <Modal 
+      <Toast 
         isOpen={showCartModal} 
-        message="장바구니에 담겼습니다" 
-        onClose={() => {
-          setShowCartModal(false);
-          navigate('/cart');
-        }} 
-        confirmText="바로가기"
-        cancelText="계속 쇼핑"
-        onCancel={() => setShowCartModal(false)}
+        message="장바구니에 담았습니다" 
+        onClose={() => setShowCartModal(false)} 
       />
     </AppLayout>
   );
