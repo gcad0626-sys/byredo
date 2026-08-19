@@ -7,7 +7,7 @@ export const BannerContainer = styled.section`
   background: var(--box-bg-1);
   border-radius: 10px;
   overflow: hidden;
-  margin: 0 16px 24px;
+  margin: 16px 16px 24px;
   padding: 0 !important;
 `;
 
