@@ -65,4 +65,14 @@ export const CartBadge = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &.is-popping {
+    animation: badgePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  @keyframes badgePop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
 `;

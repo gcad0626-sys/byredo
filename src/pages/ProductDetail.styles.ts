@@ -91,6 +91,14 @@ export const DetailWishBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  svg {
+    transition: transform 0.15s ease-in-out;
+  }
+
+  &:active svg {
+    transform: scale(1.15);
+  }
 `;
 
 export const OptionsSection = styled.div`

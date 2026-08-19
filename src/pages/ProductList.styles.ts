@@ -87,6 +87,7 @@ export const ProductImgWrap = styled.div`
   background: #f0f0f0;
   margin-bottom: 16px;
   position: relative;
+  overflow: hidden;
 
   img {
     width: 100%;
@@ -143,6 +144,14 @@ export const WishBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  svg {
+    transition: transform 0.15s ease-in-out;
+  }
+
+  &:active svg {
+    transform: scale(1.15);
+  }
 `;
 
 export const CartBtn = styled.button`
@@ -161,7 +170,27 @@ export const CartBtn = styled.button`
   z-index: 2;
   color: #111;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: opacity 0.2s;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  @media (hover: hover) {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  ${ProductImgWrap}:hover & {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  &.is-added {
+    animation: cartPop 0.3s ease;
+  }
+
+  @keyframes cartPop {
+    0% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(0) scale(1.12); }
+    100% { transform: translateY(0) scale(1); }
+  }
   
   &:active {
     opacity: 0.7;

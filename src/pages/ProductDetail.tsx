@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import {
   HeaderContainer, IconButton, ActionsWrapper, LogoWrapper, CartBadge
 } from '../components/home/AppHeader.styles';
-import Modal from '../components/common/Modal';
+import Toast from '../components/common/Toast';
 import { 
   DetailMain, HeroSection, 
   InfoSection, InfoCate, InfoTitle, InfoDesc, InfoPrice, DetailWishBtn,
@@ -88,7 +88,7 @@ const ProductDetail: React.FC = () => {
           <InfoTitle>{product.name}</InfoTitle>
           <DetailWishBtn onClick={() => toggleWishlist(product.id)}>
             {isInWishlist(product.id) ? (
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="#d14343">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
               </svg>
             ) : (
@@ -192,16 +192,10 @@ const ProductDetail: React.FC = () => {
           <BtnMoreReviews onClick={() => navigate('/mypage/reviews')}>전체 리뷰 보기</BtnMoreReviews>
         </ReviewsSection>
 
-        <Modal 
+        <Toast 
           isOpen={showCartModal} 
-          message="장바구니에 담겼습니다" 
-          onClose={() => {
-            setShowCartModal(false);
-            navigate('/cart');
-          }} 
-          confirmText="바로가기"
-          cancelText="계속 쇼핑"
-          onCancel={() => setShowCartModal(false)}
+          message="장바구니에 담았습니다" 
+          onClose={() => setShowCartModal(false)} 
         />
         
       </DetailMain>
