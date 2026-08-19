@@ -95,7 +95,7 @@ export const BlackBtn = styled.button`
   height: 52px;
   background: #222;
   color: #fff;
-  border: none;
+  border: 1px solid transparent;
   font-size: 12px;
   letter-spacing: 0.1em;
   font-weight: 500;
@@ -105,6 +105,22 @@ export const BlackBtn = styled.button`
   align-items: center;
   padding: 0 24px;
   margin-top: auto;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  span {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  &:hover {
+    background: #fff;
+    color: #222;
+    border-color: #222;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08);
+
+    span {
+      transform: translateX(6px);
+    }
+  }
 `;
 
 /* Step 2: Questions */

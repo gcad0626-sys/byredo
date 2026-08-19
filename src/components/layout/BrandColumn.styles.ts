@@ -123,6 +123,24 @@ export const QuizBtn = styled.a`
   font-weight: 600;
   letter-spacing: 0.08em;
   border-radius: 6px;
+  border: 1px solid transparent;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+
+  span:last-child {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  &:hover {
+    background: #ffffff;
+    color: var(--color-ink);
+    border-color: var(--color-ink);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+
+    span:last-child {
+      transform: translateX(6px);
+    }
+  }
 `;
 
 export const DownloadSection = styled.section`
