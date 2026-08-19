@@ -42,7 +42,7 @@ const HeroBanner: React.FC = () => {
     if (!isHovered) {
       timerRef.current = setInterval(() => {
         setActiveIndex((prev) => (prev + 1) % slides.length);
-      }, 3000);
+      }, 2800);
     }
   };
 

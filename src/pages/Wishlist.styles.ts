@@ -52,3 +52,30 @@ export const AddAllBtn = styled.button`
   justify-content: center;
   gap: 8px;
 `;
+
+export const DeleteBtn = styled.button`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #fff;
+    transform: scale(1.1);
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+`;
