@@ -1,5 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
+import { useAuth } from '../context/AuthContext';
 import AppLayout from '../components/layout/AppLayout';
 import AppHeader from '../components/home/AppHeader';
 import { 
@@ -13,27 +16,29 @@ import { useOrders } from '../context/OrderContext';
 const MyPage: React.FC = () => {
   const navigate = useNavigate();
   const { orders } = useOrders();
+  const { user } = useAuth();
   const recentOrder = orders.length > 0 ? orders[0] : null;
 
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-  const loginProvider = localStorage.getItem('loginProvider') || 'email';
-  const userName = localStorage.getItem('userName') || '게스트';
-  const userEmail = localStorage.getItem('userEmail') || '';
-
-  const getProviderText = (provider: string) => {
-    switch(provider) {
-      case 'kakao': return '카카오';
-      case 'google': return 'Google';
-      case 'apple': return 'Apple';
-      default: return '일반';
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      // LocalStorage remnants clearing just in case
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('loginProvider');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('userEmail');
+      navigate('/');
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('loginProvider');
-    localStorage.removeItem('userName');
-    window.location.reload();
+  const getProviderText = (user: any) => {
+    if (!user) return '';
+    const providerId = user.providerData?.[0]?.providerId;
+    if (providerId === 'google.com') return 'Google';
+    if (providerId === 'apple.com') return 'Apple';
+    return '이메일';
   };
 
   return (
@@ -41,21 +46,25 @@ const MyPage: React.FC = () => {
       <AppHeader />
       <MyPageMain id="mypage-main">
         <Profile>
-          <Avatar provider={isLoggedIn ? loginProvider : undefined}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-              <circle cx="12" cy="7" r="4"></circle>
-            </svg>
+          <Avatar>
+            {user?.photoURL ? (
+              <img src={user.photoURL} alt="Profile" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+            ) : (
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            )}
           </Avatar>
           <Name>
-            {isLoggedIn ? `${userName}님, 안녕하세요` : '로그인이 필요합니다'}
+            {user ? `${user.displayName || '고객'}님, 안녕하세요` : '로그인이 필요합니다'}
           </Name>
-          {isLoggedIn && userEmail && <Email>{userEmail}</Email>}
-          {isLoggedIn && <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>}
-          {isLoggedIn ? (
+          {user && <Email>{user.email}</Email>}
+          {user && <LogoutBtn onClick={handleLogout}>로그아웃</LogoutBtn>}
+          {user ? (
             <>
               <Membership>Membership: SILVER</Membership>
-              <ProviderBadge style={{ marginTop: '8px', marginLeft: 0 }}>{getProviderText(loginProvider)} 로그인</ProviderBadge>
+              <ProviderBadge style={{ marginTop: '8px', marginLeft: 0 }}>{getProviderText(user)} 로그인</ProviderBadge>
             </>
           ) : (
             <LogoutBtn style={{ position: 'static', marginTop: '16px' }} onClick={() => navigate('/login')}>로그인하러 가기</LogoutBtn>

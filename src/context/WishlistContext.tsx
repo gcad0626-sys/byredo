@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { getStorageKey } from '../utils/storage';
+import { useAuth } from './AuthContext';
 
 interface WishlistContextType {
   wishlistIds: number[];
@@ -10,14 +10,31 @@ interface WishlistContextType {
 const WishlistContext = createContext<WishlistContextType | undefined>(undefined);
 
 export const WishlistProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [wishlistIds, setWishlistIds] = useState<number[]>(() => {
-    const saved = localStorage.getItem(getStorageKey('wishlist'));
-    return saved ? JSON.parse(saved) : [];
-  });
+  const { user, loading } = useAuth();
+  const [wishlistIds, setWishlistIds] = useState<number[]>([]);
+
+  const getWishlistKey = () => {
+    if (!user) return 'wishlist_guest';
+    const provider = user.providerData?.[0]?.providerId === 'google.com' ? 'google' : 
+                     user.providerData?.[0]?.providerId === 'apple.com' ? 'apple' : 'email';
+    const userName = user.email || user.displayName || user.uid;
+    return `wishlist_${provider}_${encodeURIComponent(userName)}`;
+  };
 
   useEffect(() => {
-    localStorage.setItem(getStorageKey('wishlist'), JSON.stringify(wishlistIds));
-  }, [wishlistIds]);
+    if (loading) return;
+    try {
+      const saved = localStorage.getItem(getWishlistKey());
+      setWishlistIds(saved ? JSON.parse(saved) : []);
+    } catch (e) {
+      setWishlistIds([]);
+    }
+  }, [user, loading]);
+
+  useEffect(() => {
+    if (loading) return;
+    localStorage.setItem(getWishlistKey(), JSON.stringify(wishlistIds));
+  }, [wishlistIds, user, loading]);
 
   const toggleWishlist = (id: number) => {
     setWishlistIds(prev => 
@@ -41,3 +58,4 @@ export const useWishlist = () => {
   }
   return context;
 };
+

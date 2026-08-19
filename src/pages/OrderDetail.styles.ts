@@ -74,14 +74,15 @@ export const SectionTitle = styled.h3`
 export const Product = styled.div`
   display: flex;
   gap: 16px;
-  align-items: center;
+  margin-bottom: 20px;
+  align-items: stretch;
 `;
 
 export const ProductImg = styled.div`
-  width: 80px;
-  height: 80px;
+  width: 72px;
+  height: 72px;
   flex-shrink: 0;
-  background: #f3f3f0;
+  background: #e0e0e0;
   cursor: pointer;
 
   img {
@@ -98,19 +99,17 @@ export const ProductInfo = styled.div`
 `;
 
 export const ProductName = styled.h4`
-  font-family: var(--font-kr);
-  font-size: 15px;
+  font-family: 'EB Garamond', serif;
+  font-size: 16px;
   font-weight: 600;
-  color: #1a1a1a;
-  margin: 0 0 4px;
+  margin: 2px 0 0;
   cursor: pointer;
 `;
 
 export const ProductOption = styled.p`
-  font-family: var(--font-kr);
-  font-size: 13px;
-  color: #888;
-  margin: 0 0 12px;
+  font-size: 12px;
+  color: #666;
+  margin: 6px 0 0;
 `;
 
 export const ProductBottom = styled.div`
@@ -120,33 +119,33 @@ export const ProductBottom = styled.div`
 `;
 
 export const ProductQty = styled.span`
-  font-family: var(--font-kr);
-  font-size: 13px;
-  color: #58564f;
+  font-size: 12px;
+  color: #666;
 `;
 
 export const ProductPrice = styled.span`
   font-family: 'EB Garamond', serif;
-  font-size: 15px;
-  font-weight: 500;
-  color: #1a1a1a;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: auto;
 `;
 
 export const ReviewBtn = styled.button`
-  margin-top: 8px;
-  padding: 8px 12px;
-  background: #fff;
-  border: 1px solid #1a1a1a;
-  border-radius: 2px;
-  font-size: 12px;
+  margin-top: 12px;
+  padding: 6px 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #999;
+  font-size: 11px;
   font-weight: 500;
-  color: #1a1a1a;
+  color: #666;
   cursor: pointer;
   align-self: flex-start;
   transition: all 0.2s;
 
   &:active {
-    background: #f5f5f5;
+    color: #333;
+    border-bottom-color: #333;
   }
 `;
 

@@ -25,42 +25,46 @@ import Quiz from './pages/Quiz';
 import { CartProvider } from './context/CartContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { OrderProvider } from './context/OrderContext';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
   return (
-    <OrderProvider>
-      <WishlistProvider>
-      <CartProvider>
-        <BrowserRouter>
-        <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/products/:id" element={<ProductDetail />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/order-complete" element={<OrderComplete />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/mypage/orders" element={<OrderList />} />
-        <Route path="/mypage/orders/:id" element={<OrderDetail />} />
-        <Route path="/mypage/exchange-return/:id" element={<ExchangeReturn />} />
-        <Route path="/mypage/cancel-order/:id" element={<CancelOrder />} />
-        <Route path="/mypage/cancel-complete/:id" element={<CancelComplete />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/mypage/reviews" element={<Review />} />
-        <Route path="/mypage/write-review" element={<WriteReview />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/social-signup" element={<SocialSignup />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/quiz" element={<Quiz />} />
-      </Routes>
-        </BrowserRouter>
-      </CartProvider>
-    </WishlistProvider>
-    </OrderProvider>
+    <AuthProvider>
+      <OrderProvider>
+        <WishlistProvider>
+        <CartProvider>
+          <BrowserRouter>
+          <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/products" element={<ProductList />} />
+          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order-complete" element={<OrderComplete />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/mypage/orders" element={<OrderList />} />
+          <Route path="/mypage/orders/:id" element={<OrderDetail />} />
+          <Route path="/mypage/exchange-return/:id" element={<ExchangeReturn />} />
+          <Route path="/mypage/cancel-order/:id" element={<CancelOrder />} />
+          <Route path="/mypage/cancel-complete/:id" element={<CancelComplete />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/mypage/reviews" element={<Review />} />
+          <Route path="/mypage/write-review" element={<WriteReview />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/social-signup" element={<SocialSignup />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/quiz" element={<Quiz />} />
+        </Routes>
+          </BrowserRouter>
+        </CartProvider>
+      </WishlistProvider>
+      </OrderProvider>
+    </AuthProvider>
   );
 }
 
 export default App;
+

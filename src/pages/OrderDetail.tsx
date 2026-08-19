@@ -6,7 +6,7 @@ import { HeaderContainer, IconButton } from '../components/home/AppHeader.styles
 import { 
   DetailMain, TitleBox, Title, InfoGroup, Row, Label, Value, Divider, 
   Section, SectionTitle, Product, ProductImg, ProductInfo, ProductName, ProductOption, 
-  ProductBottom, ProductQty, ProductPrice, ReviewBtn, SummaryDivider, TotalRow, 
+  ProductPrice, ReviewBtn, SummaryDivider, TotalRow, 
   Actions, ActionBtn 
 } from './OrderDetail.styles';
 import { useOrders } from '../context/OrderContext';
@@ -88,17 +88,14 @@ const OrderDetail: React.FC = () => {
               </ProductImg>
               <ProductInfo>
                 <ProductName onClick={() => navigate(`/products/${item.id}`)}>{item.name}</ProductName>
-                <ProductOption>{item.option?.includes('ML') ? item.option : '30ML'}</ProductOption>
-                <ProductBottom>
-                  <ProductQty>{item.qty}개</ProductQty>
-                  <ProductPrice>₩{(item.price * item.qty).toLocaleString()}</ProductPrice>
-                </ProductBottom>
+                <ProductOption>{item.option?.includes('ML') ? item.option : '30ML'} / {item.qty}개</ProductOption>
+                <ProductPrice>₩{(item.price * item.qty).toLocaleString()}</ProductPrice>
                 {order.status !== '취소 완료' && (
                   <ReviewBtn onClick={(e) => {
                     e.stopPropagation();
                     navigate('/mypage/write-review', { state: { product: item } });
                   }}>
-                    이 상품 리뷰 쓰기
+                    리뷰 쓰기
                   </ReviewBtn>
                 )}
               </ProductInfo>

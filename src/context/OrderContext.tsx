@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { getStorageKey } from '../utils/storage';
+import { useAuth } from './AuthContext';
 
 export interface OrderItem {
   id: number | string;
@@ -39,18 +39,31 @@ interface OrderContextType {
 const OrderContext = createContext<OrderContextType | undefined>(undefined);
 
 export const OrderProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [orders, setOrders] = useState<Order[]>(() => {
-    try {
-      const saved = localStorage.getItem(getStorageKey('orders'));
-      return saved ? JSON.parse(saved) : [];
-    } catch (e) {
-      return [];
-    }
-  });
+  const { user, loading } = useAuth();
+  const [orders, setOrders] = useState<Order[]>([]);
+
+  const getOrdersKey = () => {
+    if (!user) return 'orders_guest';
+    const provider = user.providerData?.[0]?.providerId === 'google.com' ? 'google' : 
+                     user.providerData?.[0]?.providerId === 'apple.com' ? 'apple' : 'email';
+    const userName = user.email || user.displayName || user.uid;
+    return `orders_${provider}_${encodeURIComponent(userName)}`;
+  };
 
   useEffect(() => {
-    localStorage.setItem(getStorageKey('orders'), JSON.stringify(orders));
-  }, [orders]);
+    if (loading) return;
+    try {
+      const saved = localStorage.getItem(getOrdersKey());
+      setOrders(saved ? JSON.parse(saved) : []);
+    } catch (e) {
+      setOrders([]);
+    }
+  }, [user, loading]);
+
+  useEffect(() => {
+    if (loading) return;
+    localStorage.setItem(getOrdersKey(), JSON.stringify(orders));
+  }, [orders, user, loading]);
 
   const addOrder = (order: Order) => {
     setOrders(prev => [order, ...prev]);
@@ -82,3 +95,4 @@ export const useOrders = () => {
   }
   return context;
 };
+

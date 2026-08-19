@@ -3,9 +3,8 @@ import styled from 'styled-components';
 export const AuthMain = styled.main`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
   background: #fafaf9;
-  padding: 40px 24px;
+  padding: 40px 24px calc(var(--tabbar-h) + 40px);
 `;
 
 export const AuthTitle = styled.h2`
@@ -160,6 +159,7 @@ export const CloseButton = styled.button`
   color: #999;
   cursor: pointer;
   padding: 8px;
+  z-index: 100;
 `;
 
 export const AuthFormAgree = styled.div`
