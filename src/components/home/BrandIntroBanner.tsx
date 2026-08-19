@@ -13,7 +13,8 @@ const BrandIntroBanner: React.FC = () => {
         </h2>
         <p>기억에 남는 향, 감각적인 경험 바이레도 핸드크림을 만나보세요.</p>
         <LinkText as="span" className="trigger-about">
-          브랜드 소개 보기 →
+          <span>브랜드 소개 보기</span>
+          <span>→</span>
         </LinkText>
       </TextContent>
       <ImageWrapper>

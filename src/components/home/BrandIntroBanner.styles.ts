@@ -41,9 +41,42 @@ export const LinkText = styled.a`
   margin-top: 4px;
   font-family: var(--font-kr);
   font-size: clamp(0.65rem, 1.5vw + 0.3rem, 0.8rem);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+
+  span:first-child {
+    position: relative;
+  }
+
+  span:first-child::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background-color: currentColor;
+    transition: width 0.3s ease;
+  }
+
+  span:last-child {
+    display: inline-block;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    span:first-child::after {
+      width: 100%;
+    }
+    span:last-child {
+      transform: translateX(4px);
+    }
+  }
 `;
 
 export const ImageWrapper = styled.div`
