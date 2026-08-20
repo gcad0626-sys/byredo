@@ -70,9 +70,13 @@ const Login: React.FC = () => {
   };
 
   useEffect(() => {
-    const kakao = (window as any).Kakao;
-    if (kakao && !kakao.isInitialized()) {
-      kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
+    try {
+      const kakao = (window as any).Kakao;
+      if (kakao && !kakao.isInitialized()) {
+        kakao.init(import.meta.env.VITE_KAKAO_JAVASCRIPT_KEY);
+      }
+    } catch (error) {
+      console.error('Kakao init error:', error);
     }
   }, []);
 
