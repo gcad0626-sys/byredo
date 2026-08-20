@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tosspayments/payment-sdk": "^1.9.3",
+    "@tosspayments/payment-widget-sdk": "^0.12.2",
     "@types/styled-components": "^5.1.36",
     "firebase": "^12.17.1",
     "react": "^19.2.8",

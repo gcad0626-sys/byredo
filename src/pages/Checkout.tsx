@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { loadTossPayments } from '@tosspayments/payment-sdk';
 import AppLayout from '../components/layout/AppLayout';
 import AppHeader from '../components/home/AppHeader';
 import { 
@@ -9,15 +10,12 @@ import {
   CheckoutSummary, SummaryTotal, 
   PayTabs, PayBox, CheckoutAgree, CheckboxLabel, CheckoutAction
 } from './Checkout.styles';
-import { useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import { useOrders } from '../context/OrderContext';
 
 const Checkout: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { items, clearCart } = useCart();
-  const { addOrder } = useOrders();
+  const { items } = useCart();
   const [payMethod, setPayMethod] = useState('card');
 
   // Form states
@@ -31,6 +29,15 @@ const Checkout: React.FC = () => {
   const [showPostcode, setShowPostcode] = useState(false);
 
   useEffect(() => {
+    // Check if returned from failed payment
+    const params = new URLSearchParams(location.search);
+    const failMessage = params.get('message');
+    if (failMessage) {
+      alert(`결제 실패: ${failMessage}`);
+      // Remove query param without reloading
+      navigate('/checkout', { replace: true, state: location.state });
+    }
+
     // Load Daum Postcode script
     const script = document.createElement('script');
     script.src = '//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js';
@@ -39,7 +46,7 @@ const Checkout: React.FC = () => {
     return () => {
       document.body.removeChild(script);
     };
-  }, []);
+  }, [location.search, navigate, location.state]);
 
   const openPostcode = () => {
     setShowPostcode(true);
@@ -76,8 +83,12 @@ const Checkout: React.FC = () => {
   const checkoutItems = isDirectPurchase ? [directItem!] : items;
   const totalAmount = checkoutItems.reduce((sum, item) => sum + (item.price * item.qty), 0);
 
-  const handlePayment = () => {
-    // 결제 로직: 주문 내역 생성 및 Context에 추가
+  const handlePayment = async () => {
+    if (payMethod !== 'card' && payMethod !== 'tosspay') {
+      alert('현재는 신용카드 및 토스페이 결제만 테스트 가능합니다.');
+      return;
+    }
+
     const newOrderId = Date.now().toString();
     const now = new Date();
     const orderNumber = `#${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}-${newOrderId.slice(-4)}`;
@@ -88,7 +99,7 @@ const Checkout: React.FC = () => {
       id: newOrderId,
       orderNumber,
       date: formattedDate,
-      status: '결제 완료',
+      status: '결제 대기', // Will be updated on success
       items: checkoutItems.map(item => ({
         id: item.id,
         name: item.name,
@@ -99,18 +110,39 @@ const Checkout: React.FC = () => {
       })),
       totalAmount,
       shippingInfo: { name, phone, address: `${address} ${addressDetail}`, memo },
-      paymentMethod: payMethod
+      paymentMethod: payMethod,
+      isDirectPurchase
     };
     
-    addOrder(newOrder);
+    // Save to sessionStorage for retrieval on success page
+    sessionStorage.setItem('temp_order', JSON.stringify(newOrder));
 
-    // 바로구매가 아니라 장바구니 결제라면 장바구니 비우기
-    if (!isDirectPurchase) {
-      clearCart();
+    try {
+      const clientKey = import.meta.env.VITE_TOSS_CLIENT_KEY;
+      if (!clientKey) {
+        alert('토스페이먼츠 클라이언트 키가 설정되지 않았습니다.');
+        return;
+      }
+      
+      const tossPayments = await loadTossPayments(clientKey);
+      
+      const orderName = checkoutItems.length > 1 
+        ? `${checkoutItems[0].name} 외 ${checkoutItems.length - 1}건` 
+        : checkoutItems[0].name;
+
+      const method = payMethod === 'tosspay' ? '토스페이' : '카드';
+
+      tossPayments.requestPayment(method, {
+        amount: totalAmount,
+        orderId: newOrderId,
+        orderName,
+        customerName: name,
+        successUrl: window.location.origin + '/order-complete',
+        failUrl: window.location.origin + '/checkout',
+      });
+    } catch (error: any) {
+      alert(`결제 초기화 오류: ${error.message}`);
     }
-
-    // 결제 로직 후 완료 페이지로 이동
-    navigate('/order-complete');
   };
 
   return (
@@ -181,25 +213,16 @@ const Checkout: React.FC = () => {
           <SectionTitle>결제 수단</SectionTitle>
           <PayTabs>
             <button className={payMethod === 'card' ? 'is-active' : ''} onClick={() => setPayMethod('card')}>신용카드</button>
+            <button className={payMethod === 'tosspay' ? 'is-active' : ''} onClick={() => setPayMethod('tosspay')}>토스페이</button>
             <button className={payMethod === 'payco' ? 'is-active' : ''} onClick={() => setPayMethod('payco')}>페이코</button>
             <button className={payMethod === 'bank' ? 'is-active' : ''} onClick={() => setPayMethod('bank')}>무통장 입금</button>
           </PayTabs>
           
           <PayBox>
-            {payMethod === 'card' && (
-              <FormRow>
-                <label>카드 선택</label>
-                <FormSelect>
-                  <select>
-                    <option>국민카드</option>
-                    <option>신한카드</option>
-                    <option>현대카드</option>
-                  </select>
-                </FormSelect>
-              </FormRow>
-            )}
-            {payMethod === 'payco' && <p style={{ fontSize: '12px', color: '#666' }}>페이코 앱으로 이동하여 결제를 진행합니다.</p>}
-            {payMethod === 'bank' && <p style={{ fontSize: '12px', color: '#666' }}>주문 완료 후 입금 계좌번호가 안내됩니다.</p>}
+            {payMethod === 'card' && <p style={{ fontSize: '12px', color: '#666', textAlign: 'center', padding: '8px 0' }}>결제하기 버튼을 누르면 토스페이먼츠를 통해 안전하게 결제를 진행합니다.</p>}
+            {payMethod === 'tosspay' && <p style={{ fontSize: '12px', color: '#666', textAlign: 'center', padding: '8px 0' }}>토스 앱으로 안전하고 간편하게 결제합니다.</p>}
+            {payMethod === 'payco' && <p style={{ fontSize: '12px', color: '#666', textAlign: 'center', padding: '8px 0' }}>페이코 앱으로 이동하여 결제를 진행합니다.</p>}
+            {payMethod === 'bank' && <p style={{ fontSize: '12px', color: '#666', textAlign: 'center', padding: '8px 0' }}>주문 완료 후 입금 계좌번호가 안내됩니다.</p>}
           </PayBox>
         </CheckoutSection>
 

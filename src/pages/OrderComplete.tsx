@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AppLayout from '../components/layout/AppLayout';
 import styled from 'styled-components';
 import { HeaderContainer, LogoWrapper, IconButton } from '../components/home/AppHeader.styles';
@@ -9,6 +9,7 @@ import {
   AddressBlock, AddressText, Actions, ActionBtn 
 } from './OrderComplete.styles';
 import { useOrders } from '../context/OrderContext';
+import { useCart } from '../context/CartContext';
 
 const CompleteHeader = styled(HeaderContainer)`
   justify-content: center;
@@ -17,7 +18,38 @@ const CompleteHeader = styled(HeaderContainer)`
 
 const OrderComplete: React.FC = () => {
   const navigate = useNavigate();
-  const { orders } = useOrders();
+  const location = useLocation();
+  const { orders, addOrder } = useOrders();
+  const { clearCart } = useCart();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const paymentKey = params.get('paymentKey');
+    
+    if (paymentKey) {
+      const tempOrderStr = sessionStorage.getItem('temp_order');
+      if (tempOrderStr) {
+        try {
+          const tempOrder = JSON.parse(tempOrderStr);
+          tempOrder.status = '결제 완료';
+          tempOrder.paymentKey = paymentKey;
+
+          addOrder(tempOrder);
+
+          if (!tempOrder.isDirectPurchase) {
+            clearCart();
+          }
+
+          sessionStorage.removeItem('temp_order');
+          
+          navigate('/order-complete', { replace: true });
+        } catch (e) {
+          console.error(e);
+        }
+      }
+    }
+  }, [location.search, navigate, addOrder, clearCart]);
+
   const latestOrder = orders.length > 0 ? orders[0] : null;
 
   return (
