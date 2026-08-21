@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 
 export const MyPageMain = styled.main`
-  flex: 1;
-  overflow-y: auto;
-  padding-bottom: var(--tabbar-h);
-  background: #fafaf9;
-  padding-bottom: var(--tabbar-h);
+  /* flex, padding-top, overflow-y 등은 GlobalStyle.tsx의 #app-frame > main 에서 공통 처리됨 */
 `;
 
 export const Profile = styled.div`

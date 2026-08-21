@@ -27,6 +27,8 @@ import { WishlistProvider } from './context/WishlistContext';
 import { OrderProvider } from './context/OrderContext';
 import { AuthProvider } from './context/AuthContext';
 
+import ScrollToTop from './components/common/ScrollToTop';
+
 function App() {
   return (
     <AuthProvider>
@@ -34,6 +36,7 @@ function App() {
         <WishlistProvider>
         <CartProvider>
           <BrowserRouter>
+          <ScrollToTop />
           <GlobalStyle />
         <Routes>
           <Route path="/" element={<Home />} />
